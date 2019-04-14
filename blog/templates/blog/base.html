@@ -45,7 +45,14 @@
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
-          {% block content %}{% endblock %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
         </div>
         <div class="col-md-4">
           <div class="content-section">
@@ -78,21 +85,6 @@
             adipisicing elit.</p>
         </div>
         <hr class="w-100 clearfix d-md-none">
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-          <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
-          <p>
-            <a href="#!">MDBootstrap</a>
-          </p>
-          <p>
-            <a href="#!">MDWordPress</a>
-          </p>
-          <p>
-            <a href="#!">BrandFlow</a>
-          </p>
-          <p>
-            <a href="#!">Bootstrap Angular</a>
-          </p>
-        </div>
         <hr class="w-100 clearfix d-md-none">
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
           <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
@@ -100,10 +92,10 @@
             <a href="#!">Your Account</a>
           </p>
           <p>
-            <a href="#!">Become an Affiliate</a>
+            <a href="#!">Register</a>
           </p>
           <p>
-            <a href="#!">Shipping Rates</a>
+            <a href="#!">News</a>
           </p>
           <p>
             <a href="#!">Help</a>
@@ -127,7 +119,7 @@
         <div class="col-md-7 col-lg-8">
           <p class="text-center text-md-left">© 2018 Copyright:
             <a href="https://mdbootstrap.com/education/bootstrap/">
-              <strong> MDBootstrap.com</strong>
+              <strong> S.HOLMES</strong>
             </a>
           </p>
 
