@@ -1,43 +1,165 @@
 {% extends "blog/base.html" %}
+{load static}
 {% block content %}
-    {% for post in posts %}
-        <article class="media content-section bg-steel">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body ">
-            <div class="article-metadata">
-              <a class="mr-2" href="{% url 'user-posts' post.author.username%}">
-                  {{ post.author.get_full_name }}</a>
-              <small class="text-muted">
-                  {{ post.date_posted|date:"F d, Y" }}</small>
+
+<!-- carousel -->
+<section>
+  <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+  <div class="row">
+    <div class="col-0 col-lg-8 d-none d-lg-block p-3">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="{% static 'images/main-page/bridge.jpg' %}" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="{% static 'images/main-page/bridge.jpg' %}" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="{% static 'images/main-page/bridge.jpg' %}" alt="Third slide">
+    </div>
+  </div>
+  </div>
+    </div>
+    <div class="col-12 col-lg-4 p-3">
+      <div class="info text">
+        <div class="desc">
+          <span class="subheading">Witaj na stronie</span>
+          <h1 class="mb-4"><span>ECG.VOT.PL</span> Lorem ipsum </h1>
+          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- .carousel -->
+
+<!-- cards -->
+<h2 class="pt-5 my-5 text-center">title</h2>
+      <div class="row d-none d-xl-flex mb-4">
+        <div class="col-xl-3 col-md-6">
+          <div class="box">
+            <div class="imgBx">
+              <img src="{% source 'images/main-page/img2.jpg' %}">
             </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
+            <div class="content">
+              <h2>Title</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua.</p>
+              <a href="#">Read More</a>
+            </div>
           </div>
-        </article>
-    {% endfor %}
-    {% if is_paginated %}
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="box">
+            <div class="imgBx">
+              <img src="{% source 'images/main-page/img2.jpg' %}">
+            </div>
+            <div class="content">
+              <h2>Title</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua.</p>
+              <a href="#">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="box">
+            <div class="imgBx">
+              <img src="{% source 'images/main-page/img2.jpg' %}">
+            </div>
+            <div class="content">
+              <h2>Title</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua.</p>
+              <a href="#">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="box">
+            <div class="imgBx">
+              <img src="{% source 'images/main-page/img2.jpg' %}">
+            </div>
+            <div class="content">
+              <h2>Title</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua.</p>
+              <a href="#">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- .cards -->
 
-        {% if page_obj.has_previous %}
-            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-            <a class="btn btn-outline-info mb-4" href="?page=
-                {{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
 
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a class="btn btn-outline-info mb-4"
-                   href="?page={{ num }}">{{ num }}</a>
-            {% endif %}
-        {% endfor %}
+<!-- main content -->
 
-        {% if page_obj.has_next %}
-            <a class="btn btn-outline-info mb-4" href="?page=
-                {{ page_obj.next_page_number }}">Next</a>
-            <a class="btn btn-outline-info mb-4" href="?page=
-                {{ page_obj.paginator.num_pages }}">Last</a>
-        {% endif %}
+<div class="row">
+  <div class="col-xl-7 py-5">
+    <h3>Paragraph</h3>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum excepturi illum laborum quod, odio, veritatis voluptates amet vel ut doloribus consequuntur consectetur animi voluptatem natus neque minus aspernatur rerum quasi.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio quae aspernatur, molestias distinctio praesentium obcaecati aliquam exercitationem, vero, nobis nisi repellendus. Maiores obcaecati ducimus suscipit, enim natus, cupiditate illum adipisci.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem doloribus ut autem, nesciunt nobis in, minima velit, adipisci esse repellat voluptatum ipsa cumque. Possimus sit sint ipsam, facilis quos illum.<h3>Paragraph</h3>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum excepturi illum laborum quod, odio, veritatis voluptates amet vel ut doloribus consequuntur consectetur animi voluptatem natus neque minus aspernatur rerum quasi.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio quae aspernatur, molestias distinctio praesentium obcaecati aliquam exercitationem, vero, nobis nisi repellendus. Maiores obcaecati ducimus suscipit, enim natus, cupiditate illum adipisci.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem doloribus ut autem, nesciunt nobis in, minima velit, adipisci esse repellat voluptatum ipsa cumque. Possimus sit sint ipsam, facilis quos illum.<h3>Paragraph</h3>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum excepturi illum laborum quod, odio, veritatis voluptates amet vel ut doloribus consequuntur consectetur animi voluptatem natus neque minus aspernatur rerum quasi.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio quae aspernatur, molestias distinctio praesentium obcaecati aliquam exercitationem, vero, nobis nisi repellendus. Maiores obcaecati ducimus suscipit, enim natus, cupiditate illum adipisci.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem doloribus ut autem, nesciunt nobis in, minima velit, adipisci esse repellat voluptatum ipsa cumque. Possimus sit sint ipsam, facilis quos illum.
+  </div>
+  
+  <div class="col-xl-5 p-xl-0">
+    <div class="sidebar-box p-3">
+    <h3 class="sidebar-heading">Ciekawe artykuły</h3>
+      <div class="course-block mb-4 d-flex">
+        <a class="blog-img mr-4" style="background-image: url({% source 'images/ac_80.jpg'%});"></a>
+        <div class="text">
+          <h3 class="heading"><a href="#">Lorem ipsum dolor sit amet</a></h3>
+          <div class="meta">
+            <div><span ><i class="fas fa-calendar-alt"></i></span> Jan. 14, 2019</div>
+          </div>
+        </div>
+      </div>
+      <div class="course-block mb-4 d-flex">
+        <a class="blog-img mr-4" style="background-image: url({% source 'images/ac_80.jpg'%});"></a>
+        <div class="text">
+          <h3 class="heading"><a href="#">Lorem ipsum dolor sit amet</a></h3>
+          <div class="meta">
+            <div><span ><i class="fas fa-calendar-alt"></i></span> Jan. 14, 2019</div>
+          </div>
+        </div>
+      </div>
+      <div class="course-block mb-4 d-flex">
+        <a class="blog-img mr-4" style="background-image: url({% source 'images/ac_80.jpg'%});"></a>
+        <div class="text">
+          <h3 class="heading"><a href="#">Lorem ipsum dolor sit amet</a></h3>
+          <div class="meta">
+            <div><span ><i class="fas fa-calendar-alt"></i></span> Jan. 14, 2019</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-box p-3">
+        <h3 class="sidebar-heading">Paragraph</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+    </div>
+    <div class="sidebar-box p-3">
+        <h3 class="sidebar-heading">Paragraph</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+    </div>
 
-    {% endif %}
-{% endblock content %}
+  </div>
+</div>
+<!-- .main content -->
+
+{% endblock content%}
