@@ -9,13 +9,13 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
+from .filters import PostFilter
 
 
 def about(request):
-    context = {
-        'posts': Post.objects.all()
-    }
-    return render(request, 'blog/about.html', context)
+    post_list = Post.objects.all()
+    post_filter = PostFilter(request.GET, queryset=post_list)
+    return render(request, 'blog/about.html', {'filter': post_filter})
 
 
 def home(request):
