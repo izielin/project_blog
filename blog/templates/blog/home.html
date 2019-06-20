@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
-{load static}
+{% load static %}
 {% block content %}
-
+    <div class="container">
 <!-- carousel -->
 <section>
   <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
@@ -49,7 +49,7 @@
         <div class="col-xl-3 col-md-6">
           <div class="box">
             <div class="imgBx">
-              <img src="{% source 'images/main-page/img2.jpg' %}">
+              <img src="{% static 'images/main-page/img2.jpg' %}">
             </div>
             <div class="content">
               <h2>Title</h2>
@@ -62,7 +62,7 @@
         <div class="col-xl-3 col-md-6">
           <div class="box">
             <div class="imgBx">
-              <img src="{% source 'images/main-page/img2.jpg' %}">
+              <img src="{% static 'images/main-page/img2.jpg' %}">
             </div>
             <div class="content">
               <h2>Title</h2>
@@ -75,7 +75,7 @@
         <div class="col-xl-3 col-md-6">
           <div class="box">
             <div class="imgBx">
-              <img src="{% source 'images/main-page/img2.jpg' %}">
+              <img src="{% static 'images/main-page/img2.jpg' %}">
             </div>
             <div class="content">
               <h2>Title</h2>
@@ -88,7 +88,7 @@
         <div class="col-xl-3 col-md-6">
           <div class="box">
             <div class="imgBx">
-              <img src="{% source 'images/main-page/img2.jpg' %}">
+              <img src="{% static 'images/main-page/img2.jpg' %}">
             </div>
             <div class="content">
               <h2>Title</h2>
@@ -120,34 +120,25 @@
   
   <div class="col-xl-5 p-xl-0">
     <div class="sidebar-box p-3">
-    <h3 class="sidebar-heading">Ciekawe artykuły</h3>
-      <div class="course-block mb-4 d-flex">
-        <a class="blog-img mr-4" style="background-image: url({% source 'images/ac_80.jpg'%});"></a>
+    <h3 class="sidebar-heading">Najnowsze kursy</h3>
+    {% for post in posts %}
+        <div class="course-block mb-4 d-flex">
+        <img class="rounded-circle article-img" src=
+                  "{{ post.author.profile.image.url }}">
         <div class="text">
-          <h3 class="heading"><a href="#">Lorem ipsum dolor sit amet</a></h3>
+          <h3 class="heading"><a class="article-title" href=
+                    "{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
           <div class="meta">
-            <div><span ><i class="fas fa-calendar-alt"></i></span> Jan. 14, 2019</div>
+            <div><span ><i class="fas fa-calendar-alt"></i></span> {{ post.date_posted|date:"F d, Y" }}</div>
+              <a class="mr-2 heading article-title" href="{% url 'user-posts' post.author.username%}">
+                  {{ post.author.get_full_name }}</a>
           </div>
         </div>
       </div>
-      <div class="course-block mb-4 d-flex">
-        <a class="blog-img mr-4" style="background-image: url({% source 'images/ac_80.jpg'%});"></a>
-        <div class="text">
-          <h3 class="heading"><a href="#">Lorem ipsum dolor sit amet</a></h3>
-          <div class="meta">
-            <div><span ><i class="fas fa-calendar-alt"></i></span> Jan. 14, 2019</div>
-          </div>
-        </div>
-      </div>
-      <div class="course-block mb-4 d-flex">
-        <a class="blog-img mr-4" style="background-image: url({% source 'images/ac_80.jpg'%});"></a>
-        <div class="text">
-          <h3 class="heading"><a href="#">Lorem ipsum dolor sit amet</a></h3>
-          <div class="meta">
-            <div><span ><i class="fas fa-calendar-alt"></i></span> Jan. 14, 2019</div>
-          </div>
-        </div>
-      </div>
+    {% endfor %}
+
+
+
     </div>
     <div class="sidebar-box p-3">
         <h3 class="sidebar-heading">Paragraph</h3>
@@ -159,6 +150,7 @@
     </div>
 
   </div>
+</div>
 </div>
 <!-- .main content -->
 

@@ -18,6 +18,13 @@ def about(request):
     return render(request, 'blog/about.html', context)
 
 
+def home(request):
+    context = {
+        'posts': Post.objects.all().order_by('-id')[:3]
+    }
+    return render(request, 'blog/home.html', context)
+
+
 class PostListView(ListView):
     model = Post
     template_name = 'blog/about.html'
@@ -74,7 +81,3 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
-
-
-def home(request):
-    return render(request, 'blog/home.html', {'title': 'About'})

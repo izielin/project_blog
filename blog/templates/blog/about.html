@@ -1,20 +1,72 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    {% for post in posts %}
-        <article class="media content-section bg-steel">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body ">
-            <div class="article-metadata">
-              <a class="mr-2" href="{% url 'user-posts' post.author.username%}">
-                  {{ post.author.get_full_name }}</a>
-              <small class="text-muted">
-                  {{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
+     <section class="ecg-section ecg-heading mb-5 pb-5">
+      <div class="container">
+       <div class="row">
+          <div class="col-md-8">
+            <p class="breadcrumbs"><span class="mr-2">
+                <a href="{% url 'blog-home' %}">Strona główna</a></span><span class="mr-2"></span><span>Kursy</span></p>
+            <h1 class="bread">Kursy</h1>
           </div>
-        </article>
-    {% endfor %}
+         </div>
+      </div>
+    </section>
+    <div class="container">
+
+    <div class="row">
+        <div class="col-8">
+            {% for post in posts %}
+                <div class="card-container">
+                  <div class="card">
+                    <h2 class="card-title text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                      <hr>
+                        <div class="card-body col-12">
+                            <a class="mr-2" href="{% url 'user-posts' post.author.username%}">
+                              {{ post.author.get_full_name }}</a><br>
+                            <small class="text-muted">
+                                {{ post.date_posted|date:"F d, Y" }}</small><br>
+                            <small class="text-muted">
+                                {{ post.category }}</small><br>
+                          <span class="card-description subtle">{{ post.synopsis }}</span>
+                          <a class="btn icon-box-white card-read" href="word.html">Dalej</a>
+                        </div>
+                  </div>
+                  <div class="card-shadow"></div>
+                </div>
+        {% endfor %}
+
+        </div>
+
+
+
+
+        <div class="col-4">
+
+
+
+	            <div class="sidebar-box ">
+	              <h3 class="sidebar-heading">Paragraph</h3>
+	              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+	            </div>
+
+              <div class="sidebar-box">
+	            	<h3 class="sidebar-heading">Galerie</h3>
+	              <ul class="categories">
+	              	<li><a href="#">lorem <span>({{ page_obj.paginator.count }})</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+	              	<li><a href="#">lorem <span>(10)</span></a></li>
+
+	              </ul>
+	            </div></div>
+    </div>
+
+
     {% if is_paginated %}
 
         {% if page_obj.has_previous %}
@@ -40,4 +92,9 @@
         {% endif %}
 
     {% endif %}
+
+    </div>
+
+
+
 {% endblock content %}
