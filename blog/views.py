@@ -10,7 +10,8 @@ from django.views.generic import (
 )
 from .models import Post
 from .filters import PostFilter
-
+from django.core.files.storage import FileSystemStorage
+from .forms import DocumentForm
 
 def about(request):
     post_list = Post.objects.all()
@@ -50,7 +51,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'category', 'synopsis', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -59,7 +60,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'category', 'synopsis', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -81,3 +82,28 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+
+def simple_upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'blog/simple_upload.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'blog/simple_upload.html')
+
+
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render('blog-home')
+    else:
+        form = DocumentForm()
+    return render(request, 'core/model_form_upload.html', {
+        'form': form
+    })
