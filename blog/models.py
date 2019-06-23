@@ -18,9 +18,16 @@ class Post(models.Model):
         ('Java', 'Java'),
     )
 
+    LEVEL_CHOICES = (
+        ('Advanced', 'Advanced'),
+        ('Intermediate', 'Intermediate'),
+        ('Basic', 'Basic'),
+    )
+
     title = models.CharField(max_length=100)
     synopsis = models.TextField(max_length=200, default="")
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    level = models.CharField(max_length=100, choices=LEVEL_CHOICES, default="")
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -32,7 +39,10 @@ class Post(models.Model):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
 
-class Document(models.Model):
-    description = models.CharField(max_length=255, blank=True)
-    document = models.FileField(upload_to='documents/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+class FileUploadUrl(models.Model):
+    fileName = models.CharField(max_length=255, default="")
+    url = models.CharField(max_length=255)
+    postId = models.IntegerField()
+
+    def get_absolute_url(self):
+        return reverse('post-upload-detail', kwargs={'pk': self.pk})

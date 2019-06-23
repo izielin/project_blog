@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     DetailView,
@@ -8,10 +9,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post
+from .models import Post, FileUploadUrl
 from .filters import PostFilter
 from django.core.files.storage import FileSystemStorage
-from .forms import DocumentForm
+
 
 def about(request):
     post_list = Post.objects.all()
@@ -51,7 +52,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'category', 'synopsis', 'content']
+    fields = ['title', 'category', 'level', 'synopsis', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -60,7 +61,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'category', 'synopsis', 'content']
+    fields = ['title', 'category', 'level', 'synopsis', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -84,26 +85,29 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-def simple_upload(request):
+def download(request, pk):
+    context = {
+        'download_list': FileUploadUrl.objects.filter(postId=pk)
+    }
+    return render(request, 'blog/download.html', context)
+
+
+class DownloadDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = FileUploadUrl
+    success_url = '/'
+
+    def test_func(self):
+        return True
+
+
+def simple_upload(request, pk):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
-        return render(request, 'blog/simple_upload.html', {
-            'uploaded_file_url': uploaded_file_url
-        })
+        url = FileUploadUrl(fileName=myfile, url=uploaded_file_url, postId=pk)
+        url.save()
+        messages.success(request, f'Success! You can add another file!')
+        return render(request, 'blog/simple_upload.html')
     return render(request, 'blog/simple_upload.html')
-
-
-def model_form_upload(request):
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return render('blog-home')
-    else:
-        form = DocumentForm()
-    return render(request, 'core/model_form_upload.html', {
-        'form': form
-    })

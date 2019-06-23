@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+    <div class="row ecg-section container">
+
+        {% for item in download_list %}
+            <div class="col-md-4 d-flex align-self-stretch  ">
+              <div class="media block-6 materials py-4 d-block">
+                <div class="d-flex justify-content-start">
+                  <div class="icon d-flex align-items-center justify-content-center">
+                    <span><i class="fas fa-file-archive fa-4x"></i></span>
+                  </div>
+                </div>
+                <div class="media-body p-2 mt-2">
+                  <h3 class="heading mb-3"><a class="text-dark" href="{% url 'upload-delete' item.id %}">{{ item.fileName }}</a></h3>
+                  <a class=" btn icon-box" href="{{ item.url }}"><i class="fa fa-download"></i> Download</a>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+
+
+
+          </div>
+
+
+
+{% endblock content %}
