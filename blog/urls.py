@@ -22,4 +22,5 @@ urlpatterns = [
     path('post/<int:pk>/upload/', views.simple_upload, name='post-upload'),
     path('download/<int:pk>', DownloadDeleteView.as_view(), name='upload-delete'),
     path('post/<int:pk>/download/', views.download, name='post-download'),
+    path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
 ]

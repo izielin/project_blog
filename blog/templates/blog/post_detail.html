@@ -34,6 +34,27 @@
       <p class="article-content">{{ object.content }}</p>
     </div>
   </article>
+    {% if user.is_authenticated%}
+  <hr>
+  <a class="btn btn-primary" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    {% endif %}
+  <hr>
+  <h3> Comments: {{ post.comments.count }}</h3>
+{% for comment in post.comments.all %}
+
+    <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2">{{ comment.author.get_full_name }}</a>
+          <small class="text-muted">{{ comment.created_date|date:"d.m.Y"  }}</small>
+      </div>
+      <p class="article-content">{{ comment.text|linebreaks }}</p>
+    </div>
+  </article>
+
+{% endfor %}
+
   </div>
 
   <div class="col-xl-5 p-xl-0">

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -12,6 +12,7 @@ from django.views.generic import (
 from .models import Post, FileUploadUrl
 from .filters import PostFilter
 from django.core.files.storage import FileSystemStorage
+from .forms import CommentForm
 
 
 def about(request):
@@ -89,7 +90,9 @@ def download(request, pk):
     context = {
         'download_list': FileUploadUrl.objects.filter(postId=pk)
     }
-    return render(request, 'blog/download.html', context)
+
+    post = Post.objects.filter(id=pk)
+    return render(request, 'blog/download.html', context, post)
 
 
 class DownloadDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -111,3 +114,18 @@ def simple_upload(request, pk):
         messages.success(request, f'Success! You can add another file!')
         return render(request, 'blog/simple_upload.html')
     return render(request, 'blog/simple_upload.html')
+
+
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        form.instance.author = request.user
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comment_to_post.html', {'form': form})

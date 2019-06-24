@@ -39,6 +39,19 @@ class Post(models.Model):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
 
+class Comment(models.Model):
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+
+    def get_absolute_url(self):
+        return reverse('add_comment_to_comment', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return self.text
+
+
 class FileUploadUrl(models.Model):
     fileName = models.CharField(max_length=255, default="")
     url = models.CharField(max_length=255)
