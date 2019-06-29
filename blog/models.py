@@ -27,14 +27,17 @@ class Post(models.Model):
         ('Basic', 'Basic'),
     )
 
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
     synopsis = models.CharField(max_length=200)
+    # category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='Java')
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
-    level = models.CharField(max_length=100, choices=LEVEL_CHOICES, default="")
+    # level = models.CharField(max_length=100, choices=LEVEL_CHOICES, default='Basic')
+    level = models.CharField(max_length=100, choices=LEVEL_CHOICES)
     content = MDTextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    ratings = GenericRelation(Rating, related_query_name='foos')
+    authorized = models.BooleanField(default=False)
+    # ratings = GenericRelation(Rating, related_query_name='foos')
 
     def __str__(self):
         return self.title

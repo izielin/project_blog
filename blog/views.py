@@ -21,7 +21,6 @@ try:
 except ImportError:  # Django < 2.0
     from django.core.urlresolvers import reverse
 
-
 def about(request):
     post_list = Post.objects.all()
     post_filter = PostFilter(request.GET, queryset=post_list)
@@ -62,7 +61,10 @@ class MDEditorFormView(generic.FormView):
     def form_valid(self, form):
         kwargs = {
             'title': form.cleaned_data['title'],
+            'synopsis': form.cleaned_data['synopsis'],
             'content': form.cleaned_data['content'],
+            'category': form.cleaned_data['category'],
+            'level': form.cleaned_data['level'],
             'author': self.request.user
         }
         instance = models.Post.objects.create(**kwargs)
@@ -89,7 +91,7 @@ show_view = ShowView.as_view()
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'category', 'level', 'synopsis', 'content']
+    fields = ['title', 'synopsis', 'category', 'level', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

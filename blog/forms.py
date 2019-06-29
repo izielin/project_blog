@@ -4,34 +4,15 @@ from django import forms
 
 from mdeditor.fields import MDTextFormField
 from .models import Post, Comment
-from django.utils import timezone
-from django.contrib.auth.models import User
 
-CATEGORY_CHOICES = (
-    ('Django', 'Django'),
-    ('Python', 'Python'),
-    ('C++', 'C++'),
-    ('Graphics', 'Graphics'),
-    ('Word', 'Word'),
-    ('Excel', 'Excel'),
-    ('DataBase', 'DataBase'),
-    ('Html & css', 'Html&css'),
-    ('JavaScript', 'JavaScript'),
-    ('Java', 'Java'),
-)
-
-LEVEL_CHOICES = (
-    ('Advanced', 'Advanced'),
-    ('Intermediate', 'Intermediate'),
-    ('Basic', 'Basic'),
-)
-
+CATEGORY_CHOICES = Post.CATEGORY_CHOICES
+LEVEL_CHOICES = Post.LEVEL_CHOICES
 
 class MDEditorForm(forms.Form):
     title = forms.CharField()
-    synopsis = forms.CharField(required=True)
-    category = forms.ChoiceField(choices=CATEGORY_CHOICES, label="category", initial='', widget=forms.Select(), required=True)
-    level = forms.ChoiceField(choices=LEVEL_CHOICES, label="level", initial='', widget=forms.Select(), required=True)
+    synopsis = forms.CharField()
+    category = forms.ChoiceField(choices=CATEGORY_CHOICES, label="category", initial='', widget=forms.Select())
+    level = forms.ChoiceField(choices=LEVEL_CHOICES, label="level", initial='', widget=forms.Select())
     content = MDTextFormField()
 
 

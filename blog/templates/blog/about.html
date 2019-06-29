@@ -21,24 +21,26 @@
         <div class="col-8">
         <div class="row">
             {% for post in filter.qs %}
-                <div class="col-12 col-lg-6 my-5">
-                  <div class="card">
-                    <h4 class="card-title text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                      <hr>
-                        <div class="card-body col-12">
-                            {% ratings post %}
-                            <small class="mr-2">
-                              {{ post.author.get_full_name }}</small><br>
-                            <small class="text-muted">
-                                {{ post.date_posted|date:"F d, Y" }}</small><br>
-                            <small class="text-muted">
-                                {{ post.category }}</small><br>
-                          <span class="card-description subtle">{{ post.synopsis }}</span>
-                          <a class="btn icon-box-white card-read" href="{% url 'post-detail' post.id %}">Dalej</a>
-                        </div>
-                  </div>
-                  <div class="card-shadow"></div>
-                </div>
+                {% if post.authorized == True %}
+                    <div class="col-12 col-lg-6 my-5">
+                      <div class="card">
+                        <h4 class="card-title text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                          <hr>
+                            <div class="card-body col-12">
+                                {% ratings post %}
+                                <small class="mr-2">
+                                  {{ post.author.get_full_name }}</small><br>
+                                <small class="text-muted">
+                                    {{ post.date_posted|date:"F d, Y" }}</small><br>
+                                <small class="text-muted">
+                                    {{ post.category }}</small><br>
+                              <span class="card-description subtle">{{ post.synopsis }}</span>
+                              <a class="btn icon-box-white card-read" href="{% url 'post-detail' post.id %}">Dalej</a>
+                            </div>
+                      </div>
+                      <div class="card-shadow"></div>
+                    </div>
+            {%  endif %}
         {% endfor %}
         </div>
 

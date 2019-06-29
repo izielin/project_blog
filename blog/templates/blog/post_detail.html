@@ -22,17 +22,17 @@
 <div class="row mt-5 pt-5">
   <div class="col-xl-7 py-5">
 {% if object.author == user %}
-          <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Edit</a>
-            <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'post-upload' object.id%}">Upload</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+          <div class="row">
+              <button class="btn-hover-update" onclick="location.href='{% url 'post-update' object.id %}'"><span>Edit</span></button>
+              <button class="btn-hover-add" onclick="location.href='{% url 'post-upload' object.id %}'"><span>Upload</span></button>
+              <button class="btn-hover-delete" onclick="location.href='{% url 'post-delete' object.id %}'"><span>Delete</span></button>
           </div>
         {% endif %}
   <div id="content"><textarea>{{ object.content }}</textarea></div>
 
     {% if user.is_authenticated%}
   <hr>
-  <a class="btn btn-primary" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+        <button class="btn-hover-add" style="width: 40%;" onclick="location.href='{% url 'add_comment_to_post' pk=post.pk %}'"><span>Add comment</span></button>
     {% endif %}
   <hr>
   <h3> Comments: {{ post.comments.count }}</h3>
