@@ -1,16 +1,12 @@
 {% extends "blog/base.html" %}
-{% load crispy_forms_tags %}
+{% load staticfiles %}
 {% block content %}
-    <div class="content-section container my-5 py-5">
-        <form method="POST">
+        <div class="container my-5 py-5">
+        <form method="post" class="form-group">
             {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Blog Post</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Post</button>
-            </div>
+            {{ form.media }}
+            {{ form.as_p }}
+            <p><input type="submit" value="post"></p>
         </form>
-    </div>
-{% endblock content %}
+        </div>
+{% endblock %}

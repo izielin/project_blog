@@ -13,6 +13,13 @@ from .models import Post, FileUploadUrl
 from .filters import PostFilter
 from django.core.files.storage import FileSystemStorage
 from .forms import CommentForm
+from django.views import generic
+from . import forms
+from . import models
+try:
+    from django.urls import reverse
+except ImportError:  # Django < 2.0
+    from django.core.urlresolvers import reverse
 
 
 def about(request):
@@ -47,17 +54,48 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
-class PostDetailView(DetailView):
-    model = Post
+# class PostDetailView(DetailView):
+#     model = Post
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
-    fields = ['title', 'category', 'level', 'synopsis', 'content']
+# class PostCreateView(LoginRequiredMixin, CreateView):
+#     model = Post
+#     fields = ['title', 'category', 'level', 'synopsis', 'content']
+#
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         return super().form_valid(form)
+
+class MDEditorFormView(generic.FormView):
+    form_class = forms.MDEditorForm
+    template_name = 'blog/post_form.html'
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+        kwargs = {
+            'title': form.cleaned_data['title'],
+            'content': form.cleaned_data['content'],
+            'author': self.request.user
+        }
+        instance = models.Post.objects.create(**kwargs)
+        self.success_url = reverse('post-detail', kwargs={'pk': instance.id})
+        return super(MDEditorFormView, self).form_valid(form)
+
+
+class MDEditorModleForm(generic.CreateView):
+    form_class = forms.MDEditorModleForm
+    template_name = 'blog/post_form.html'
+
+    def get_success_url(self):
+        return reverse('blog')
+
+
+class ShowView(generic.DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+
+mdeditor_form_view = MDEditorFormView.as_view()
+mdeditor_model_form_view = MDEditorModleForm.as_view()
+show_view = ShowView.as_view()
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

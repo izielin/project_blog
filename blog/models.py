@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from mdeditor.fields import MDTextField
 
 
 class Post(models.Model):
@@ -25,10 +26,10 @@ class Post(models.Model):
     )
 
     title = models.CharField(max_length=100)
-    synopsis = models.TextField(max_length=200, default="")
+    synopsis = models.CharField(max_length=200)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     level = models.CharField(max_length=100, choices=LEVEL_CHOICES, default="")
-    content = models.TextField()
+    content = MDTextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
