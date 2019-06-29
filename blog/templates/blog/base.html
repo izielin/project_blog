@@ -32,9 +32,8 @@
           <li><a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a></li>
         <li><a class="nav-item nav-link" href="{% url 'blog-about' %}">Kursy</a></li>
         {% if user.is_authenticated%}
-            {% if perms.posts.add_post %}
-                <li><a class="nav-item nav-link" href="#">moderacja</a></li>
-{#                <li><a class="nav-item nav-link" href="{% url 'post-no-authorized' %}">moderacja</a></li>#}
+            {% if user.profile.moderator == True %}
+                <li><a class="nav-item nav-link" href="{% url 'post-no-authorized' %}">moderacja</a></li>
             {% endif %}
             <li><a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a></li>
             <li><a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a></li>

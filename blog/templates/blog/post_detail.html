@@ -21,13 +21,20 @@
 
 <div class="row mt-5 pt-5">
   <div class="col-xl-7 py-5">
-{% if object.author == user %}
+  {% if user.profile.moderator == True%}
+      <div class="row">
+    <button class="btn-hover-update" onclick="location.href='{% url 'm-post-update' object.id %}'"><span>Edit</span></button>
+      <button class="btn-hover-add" onclick="location.href='{% url 'post-upload' object.id %}'"><span>Upload</span></button>
+      <button class="btn-hover-delete" onclick="location.href='{% url 'post-delete' object.id %}'"><span>Delete</span></button>
+      </div>
+{% elif object.author == user %}
           <div class="row">
               <button class="btn-hover-update" onclick="location.href='{% url 'post-update' object.id %}'"><span>Edit</span></button>
               <button class="btn-hover-add" onclick="location.href='{% url 'post-upload' object.id %}'"><span>Upload</span></button>
               <button class="btn-hover-delete" onclick="location.href='{% url 'post-delete' object.id %}'"><span>Delete</span></button>
           </div>
-        {% endif %}
+
+{% endif %}
   <div id="content"><textarea>{{ object.content }}</textarea></div>
 
     {% if user.is_authenticated%}

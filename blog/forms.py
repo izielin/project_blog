@@ -1,12 +1,12 @@
 from __future__ import absolute_import
-
 from django import forms
-
 from mdeditor.fields import MDTextFormField
 from .models import Post, Comment
 
+
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
 LEVEL_CHOICES = Post.LEVEL_CHOICES
+
 
 class MDEditorForm(forms.Form):
     title = forms.CharField()

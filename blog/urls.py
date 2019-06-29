@@ -1,20 +1,21 @@
 from django.urls import path
 from .views import (
-    PostListView,
-    # PostDetailView,
     PostUpdateView,
+    MPostUpdateView,
     PostDeleteView,
-    DownloadDeleteView
+    DownloadDeleteView,
+    MDEditorFormView,
+    ShowView,
 )
 from . import views
 
 urlpatterns = [
     path('about/', views.about, name='blog-about'),
-    # path('about/', PostListView.as_view(), name='blog-about'),
-    path('model/', views.mdeditor_model_form_view, name='mdeditor-model-form'),
-    path('post/<int:pk>/', views.show_view, name='post-detail'),
-    path('post/new/', views.mdeditor_form_view, name='post-create'),
+    path('no-authorized/', views.posts_no_authorized, name='post-no-authorized'),
+    path('post/<int:pk>/', ShowView.as_view(), name='post-detail'),
+    path('post/new/', MDEditorFormView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/m-update/', MPostUpdateView.as_view(), name='m-post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('', views.home, name='blog-home'),
     path('post/<int:pk>/upload/', views.simple_upload, name='post-upload'),

@@ -1,5 +1,4 @@
 {% extends "blog/base.html" %}
-{% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section  container py-5 my-5">
       <div class="media">
@@ -22,8 +21,8 @@
           {% csrf_token %}
           <fieldset class="form-group">
               <legend class="border-bottom mb-4">Profile Info</legend>
-              {{ u_form|crispy }}
-              {{ p_form|crispy }}
+              {{ u_form}}
+              {{ p_form }}
           </fieldset>
           <div class="form-group">
               <button class="btn btn-dark" type="submit">Update</button>
