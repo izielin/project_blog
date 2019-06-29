@@ -130,8 +130,8 @@
                     "{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
           <div class="meta">
             <div><span ><i class="fas fa-calendar-alt"></i></span> {{ post.date_posted|date:"F d, Y" }}</div>
-              <a class="mr-2 heading article-title" href="{% url 'user-posts' post.author.username%}">
-                  {{ post.author.get_full_name }}</a>
+              <p class="mr-2 heading article-title">
+                  {{ post.author.get_full_name }}</p>
           </div>
         </div>
       </div>

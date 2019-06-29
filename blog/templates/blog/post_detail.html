@@ -1,8 +1,11 @@
 {% extends "blog/base.html" %}
 {% load static %}
+{% load ratings %}
 {% block content %}
     <link href="{% static 'mdeditor/css/editormd.min.css' %}" rel="stylesheet">
   <link href="{% static 'mdeditor/css/editormd.preview.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 <section class="ecg-section ecg-heading">
     <div class="container">
      <div class="row">
@@ -26,12 +29,6 @@
           </div>
         {% endif %}
   <div id="content"><textarea>{{ object.content }}</textarea></div>
-
-
-
-
-
-
 
     {% if user.is_authenticated%}
   <hr>
@@ -63,6 +60,8 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
         <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a></div>
       <div class="mt-5 mb-3"><h3 class="sidebar-heading">Paragraph</h3>
+        {% ratings object %}
+          <hr class="bg-white">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p></div>
     </div>
 
@@ -98,6 +97,6 @@
   })
 
 </script>
-{% endblock content %}
+{% endblock %}
 
 

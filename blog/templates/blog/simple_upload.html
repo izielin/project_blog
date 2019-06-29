@@ -6,10 +6,8 @@
   <div class="container content-section my-5 py-5">
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="myfile">
-    <button type="submit">Upload</button>
-  </form>
-
-  <a class="text-dark" href="{% url 'blog-home' %}">Return to home</a>
-  </div>
+    <input type="file" name="myfile">Wybierz plik</input>
+      <br>
+    <button class="btn btn-dark my-4" type="submit">Upload</button>
+  </form></div>
 {% endblock %}

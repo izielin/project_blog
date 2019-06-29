@@ -2,11 +2,11 @@
 {% load staticfiles %}
 {% block content %}
         <div class="container my-5 py-5">
-        <form method="post" class="form-group">
+        <form method="post">
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}
-            <p><input type="submit" value="post"></p>
+            <button class="btn btn-dark" type="submit">Dodaj</button>
         </form>
         </div>
 {% endblock %}
