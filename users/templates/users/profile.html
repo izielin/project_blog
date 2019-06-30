@@ -1,6 +1,11 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <div class="content-section  container py-5 my-5">
+            <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    </nav>
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
         <div class="media-body">

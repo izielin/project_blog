@@ -2,9 +2,9 @@
 {% load ratings %}
 {% load static %}
 {% block content %}
-    {% load widget_tweaks %}
-        <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
-        <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+{% load widget_tweaks %}
+<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
      <section class="ecg-section ecg-heading mb-5 pb-5">
       <div class="container">
        <div class="row">
@@ -16,6 +16,11 @@
          </div>
       </div>
     </section>
+      <nav class="navbar navbar-light bg-white container justify-content-end d-xl-none my-3">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+       </nav>
     <div class="container">
     <div class="row">
         <div class="col-8">
@@ -26,7 +31,7 @@
                       <div class="card">
                         <h4 class="card-title text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
                           <hr>
-                            <div class="card-body col-12">
+                            <div class=" col-12">
                                 {% ratings post %}
                                 <small class="mr-2">
                                   {{ post.author.get_full_name }}</small><br>

@@ -9,7 +9,7 @@
 html {
 font-family: sans-serif;
 line-height: 1.15;
-background-color: #f2f2f2;
+background-color: white;
 }
 
 body {
@@ -94,55 +94,65 @@ content: "\f002";
 
 /* navbar */
 #aside {
-padding-top: 3em;
-padding-bottom: 40px;
-padding-left: 3em;
-padding-right: 3em;
-width: 300px;
-position: fixed;
-bottom: 0;
-top: 0;
-left: 0;
-right: 0;
-overflow-y: hidden;
-z-index: 1001;
-background: rgb(36, 36, 35);
-overflow: auto;
+  padding-top: 3em;
+  padding-bottom: 40px;
+  padding-left: 3em;
+  padding-right: 3em;
+  width: 18%;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow-y: hidden;
+  z-index: 1001;
+  background: var(--dark);
 }
 
+  @media (min-width: 992px) {
+    #aside {
+      width: 18%; }
+    }
+
+@media (max-width: 500px) {
+    #aside {
+      width: 40%; }
+    }
+
 #aside #logo {
-margin-bottom: 1.5em;
-display: block;
-width: 100%;
-font-weight: 700;
-font-size: 24px;
+  margin-bottom: 1.5em;
+  display: block;
+  width: 100%;
+  font-weight: 700;
+  font-size: 24px;
 }
 
 #aside #logo span.img {
-display: block;
-width: 150px;
-height: 150px;
-margin: 0 auto;
-margin-bottom: 10px;
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }
 
 #aside #logo a {
-display: inline-block;
-text-align: center;
-color: var(--primary);
-}
+  display: inline-block;
+  text-align: center;
+  color: var(--light);
+  text-decoration: none;
+ }
 
 #aside #main-menu ul {
-margin: 0;
-padding: 0;
-}
+  margin: 0;
+  padding: 0;
+ }
 
 #aside #main-menu ul li {
-margin: 0 0 15px 0;
-padding: 0;
-list-style: none;
-font-size: 16px;
-font-weight: 700;
+  margin: 0 0 15px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 #aside #main-menu ul li a {
@@ -176,7 +186,7 @@ font-weight: 700;
 
 #aside #main-menu ul li a:hover {
   text-decoration: none;
-  color: var(--main);
+  color: #ccb78f;
 }
 
 #aside #main-menu ul li a:hover:after {
@@ -200,7 +210,6 @@ font-weight: 700;
   -o-transform: scaleX(1);
   transform: scaleX(1);
 }
-
 
 /*main page*/
 /* carousel*/
@@ -739,15 +748,15 @@ textarea {
 }
 
 .btn-hover-update:after{
-  background: var(--main);
+  background: rgba(58, 83, 155, 1);
 }
 
 .btn-hover-add:after {
-  background: green;
+  background: rgba(30, 130, 76, 1);
 }
 
 .btn-hover-delete:after{
-  background: red;
+  background: rgba(150, 40, 27, 1);
 }
 
 .btn-hover-update:hover:after, .btn-hover-add:hover:after, .btn-hover-delete:hover:after  {
