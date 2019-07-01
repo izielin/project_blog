@@ -1,11 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <div class="content-section container my-5 py-5">
-            <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+
+        <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-    </nav>
+        </nav>
+
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -16,10 +18,12 @@
                 <button class="btn btn-dark" type="submit">Login</button>
             </div>
         </form>
+
         <div class="border-top pt-3">
             <small class="text-muted">
-                Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+                Need An Account? <a class="ml-2 text-dark" href="{% url 'register' %}">Sign Up Now</a>
             </small>
         </div>
+
     </div>
 {% endblock content %}

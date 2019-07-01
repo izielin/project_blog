@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+    <section class="ecg-section ecg-heading">
+    <div class="container">
+     <div class="row">
+        <div class="col-md-8">
+          <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span>Dodaj Komentarz</span></p>
+          <h1 class="bread">Dodaj Komentarz</h1>
+        </div>
+     </div>
+  </div>
+</section>
+
+    <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+
+    <div class="container my-5 py-5">
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ form }}
+            <button class="btn-hover-add" type="submit"><span>Opublikuj</span></button>
+        </form>
+    </div>
+{% endblock %}

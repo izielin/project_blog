@@ -1,17 +1,20 @@
 {% extends "blog/base.html" %}
 {% load staticfiles %}
 {% block content %}
-      <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-       </nav>
-        <div class="container my-5 py-5">
+
+  <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+   </nav>
+
+    <div class="container my-5 py-5">
         <form method="post">
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}
             <button class="btn-hover-update" type="submit"><span>Dodaj</span></button>
         </form>
-        </div>
+    </div>
+
 {% endblock %}

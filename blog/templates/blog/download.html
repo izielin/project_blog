@@ -1,22 +1,23 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <section class="ecg-section ecg-heading">
-    <div class="container">
-     <div class="row">
-        <div class="col-md-8">
-          <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span> <span>Download</span></p>
-          <h1 class="bread">Download</h1>
-        </div>
-     </div>
-  </div>
-</section>
-            <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-    </nav>
-    <div class="row ecg-section container my-5 mx-auto">
+        <div class="container">
+         <div class="row">
+            <div class="col-md-8">
+              <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span> <span>Download</span></p>
+              <h1 class="bread">Download</h1>
+            </div>
+         </div>
+      </div>
+    </section>
 
+    <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+
+    <div class="row ecg-section container my-5 mx-auto">
         {% for item in download_list %}
             <div class="col-md-4 d-flex align-self-stretch">
               <div class="media block-6 materials py-4 d-block">
@@ -31,11 +32,9 @@
                 </div>
               </div>
             </div>
-            {% empty %}
-        <p>Nie ma żadnych plików do pobrania</p>
+        {% empty %}
+            <p>Nie ma żadnych plików do pobrania</p>
         {% endfor %}
-          </div>
-
-
+    </div>
 
 {% endblock content %}

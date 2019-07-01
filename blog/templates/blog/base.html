@@ -29,18 +29,18 @@
     </h1>
     <nav id="main-menu" role="navigation">
       <ul>
-          <li><a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a></li>
-        <li><a class="nav-item nav-link" href="{% url 'blog-about' %}">Kursy</a></li>
+          <li><a class="nav-item nav-link" href="{% url 'blog-home' %}">Strona Głowna</a></li>
+        <li><a class="nav-item nav-link" href="{% url 'blog-about' %}">Lista Kursów</a></li>
         {% if user.is_authenticated%}
             {% if user.profile.moderator == True %}
-                <li><a class="nav-item nav-link" href="{% url 'post-no-authorized' %}">moderacja</a></li>
+                <li><a class="nav-item nav-link" href="{% url 'post-no-authorized' %}">Akceptacja</a></li>
             {% endif %}
-            <li><a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a></li>
-            <li><a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a></li>
-            <li><a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a></li>
+            <li><a class="nav-item nav-link" href="{% url 'post-create' %}">Nowy Kurs</a></li>
+            <li><a class="nav-item nav-link" href="{% url 'profile' %}">Twój Profil</a></li>
+            <li><a class="nav-item nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
           {% else %}
-            <li><a class="nav-item nav-link" href="{% url 'login' %}">Login</a></li>
-            <li><a class="nav-item nav-link" href="{% url 'register' %}">Register</a></li>
+            <li><a class="nav-item nav-link" href="{% url 'login' %}">Zaloguj</a></li>
+            <li><a class="nav-item nav-link" href="{% url 'register' %}">Rejestracja</a></li>
         {% endif %}
       </ul>
     </nav>

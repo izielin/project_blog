@@ -2,25 +2,29 @@
 {% load static %}
 {% load ratings %}
 {% block content %}
+
     <link href="{% static 'mdeditor/css/editormd.min.css' %}" rel="stylesheet">
-  <link href="{% static 'mdeditor/css/editormd.preview.css' %}" rel="stylesheet">
+    <link href="{% static 'mdeditor/css/editormd.preview.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-<section class="ecg-section ecg-heading">
-    <div class="container">
-     <div class="row">
-        <div class="col-md-8">
-          <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span> <span>{{ object.title }}</span></p>
-          <h1 class="bread">{{ object.title }}</h1>
-        </div>
-     </div>
-  </div>
-</section>
+
+    <section class="ecg-section ecg-heading">
+        <div class="container">
+         <div class="row">
+            <div class="col-md-8">
+              <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span> <span>{{ object.title }}</span></p>
+              <h1 class="bread">{{ object.title }}</h1>
+            </div>
+         </div>
+      </div>
+    </section>
+
     <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </nav>
+
     <div class="container">
         <!-- main content -->
         <div class="row mt-5 pt-5">
@@ -58,35 +62,33 @@
             </div>
           </article>
         {% endfor %}
-
-          </div>
-
-          <div class="col-xl-4 p-xl-0">
-
-            <div class="sidebar-box p-3">
-              <div class="mt-3 mb-5"><h3 class="sidebar-heading">Download materials</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
-                <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a></div>
-              <div class="mt-5 mb-3"><h3 class="sidebar-heading">Paragraph</h3>
-                {% ratings object %}
-                  <hr class="bg-white">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p></div>
-            </div>
-
-          </div>
-        </div>
-<!-- .main content -->
     </div>
 
-  <script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/lib/raphael.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/lib/underscore.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/lib/sequence-diagram.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
-  <script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
+    <div class="col-xl-4 p-xl-0">
+        <div class="sidebar-box p-3">
+          <div class="mt-3 mb-5"><h3 class="sidebar-heading">Download materials</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+            <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a></div>
+          <div class="mt-5 mb-3"><h3 class="sidebar-heading">Paragraph</h3>
+            {% ratings object %}
+              <hr class="bg-white">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p></div>
+        </div>
+    </div>
+
+</div>
+<!-- .main content -->
+</div>
+
+<script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/raphael.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/underscore.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/sequence-diagram.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
 <script>
   $(function () {
       // js 解析markdown

@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic import (
     UpdateView,
@@ -21,7 +20,7 @@ except ImportError:
 
 
 def about(request):
-    post_list = Post.objects.all()
+    post_list = Post.objects.all().order_by('-date_posted')
     post_filter = PostFilter(request.GET, queryset=post_list)
     return render(request, 'blog/about.html', {'filter': post_filter})
 
@@ -147,11 +146,11 @@ def add_comment_to_post(request, pk):
             return redirect('post-detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+    return render(request, 'blog/addComment.html', {'form': form})
 
 
 def posts_no_authorized(request):
     context = {
-        'posts': Post.objects.filter(authorized=False)
+        'posts': Post.objects.filter(authorized=False).order_by('-date_posted')
     }
     return render(request, 'blog/no_authorized.html', context)
