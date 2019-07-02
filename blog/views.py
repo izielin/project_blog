@@ -27,7 +27,7 @@ def about(request):
 
 def home(request):
     context = {
-        'posts': Post.objects.all().order_by('-id')[:3]
+        'posts': Post.objects.filter(authorized=True).order_by('-id')[:4]
     }
     return render(request, 'blog/home.html', context)
 

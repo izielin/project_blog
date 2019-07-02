@@ -40,6 +40,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     authorized = models.BooleanField(default=False)
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default="Not-Approved-Yet")
+    numbers_of_entries = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
