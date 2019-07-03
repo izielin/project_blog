@@ -6,12 +6,13 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post, FileUploadUrl
-from .filters import PostFilter
 from django.core.files.storage import FileSystemStorage
 from .forms import CommentForm
 from django.views import generic
 from . import forms
 from . import models
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 try:
     from django.urls import reverse
@@ -20,9 +21,27 @@ except ImportError:
 
 
 def about(request):
-    post_list = Post.objects.all().order_by('-date_posted')
-    post_filter = PostFilter(request.GET, queryset=post_list)
-    return render(request, 'blog/about.html', {'filter': post_filter})
+    posts_list = Post.objects.filter(authorized=True).order_by('-date_posted')
+    query = request.GET.get('q')
+    if query:
+        posts_list = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) |
+            Q(author__first_name__icontains=query) | Q(category__icontains=query)
+        ).filter(authorized=True).distinct()
+    paginator = Paginator(posts_list, 6)  # 6 posts per page
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'posts': posts
+    }
+    return render(request, "blog/about.html", context)
 
 
 def home(request):

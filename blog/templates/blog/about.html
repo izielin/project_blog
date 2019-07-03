@@ -3,6 +3,9 @@
 {% load static %}
 {% block content %}
 {% load widget_tweaks %}
+    <style>
+    a{color: #0a001f;}
+    </style>
 <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
 <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
      <section class="ecg-section ecg-heading mb-5 pb-5">
@@ -25,14 +28,13 @@
     <div class="row">
         <div class="col-8">
         <div class="row">
-            {% for post in filter.qs %}
-                {% if post.authorized == True %}
+            {% for post in posts %}
                     <div class="col-12 my-5">
 
                       <div class="card">
                       <div class="row">
                          <div class="col-12"><h4 class="card-title text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>                           <hr class="mb-5">
-</div>
+                      </div>
                           <div class="col-4">
                           <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -71,7 +73,6 @@
                       </div>
                       <div class="card-shadow"></div>
                     </div>
-            {%  endif %}
         {% endfor %}
         </div>
 
@@ -79,40 +80,52 @@
 
         <div class="col-4">
         <div class="sidebar-box">
-           <form method="get">
-            <div class="well">
-              <h4 class="sidebar-heading">Filter</h4>
-              <div class="row">
-                <div class="form-group col-12">
-                  {{ filter.form.title.label_tag }}
-                  {% render_field filter.form.title class="form-control" %}
+            <form method="GET" >
+                <div class="input-field">
+                    <div class="row">
+                        <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Wyszukaj">
+                        <button class="btn btn-light" type="submit" name="action"><i class="fas fa-search"></i></button>
+                    </div>
+
+
                 </div>
-                  <div class="form-group col-12">
-                  {{ filter.form.level.label_tag }}
-                  {% render_field filter.form.level class="form-control" %}
-                </div>
-                <div class="form-group col-12">
-                  {{ filter.form.category.label_tag }}
-                  {% render_field filter.form.category class="form-control" %}
-                </div>
-                <div class="form-group col-12">
-                  {{ filter.form.author.label_tag }}
-                  {% render_field filter.form.author class="form-control" %}
-                </div>
-              </div>
-              <button type="submit" class="btn btn-light">
-                <span class="glyphicon glyphicon-search"></span> Search
-              </button>
-            </div>
-          </form>
+            </form>
         </div>
 
         <div class="sidebar-box ">
           <h3 class="sidebar-heading">Paragraph</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
         </div>
+
         </div>
     </div>
+    {% if posts.has_other_pages %}
+
+        {% if posts.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page=
+                    {{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a>
+        {% endif %}
+
+
+        {% for num in posts.paginator.page_range %}
+            {% if posts.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4"
+                   href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+
+        {% if posts.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page=
+                {{ posts.next_page_number }}">Next</a>
+            <a class="btn btn-outline-info mb-4" href="?page=
+                {{ posts.paginator.num_pages }}">Last</a>
+        {% endif %}
+{% endif %}
+
  </div>
 
 {% endblock content %}
