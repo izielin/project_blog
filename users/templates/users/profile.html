@@ -14,8 +14,6 @@
                 <div class="row">
                     <div class="col-11"><h2 class="account-heading">
                         {{ user.get_full_name }}</h2></div>
-                    <div class="col-1"><a class="text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas
-                    fa-user-edit"></i></a></div>
                 </div>
                     <h6 class="text-muted">{{ user.username }}</h6>
                     <hr> <br>
@@ -24,18 +22,18 @@
         </div>
     </div>
 
-    <div class="content-section mt-4 collapse  container py-5 my-5" id="collapseExample">
-    <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <fieldset class="form-group">
-              <legend class="border-bottom mb-4">Profile Info</legend>
-              {{ u_form}}
-              {{ p_form }}
-          </fieldset>
-          <div class="form-group">
-              <button class="btn btn-dark" type="submit">Update</button>
-          </div>
-    </form>
-
-    </div>
+<div class="content-section bg-dark container py-5 my-5">
+    {%  for post in posts %}
+              <div class="course-block mb-4 d-flex">
+                <div class="text">
+                  <h3><a class="article-title" href=
+                            "{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+                  <div class="meta">
+                    <div><span ><i class="fas fa-calendar-alt"></i></span> {{ post.date_posted|date:"F d, Y" }}</div>
+                  </div>
+                </div>
+              </div>
+              <hr class="bg-secondary">
+          {% endfor %}
+</div>
 {% endblock content %}

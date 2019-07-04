@@ -32,10 +32,12 @@
           <li><a class="nav-item nav-link" href="{% url 'blog-home' %}">Strona Głowna</a></li>
         <li><a class="nav-item nav-link" href="{% url 'blog-about' %}">Lista Kursów</a></li>
         {% if user.is_authenticated%}
+            <li><a class="nav-item nav-link" href="{% url 'post-create' %}">Nowy Kurs</a></li><br>
+            <hr class="w-75 bg-light">
             {% if user.profile.moderator == True %}
                 <li><a class="nav-item nav-link" href="{% url 'post-no-authorized' %}">Akceptacja</a></li>
             {% endif %}
-            <li><a class="nav-item nav-link" href="{% url 'post-create' %}">Nowy Kurs</a></li>
+           <hr class="w-75 bg-light"><br><br><br>
             <li><a class="nav-item nav-link" href="{% url 'profile' %}">Twój Profil</a></li>
             <li><a class="nav-item nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
           {% else %}
@@ -50,15 +52,17 @@
   </div>
   <div class="col-xl-10 col-12 p-0">
         <!-- container -->
-
-    {% if messages %}
+    <div class="container">
+            {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
                 {{ message }}
             </div>
         {% endfor %}
     {% endif %}
-    {% block content %}{% endblock %}
+    </div>
+      {% block content %}{% endblock %}
+
 <!-- .container -->
 
 
@@ -79,12 +83,12 @@
                   <h2>Przydatne linki</h2>
                   <ul>
                     <a href="http://lo1.sandomierz.pl/"><p>Strona Szkoły <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
-                <hr>
-                <a href="index.html"><p>Poczytaj <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
-                <hr>
-                <a href="materialy.html"><p>Materiały <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
-                <hr>
-                <a href="linki.html"><p>Linki & Narzędzia <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="index.html"><p>Poczytaj <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="materialy.html"><p>Materiały <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="linki.html"><p>Linki & Narzędzia <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
                   </ul>
                 </div>
               </div>
@@ -93,12 +97,12 @@
                   <h2>Przydatne linki</h2>
                   <ul>
                     <a href="http://lo1.sandomierz.pl/"><p>Strona Szkoły <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
-                <hr>
-                <a href="index.html"><p>Poczytaj <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
-                <hr>
-                <a href="materialy.html"><p>Materiały <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
-                <hr>
-                <a href="linki.html"><p>Linki & Narzędzia <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="index.html"><p>Poczytaj <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="materialy.html"><p>Materiały <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="linki.html"><p>Linki & Narzędzia <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
                   </ul>
                 </div>
               </div>

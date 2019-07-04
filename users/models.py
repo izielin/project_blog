@@ -9,7 +9,7 @@ class Profile(models.Model):
     moderator = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return '{self.user.username} Profile'
 
     def save(self):
         super().save()

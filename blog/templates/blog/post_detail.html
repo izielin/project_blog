@@ -13,7 +13,7 @@
          <div class="row">
             <div class="col-md-8">
               <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span> <span>{{ object.title }}</span></p>
-              <h1 class="bread">{{ object.title }}</h1>
+              <h1 class="bread">{{ object.title }} </h1>
             </div>
          </div>
       </div>
@@ -35,20 +35,27 @@
             <button class="btn-hover-add" onclick="location.href='{% url 'post-upload' object.id %}'"><span>Upload</span></button>
             <button class="btn-hover-delete" onclick="location.href='{% url 'post-delete' object.id %}'"><span>Delete</span></button>
           </div>
-        {% elif object.author == user %}
-          <div class="row">
+              <hr class="bd-dark mt-4 mb-4">
+          {% elif object.author == user %}
+          <div class="row ">
               <button class="btn-hover-update" onclick="location.href='{% url 'post-update' object.id %}'"><span>Edit</span></button>
               <button class="btn-hover-add" onclick="location.href='{% url 'post-upload' object.id %}'"><span>Upload</span></button>
               <button class="btn-hover-delete" onclick="location.href='{% url 'post-delete' object.id %}'"><span>Delete</span></button>
           </div>
+              <hr class="bd-dark mt-4 mb-4">
 
         {% endif %}
-          <div id="content"><textarea>{{ object.content }}</textarea></div>
-            {% if user.is_authenticated%}
+
+          <div id="content">
+              <textarea>{{ object.content }}</textarea>
+          </div>
+
+              {% if user.is_authenticated%}
              <hr>
               <button class="btn-hover-add" style="width: 40%;" onclick="location.href='{% url 'add_comment_to_post' pk=post.pk %}'"><span>Add comment</span></button>
             {% endif %}
           <hr>
+
           <h3> Comments: {{ post.comments.count }}</h3>
         {% for comment in post.comments.all %}
             <article class="media content-section">

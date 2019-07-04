@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from mdeditor.fields import MDTextField
 from star_ratings.models import Rating
+from django.contrib.contenttypes.fields import GenericRelation
 
+from django.contrib.contenttypes.models import ContentType
 
 class Post(models.Model):
     CATEGORY_CHOICES = (
@@ -12,12 +14,10 @@ class Post(models.Model):
         ('Python', 'Python'),
         ('C++', 'C++'),
         ('Graphics', 'Graphics'),
-        ('Word', 'Word'),
-        ('Excel', 'Excel'),
+        ('Text Editor', 'TextEditor'),
+        ('Spreadsheet', 'Spreadsheet'),
         ('DataBase', 'DataBase'),
-        ('Html & css', 'Html&css'),
-        ('JavaScript', 'JavaScript'),
-        ('Java', 'Java'),
+        ('Web Design', 'WebDesign'),
     )
 
     LEVEL_CHOICES = (
@@ -32,7 +32,7 @@ class Post(models.Model):
     )
 
     title = models.CharField(max_length=50)
-    synopsis = models.CharField(max_length=200)
+    synopsis = models.CharField(max_length=500)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     level = models.CharField(max_length=100, choices=LEVEL_CHOICES)
     content = MDTextField()
@@ -41,6 +41,7 @@ class Post(models.Model):
     authorized = models.BooleanField(default=False)
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default="Not-Approved-Yet")
     numbers_of_entries = models.IntegerField(default=0)
+    ratings = GenericRelation(Rating)
 
     def __str__(self):
         return self.title

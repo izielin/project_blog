@@ -11,8 +11,9 @@ from .forms import CommentForm
 from django.views import generic
 from . import forms
 from . import models
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponseRedirect
 
 try:
     from django.urls import reverse
@@ -21,6 +22,7 @@ except ImportError:
 
 
 def about(request):
+    category = Post.objects.filter(authorized=True).values('category').annotate(Count('category')).order_by('category')
     posts_list = Post.objects.filter(authorized=True).order_by('-date_posted')
     query = request.GET.get('q')
     if query:
@@ -39,14 +41,17 @@ def about(request):
         posts = paginator.page(paginator.num_pages)
 
     context = {
-        'posts': posts
+        'posts': posts,
+        'most_popular': Post.objects.filter(authorized=True).order_by('-numbers_of_entries')[:3],
+        'most_rated': Post.objects.filter(authorized=True).filter(ratings__isnull=False).order_by('-ratings__average')[:3],
+        'category': category,
     }
     return render(request, "blog/about.html", context)
 
 
 def home(request):
     context = {
-        'posts': Post.objects.filter(authorized=True).order_by('-id')[:4]
+        'posts': Post.objects.filter(authorized=True).order_by('-date_posted')[:4]
     }
     return render(request, 'blog/home.html', context)
 
@@ -72,6 +77,12 @@ class MDEditorFormView(generic.FormView):
 class ShowView(generic.DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object.numbers_of_entries = self.object.numbers_of_entries + 1
+        self.object.save()
+        return context
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -114,7 +125,7 @@ class MPostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    success_url = '/'
+    success_url = '/about'
 
     def test_func(self):
         post = self.get_object()
@@ -134,7 +145,10 @@ def download(request, pk):
 
 class DownloadDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = FileUploadUrl
-    success_url = '/'
+
+    def get_success_url(self):
+        id = self.object.postId
+        return reverse('post-download', kwargs={'pk': id})
 
     def test_func(self):
         return True
@@ -148,8 +162,8 @@ def simple_upload(request, pk):
         uploaded_file_url = fs.url(filename)
         url = FileUploadUrl(fileName=myfile, url=uploaded_file_url, postId=pk)
         url.save()
-        messages.success(request, f'Success! You can add another file!')
-        return render(request, 'blog/simple_upload.html')
+        messages.success(request, 'Success! You can add another file!')
+        return HttpResponseRedirect(reverse('post-detail', kwargs={'pk': pk}))
     return render(request, 'blog/simple_upload.html')
 
 
