@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from django import forms
 from mdeditor.fields import MDTextFormField
-from .models import Post, Comment
+from .models import Post, Comment, Document
 
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
@@ -27,3 +27,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('text',)
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('name', 'document', )

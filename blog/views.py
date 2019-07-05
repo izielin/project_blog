@@ -1,13 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib import messages
 from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post, FileUploadUrl
-from django.core.files.storage import FileSystemStorage
-from .forms import CommentForm
+from .models import Post, Document
+from .forms import CommentForm, DocumentForm
 from django.views import generic
 from . import forms
 from . import models
@@ -87,38 +85,23 @@ class ShowView(generic.DetailView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-
-    # def pattern(self):
-    #     post = self.get_object()
-    #     if self.request.user == post.author:
-    #         fields = ['title', 'synopsis', 'category', 'level', 'content']
-    #     else:
-    #         fields = ['title', 'synopsis', 'category', 'level', 'authorized', 'content', 'status']
-    #     return fields
-    # fields = pattern()
     fields = ['title', 'synopsis', 'category', 'level', 'content']
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.status = 'Approved'
+        form.instance.author = form.instance.author
         return super().form_valid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.profile.moderator == True:
+            self.fields = ['title', 'synopsis', 'category', 'level', 'authorized', 'content', 'status']
+        else:
+            self.fields = ['title', 'synopsis', 'category', 'level', 'content']
+        return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
-
-
-class MPostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
-    fields = ['title', 'synopsis', 'category', 'level', 'status', 'authorized', 'content']
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def test_func(self):
-        if self.request.user.profile.moderator == True:
+        if self.request.user == post.author or self.request.user.profile.moderator == True:
             return True
         return False
 
@@ -136,15 +119,15 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def download(request, pk):
     context = {
-        'download_list': FileUploadUrl.objects.filter(postId=pk)
+        'download_list': Document.objects.filter(postId=pk),
+        'post': Post.objects.filter(id=pk)
     }
 
-    post = Post.objects.filter(id=pk)
-    return render(request, 'blog/download.html', context, post)
+    return render(request, 'blog/download.html', context)
 
 
 class DownloadDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = FileUploadUrl
+    model = Document
 
     def get_success_url(self):
         id = self.object.postId
@@ -152,19 +135,6 @@ class DownloadDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return True
-
-
-def simple_upload(request, pk):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_url = fs.url(filename)
-        url = FileUploadUrl(fileName=myfile, url=uploaded_file_url, postId=pk)
-        url.save()
-        messages.success(request, 'Success! You can add another file!')
-        return HttpResponseRedirect(reverse('post-detail', kwargs={'pk': pk}))
-    return render(request, 'blog/simple_upload.html')
 
 
 def add_comment_to_post(request, pk):
@@ -187,3 +157,15 @@ def posts_no_authorized(request):
         'posts': Post.objects.filter(authorized=False).order_by('-date_posted')
     }
     return render(request, 'blog/no_authorized.html', context)
+
+
+def model_form_upload(request, pk):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.postId = pk
+            form.save()
+            return HttpResponseRedirect(reverse('post-detail', kwargs={'pk': pk}))
+    else:
+        form = DocumentForm()
+    return render(request, 'blog/upload.html', {'form': form})

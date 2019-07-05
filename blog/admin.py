@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, FileUploadUrl, Comment
+from .models import Post, Comment
 from django.db import models
 
 # Register your models here.
@@ -15,5 +15,5 @@ class ExampleModelAdmin(admin.ModelAdmin):
 
 admin.site.register(demo_models.Post, ExampleModelAdmin)
 
-admin.site.register(FileUploadUrl)
+# admin.site.register(FileUploadUrl)
 admin.site.register(Comment)

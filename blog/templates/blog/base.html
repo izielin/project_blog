@@ -33,11 +33,11 @@
         <li><a class="nav-item nav-link" href="{% url 'blog-about' %}">Lista Kursów</a></li>
         {% if user.is_authenticated%}
             <li><a class="nav-item nav-link" href="{% url 'post-create' %}">Nowy Kurs</a></li><br>
-            <hr class="w-75 bg-light">
             {% if user.profile.moderator == True %}
+                <hr class="w-75 bg-light">
                 <li><a class="nav-item nav-link" href="{% url 'post-no-authorized' %}">Akceptacja</a></li>
+                <hr class="w-75 bg-light"><br><br><br>
             {% endif %}
-           <hr class="w-75 bg-light"><br><br><br>
             <li><a class="nav-item nav-link" href="{% url 'profile' %}">Twój Profil</a></li>
             <li><a class="nav-item nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
           {% else %}

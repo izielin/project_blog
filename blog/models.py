@@ -5,8 +5,8 @@ from django.urls import reverse
 from mdeditor.fields import MDTextField
 from star_ratings.models import Rating
 from django.contrib.contenttypes.fields import GenericRelation
-
 from django.contrib.contenttypes.models import ContentType
+
 
 class Post(models.Model):
     CATEGORY_CHOICES = (
@@ -27,11 +27,12 @@ class Post(models.Model):
     )
 
     STATUS_CHOICES = (
-        ('Work-In-Progress', 'Work-In-Progress'),
-        ('Not-Approved-Yet', 'Not-Approved-Yet'),
+        ('Work In Progress', 'Work-In-Progress'),
+        ('Not Approved Yet', 'Not-Approved-Yet'),
+        ('Approved', 'Approved'),
     )
 
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, unique=True)
     synopsis = models.CharField(max_length=500)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     level = models.CharField(max_length=100, choices=LEVEL_CHOICES)
@@ -63,9 +64,10 @@ class Comment(models.Model):
         return self.text
 
 
-class FileUploadUrl(models.Model):
-    fileName = models.CharField(max_length=255, default="")
-    url = models.CharField(max_length=255)
+class Document(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    document = models.FileField(upload_to='documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
     postId = models.IntegerField()
 
     def get_absolute_url(self):

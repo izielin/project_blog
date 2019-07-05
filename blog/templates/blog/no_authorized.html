@@ -21,7 +21,7 @@
             <tbody >
                 {% for post in posts %}
                 <tr>
-                    <td><a class="article-title" href="{% url 'm-post-update' post.id %}">{{ post.title }}</a></td>
+                    <td><a class="article-title" href="{% url 'post-update' post.id %}">{{ post.title }}</a></td>
                     <td>{{post.author.get_full_name }}</td>
                     <td>{{post.category}}</td>
                     <td>{{post.status}}</td>

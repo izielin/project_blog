@@ -10,12 +10,13 @@
               </button>
        </nav>
 
+
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="myfile">Wybierz plik</input>
-          <br>
-          <button class="btn-hover-add" type="submit"><span>Dodaj Plik</span></button>
+        {{ form.as_p }}
+        <button class="btn-hover-add" type="submit"><span>Dodaj Plik</span></button>
       </form>
+
 
   </div>
 {% endblock %}

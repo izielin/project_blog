@@ -1,7 +1,6 @@
 from django.urls import path
 from .views import (
     PostUpdateView,
-    MPostUpdateView,
     PostDeleteView,
     DownloadDeleteView,
     MDEditorFormView,
@@ -15,10 +14,9 @@ urlpatterns = [
     path('post/<int:pk>/', ShowView.as_view(), name='post-detail'),
     path('post/new/', MDEditorFormView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
-    path('post/<int:pk>/m-update/', MPostUpdateView.as_view(), name='m-post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('', views.home, name='blog-home'),
-    path('post/<int:pk>/upload/', views.simple_upload, name='post-upload'),
+    path('post/<int:pk>/upload/', views.model_form_upload, name='post-upload'),
     path('download/<int:pk>', DownloadDeleteView.as_view(), name='upload-delete'),
     path('post/<int:pk>/download/', views.download, name='post-download'),
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),

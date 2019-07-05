@@ -4,7 +4,13 @@
         <div class="container">
          <div class="row">
             <div class="col-md-8">
-              <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span> <span>Download</span></p>
+              <p class="breadcrumbs">
+                  <span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span>
+                  <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span>
+                  {% for item in post %}
+                  <span class="mr-2"><a href="{% url 'post-detail' item.id%}">{{ item.title }}</a></span>
+                  {% endfor %}
+                  <span>Download</span></p>
               <h1 class="bread">Download</h1>
             </div>
          </div>
@@ -27,8 +33,8 @@
                   </div>
                 </div>
                 <div class="media-body p-2 mt-2">
-                  <h3 class="heading mb-3"><a class="text-dark" href="{% url 'upload-delete' item.id %}">{{ item.fileName }}</a></h3>
-                  <a class=" btn icon-box" href="{{ item.url }}"><i class="fa fa-download"></i></a>
+                  <h3 class="heading mb-3"><a class="text-dark" href="{% url 'upload-delete' item.id %}">{{ item.name }}</a></h3>
+                  <a class=" btn icon-box" href="{{ item.document.url }}"><i class="fa fa-download"></i></a>
                 </div>
               </div>
             </div>
