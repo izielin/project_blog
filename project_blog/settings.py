@@ -155,7 +155,10 @@ MDEDITOR_CONFIGS = {
         'emoji': False,  # whether to open the expression function
         'tex': True,  # whether to open the tex chart function
         'flow_chart': True,  # whether to open the flow chart function
-        'sequence': True  # Whether to open the sequence diagram function
+        'sequence': True,  # Whether to open the sequence diagram function
+        'language': 'en'
     }
-
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
