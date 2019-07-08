@@ -4,7 +4,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post, Document
+from .models import Post, Document, Comment
 from .forms import CommentForm, DocumentForm
 from django.views import generic
 from . import forms
@@ -115,6 +115,18 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
+def model_form_upload(request, pk):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.postId = pk
+            form.save()
+            return HttpResponseRedirect(reverse('post-detail', kwargs={'pk': pk}))
+    else:
+        form = DocumentForm()
+    return render(request, 'blog/upload.html', {'form': form})
+
+
 def download(request, pk):
     context = {
         'download_list': Document.objects.filter(postId=pk),
@@ -150,20 +162,20 @@ def add_comment_to_post(request, pk):
     return render(request, 'blog/addComment.html', {'form': form})
 
 
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+
+    def get_success_url(self):
+        id = self.object.post.id
+        return reverse('post-detail', kwargs={'pk': id})
+
+    def test_func(self):
+        return True
+
+
 def posts_no_authorized(request):
     context = {
         'posts': Post.objects.filter(authorized=False).order_by('-date_posted')
     }
     return render(request, 'blog/no_authorized.html', context)
 
-
-def model_form_upload(request, pk):
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.instance.postId = pk
-            form.save()
-            return HttpResponseRedirect(reverse('post-detail', kwargs={'pk': pk}))
-    else:
-        form = DocumentForm()
-    return render(request, 'blog/upload.html', {'form': form})

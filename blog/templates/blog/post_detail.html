@@ -57,6 +57,9 @@
               <div class="article-metadata">
                 <a class="mr-2">{{ comment.author.get_full_name }}</a>
                   <small class="text-muted">{{ comment.created_date|date:"d.m.Y"  }}</small>
+                  {%if object.author == user or user.profile.moderator == True%}
+              <button class="btn justify-content-end" onclick="location.href='{% url 'comment-delete' comment.id %}'"><span><i class="fas fa-trash-alt text-danger d-flex " ></i></span></button>
+              {% endif %}
               </div>
               <p class="article-content">{{ comment.text|linebreaks }}</p>
             </div>
