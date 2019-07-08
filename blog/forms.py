@@ -12,7 +12,6 @@ class MDEditorForm(forms.Form):
     title = forms.CharField()
     synopsis = forms.CharField()
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, label="category", initial='', widget=forms.Select())
-    level = forms.ChoiceField(choices=LEVEL_CHOICES, label="level", initial='', widget=forms.Select())
     content = MDTextFormField()
 
 

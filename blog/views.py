@@ -20,13 +20,12 @@ except ImportError:
 
 
 def about(request):
-    category = Post.objects.filter(authorized=True).values('category').annotate(Count('category')).order_by('category')
     posts_list = Post.objects.filter(authorized=True).order_by('-date_posted')
     query = request.GET.get('q')
     if query:
         posts_list = Post.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query) |
-            Q(author__first_name__icontains=query) | Q(category__icontains=query)
+            Q(author__first_name__icontains=query) | Q(category__icontains=query) | Q(level__icontains=query)
         ).filter(authorized=True).distinct()
     paginator = Paginator(posts_list, 6)  # 6 posts per page
     page = request.GET.get('page')
@@ -42,7 +41,8 @@ def about(request):
         'posts': posts,
         'most_popular': Post.objects.filter(authorized=True).order_by('-numbers_of_entries')[:3],
         'most_rated': Post.objects.filter(authorized=True).filter(ratings__isnull=False).order_by('-ratings__average')[:3],
-        'category': category,
+        'category': Post.objects.filter(authorized=True).values('category').annotate(Count('category')).order_by('category'),
+        'level': Post.objects.filter(authorized=True).values('level').annotate(Count('level')).order_by('level'),
     }
     return render(request, "blog/about.html", context)
 
@@ -64,7 +64,6 @@ class MDEditorFormView(generic.FormView):
             'synopsis': form.cleaned_data['synopsis'],
             'content': form.cleaned_data['content'],
             'category': form.cleaned_data['category'],
-            'level': form.cleaned_data['level'],
             'author': self.request.user
         }
         instance = models.Post.objects.create(**kwargs)
@@ -85,7 +84,6 @@ class ShowView(generic.DetailView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'synopsis', 'category', 'level', 'content']
 
     def form_valid(self, form):
         form.instance.status = 'Approved'
@@ -96,7 +94,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user.profile.moderator == True:
             self.fields = ['title', 'synopsis', 'category', 'level', 'authorized', 'content', 'status']
         else:
-            self.fields = ['title', 'synopsis', 'category', 'level', 'content']
+            self.fields = ['title', 'synopsis', 'category', 'content']
         return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):

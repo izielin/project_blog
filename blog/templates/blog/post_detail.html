@@ -51,7 +51,7 @@
 
           <h3> Comments: {{ post.comments.count }}</h3>
         {% for comment in post.comments.all %}
-            <article class="media content-section">
+            <article class="media comment-section">
             <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
             <div class="media-body">
               <div class="article-metadata">

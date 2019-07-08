@@ -21,6 +21,7 @@ class Post(models.Model):
     )
 
     LEVEL_CHOICES = (
+        ('Unknown', 'Unknown'),
         ('Advanced', 'Advanced'),
         ('Intermediate', 'Intermediate'),
         ('Basic', 'Basic'),
@@ -33,9 +34,9 @@ class Post(models.Model):
     )
 
     title = models.CharField(max_length=50, unique=True)
-    synopsis = models.CharField(max_length=500)
+    synopsis = models.TextField(max_length=500)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
-    level = models.CharField(max_length=100, choices=LEVEL_CHOICES)
+    level = models.CharField(max_length=100, choices=LEVEL_CHOICES, default="Unknown")
     content = MDTextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)

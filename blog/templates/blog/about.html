@@ -64,11 +64,15 @@
                                 <i class="far fa-calendar-alt"></i><small class="text-muted">
                                     {{ post.date_posted|date:"F d, Y" }}</small>
                             </li>
-                            <li class="list-group-item">
+                              <li class="list-group-item">
+                                  <i class="fas fa-chart-line"></i><small class="text-muted">
+                                  Poziom: {{ post.level }}  </small>
+                              </li>
+                              <li class="list-group-item">
                                 <i class="far fa-eye"></i><small class="text-muted">
                                     Wejść: {{ post.numbers_of_entries }} </small>
                             </li>
-                            <li class="list-group-item">
+                              <li class="list-group-item">
                               <i class="far fa-comments"></i><small class="text-muted">
                                     Komentarzy: {{ post.comments.count }}  </small>
                             </li>
@@ -115,6 +119,16 @@
             {%  for cat in category%}
                 <form method="get">
                     <button type="submit" name="q" value="{{  cat.category }}" class="btn-sub d-flex justify-content-start"><span class="d-flex justify-content-start" style="width: 50%;">{{ cat.category }}</span><span class="d-flex justify-content-end" style="width: 50%;">({{ cat.category__count }})</span></button>
+                </form>
+                  <hr class="bg-light">
+            {% endfor %}
+        </div>
+
+        <div class="sidebar-box ">
+          <h3 class="sidebar-heading">Paragraph</h3>
+            {%  for lvl in level%}
+                <form method="get">
+                    <button type="submit" name="q" value="{{  lvl.level }}" class="btn-sub d-flex justify-content-start"><span class="d-flex justify-content-start" style="width: 50%;">{{ lvl.level }}</span><span class="d-flex justify-content-end" style="width: 50%;">({{ lvl.level__count }})</span></button>
                 </form>
                   <hr class="bg-light">
             {% endfor %}
