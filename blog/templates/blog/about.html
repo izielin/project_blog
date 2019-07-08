@@ -44,55 +44,54 @@
         <div class="col-12 col-lg-8">
         <div class="row">
             {% for post in posts %}
-                    <div class="col-12 my-5">
-                      <div class="card">
-                      <div class="row">
-                         <div class="col-12"><h4 class="card-title text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>                           <hr class="mb-5">
-                      </div>
-                          <div class="col-4">
-                          <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <i class="far fa-keyboard"></i><small class="text-muted">
-                                    {{ post.category }}</small>
-                                <br>
-                            </li>
-                            <li class="list-group-item">
-                                <i class="far fa-user"></i><small class="mr-2">
-                                  {{ post.author.get_full_name }}</small>
-                            </li>
-                            <li class="list-group-item">
-                                <i class="far fa-calendar-alt"></i><small class="text-muted">
-                                    {{ post.date_posted|date:"F d, Y" }}</small>
-                            </li>
-                              <li class="list-group-item">
-                                  <i class="fas fa-chart-line"></i><small class="text-muted">
-                                  Poziom: {{ post.level }}  </small>
-                              </li>
-                              <li class="list-group-item">
-                                <i class="far fa-eye"></i><small class="text-muted">
-                                    Wejść: {{ post.numbers_of_entries }} </small>
-                            </li>
-                              <li class="list-group-item">
-                              <i class="far fa-comments"></i><small class="text-muted">
-                                    Komentarzy: {{ post.comments.count }}  </small>
-                            </li>
-                          </ul>
-                          
-                        </div>
-                          <div class="col-8">
+                <div class="col-12 my-5">
+                  <div class="card-post">
+                  <div class="row">
+                     <div class="col-12"><h4 class="card-post-title text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>                           <hr class="mb-5">
+                  </div>
+                      <div class="col-4">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="far fa-keyboard"></i><small class="text-muted">
+                                {{ post.category }}</small>
+                            <br>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="far fa-user"></i><small class="text-muted">
+                              {{ post.author.get_full_name }}</small>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="far fa-calendar-alt"></i><small class="text-muted">
+                                {{ post.date_posted|date:"F d, Y" }}</small>
+                        </li>
+                          <li class="list-group-item">
+                              <i class="fas fa-chart-line"></i><small class="text-muted">
+                              Poziom: {{ post.level }}  </small>
+                          </li>
+                          <li class="list-group-item">
+                            <i class="far fa-eye"></i><small class="text-muted">
+                                Wejść: {{ post.numbers_of_entries }} </small>
+                        </li>
+                          <li class="list-group-item">
+                          <i class="far fa-comments"></i><small class="text-muted">
+                                Komentarzy: {{ post.comments.count }}  </small>
+                        </li>
+                      </ul>
 
-                              {% ratings post %}<br>
-                              <span class="card-description subtle mb-5">{{ post.synopsis }}</span>
-                              <hr>
-                          </div>
-                      </div>
-                          <div class="row d-flex justify-content-center">
-                                  <a class="btn icon-box-white card-read mt-5" href="{% url 'post-detail' post.id %}">Dalej</a>
-                          </div>
-
-                      </div>
-                      <div class="card-shadow"></div>
                     </div>
+                      <div class="col-8">
+
+                          {% ratings post %}<br>
+                          <span class="card-post-description subtle mb-5">{{ post.synopsis }}</span>
+                          <hr>
+                      </div>
+                  </div>
+                      <div class="row d-flex justify-content-center">
+                              <a class="btn icon-box-white card-read mt-5" href="{% url 'post-detail' post.id %}">Dalej</a>
+                      </div>
+
+                  </div>
+                </div>
         {% endfor %}
 
 

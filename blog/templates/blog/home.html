@@ -1,27 +1,115 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
+    <section class="home_banner_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5"></div>
+                <div class="col-lg-7">
+                    <div class="blog_text_slider owl-carousel">
+                    {% for post in posts %}
+                        <div class="item">
+                            <div class="blog_text">
+                                <div class="cat">
+                                    <span class="cat_btn mr-4"> {{ post.author.get_full_name }}</span>
+                                    <span><i class="fas fa-calendar-alt"></i> {{ post.date_posted|date:"d.m.Y" }}</span>
+                                </div>
+                                    <h3 class="my-4"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+                                <p>{{ post.synopsis }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 <div class="container my-3">
-
-
+      <nav class="navbar navbar-light bg-white container justify-content-end d-xl-none my-3">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+       </nav>
     <!-- -->
-	<section class="home-area section_gap">
+	<section class="home-area section_gap mt-5">
 		<div class="container">
 			<div class="row align-items-center justify-content-center">
 				<div class="col-lg-6">
 					<div class="home-area-left">
 						<div class="get-know">
-              <h3 class="text-muted">Witaj na</h3>
-							<h1>Ecg.Vot.PL</h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed eiusmod tempor incididunt labore dolore magna
-								aliqua enim minim veniam quis nostrud.</p>
+                          <div class="about-desc">
+                            <span class="heading-meta">Welcome &amp; Introduce</span>
+                            <h3>Hola! my name is Louie Jie!</h3>
+                            <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country.</p>
+                        </div>
 						</div>
 						<div class="author-lacture">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed eiusmod tempor incididunt labore dolore magna
-								aliqua enim minim veniam quis nostrud. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed eiusmod
-								tempor incididunt labore dolore magna aliqua enim minim veniam quis nostrud. Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed eiusmod tempor incididunt labore dolore magna aliqua enim minim veniam quis
-								nostrud.</p>
+							<div class="row">
+                                <div class="col-md-12">
+                                    <div class="about-desc">
+                                        <span class="heading-meta">Welcome &amp; Introduce</span>
+                                        <h3>Hola! my name is Louie Jie!</h3>
+                                        <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country.</p>
+                                    </div>
+                                    <div class="accordion" id="accordionExample">
+                                      <div class="card">
+                                        <div id="headingOne">
+                                          <h5 class="mb-0 panel-heading">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                              Why choose me?
+                                            </button>
+                                          </h5>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                          <div class="card-body">
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                  <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                  <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                                </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="card">
+                                        <div id="headingTwo">
+                                          <h5 class="mb-0 panel-heading">
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                              What I do?
+                                            </button>
+                                          </h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                          <div class="card-body">
+                                            <p>Far far away, behind the word <strong>mountains</strong>, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                            <ul>
+                                             <li>Separated they live in Bookmarksgrove right</li>
+                                             <li>Separated they live in Bookmarksgrove right</li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="card">
+                                        <div id="headingThree">
+                                          <h5 class="mb-0 panel-heading">
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                              My Specialties
+                                            </button>
+                                          </h5>
+                                        </div>
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                          <div class="card-body">
+                                            <p>Far far away, behind the word <strong>mountains</strong>, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                               </div>
+                            </div>
 						</div>
 					</div>
 				</div>
@@ -30,14 +118,14 @@
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6">
 								<div class="left-image">
-										<div class="s-img"><img class="img-fluid" src="{% static 'images/main-page/img1.jpg' %}" alt=""></div>
-										<div class="s-img"><img class="img-fluid" src="{% static 'images/main-page/img2.jpg' %}" alt=""></div>
+										<div class="s-img"><img class="img-fluid" src="{% static 'blog/images/main-page/img1.jpg' %}" alt=""></div>
+										<div class="s-img"><img class="img-fluid" src="{% static 'blog/images/main-page/img2.jpg' %}" alt=""></div>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6">
 								<div class="right-image">
-									<div class="s-img"><img class="img-fluid" src="{% static 'images/main-page/img3.jpg' %}" alt=""></div>
-									<div class="s-img"><img class="img-fluid" src="{% static 'images/main-page/img4.jpg' %}" alt=""></div>
+									<div class="s-img"><img class="img-fluid" src="{% static 'blog/images/main-page/img3.jpg' %}" alt=""></div>
+									<div class="s-img"><img class="img-fluid" src="{% static 'blog/images/main-page/img4.jpg' %}" alt=""></div>
 								</div>
 							</div>
 						</div>
@@ -48,14 +136,13 @@
 	</section>
     <!-- -->
 
-
     <!-- cards -->
     <h2 class="pt-5 my-5 text-center">title</h2>
           <div class="row d-none d-xl-flex mb-4">
             <div class="col-xl-3 col-md-6">
               <div class="box">
                 <div class="imgBx">
-                  <img src="{% static 'images/main-page/img1.jpg' %}">
+                  <img src="{% static 'blog/images/main-page/img1.jpg' %}">
                 </div>
                 <div class="content">
                   <h2>Title</h2>
@@ -68,7 +155,7 @@
             <div class="col-xl-3 col-md-6">
               <div class="box">
                 <div class="imgBx">
-                  <img src="{% static 'images/main-page/img2.jpg' %}">
+                  <img src="{% static 'blog/images/main-page/img2.jpg' %}">
                 </div>
                 <div class="content">
                   <h2>Title</h2>
@@ -81,7 +168,7 @@
             <div class="col-xl-3 col-md-6">
               <div class="box">
                 <div class="imgBx">
-                  <img src="{% static 'images/main-page/img3.jpg' %}">
+                  <img src="{% static 'blog/images/main-page/img3.jpg' %}">
                 </div>
                 <div class="content">
                   <h2>Title</h2>
@@ -94,7 +181,7 @@
             <div class="col-xl-3 col-md-6">
               <div class="box">
                 <div class="imgBx">
-                  <img src="{% static 'images/main-page/img4.jpg' %}">
+                  <img src="{% static 'blog/images/main-page/img4.jpg' %}">
                 </div>
                 <div class="content">
                   <h2>Title</h2>
@@ -107,35 +194,97 @@
           </div>
     <!-- .cards -->
 
+<div class="colorlib-services">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-md-pull-3">
+            <span class="heading-meta">What I do?</span>
+            <h2 class="colorlib-heading animate-box" data-animate-effect="fadeInLeft">Here are some of my expertise</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="colorlib-feature animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="colorlib-text">
+                    <h3>Branding</h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                </div>
+            </div>
+
+            <div class="colorlib-feature animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                    <i class="fas fa-pen"></i>
+                </div>
+                <div class="colorlib-text">
+                    <h3>Web Design</h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                </div>
+            </div>
+
+            <div class="colorlib-feature animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="colorlib-text">
+                    <h3>Search engine optimization</h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="colorlib-feature animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                    <i class="far fa-paper-plane"></i>
+                </div>
+                <div class="colorlib-text">
+                    <h3>Web Development</h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                </div>
+            </div>
+
+            <div class="colorlib-feature animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div class="colorlib-text">
+                    <h3>User Interface</h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                </div>
+            </div>
+
+            <div class="colorlib-feature animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                    <i class="fas fa-question"></i>
+                </div>
+                <div class="colorlib-text">
+                    <h3>Help &amp; Support</h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
   <section class="section_gap blog_area my-5 py-5">
     <div class="container">
         <h3 class="heading">Najnowsze kursy:</h3>
         <div class="row justify-content-center">
-        <div class="col-lg-4 col-6">
-          <div class="sidebar-box my-5">
-                <h3 class="sidebar-heading">Jak zacząć?</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias autem maxime, blanditiis ut soluta error perferendis dolore deserunt aperiam corporis. Expedita, nam autem eum nemo assumenda molestiae ratione, quam eligendi!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias autem maxime, blanditiis ut soluta error perferendis dolore deserunt aperiam corporis. Expedita, nam autem eum nemo assumenda molestiae ratione, quam eligendi!</p>
+        <div class="owl-carousel" style="width: 95%;">
+            {% for post in posts %}
+                  <div class="single-blog my-3">
+                    <div class="blog-details">
+                      <div class="blog-meta">
+                        <span><i class="fas fa-calendar-alt"></i> {{ post.date_posted|date:"d.m.Y" }} | By {{ post.author.get_full_name }}</span>
+                      </div>
+                      <h3 class="heading"><a class="article-title" href=
+                       "{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+                      <p>{{ post.synopsis }}</p>
+                    </div>
+                  </div>
+            {% endfor %}
             </div>
-        </div>
-        <div class="col-8">
-        <div class="row">
-        {% for post in posts %}
-          <div class="col-lg-6 col-md-6 col-sm-6">
-          <div class="single-blog my-3">
-            <div class="blog-details">
-              <div class="blog-meta">
-                <span><i class="fas fa-calendar-alt"></i> {{ post.date_posted|date:"d.m.Y" }} | By {{ post.author.get_full_name }}</span>
-              </div>
-              <h3 class="heading"><a class="article-title" href=
-                            "{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
-              <p>{{ post.synopsis }}</p>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-
-        </div>
-        </div>
       </div>
     </div>
   </section>
