@@ -8,6 +8,15 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
 
+# class Queue(object):
+#     title = models.CharField(max_length=200, unique = True, help_text="Podaj tytuł")
+#     date_created = models.DateTimeField(default=timezone.now)
+#     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.title
+
+
 class Post(models.Model):
     CATEGORY_CHOICES = (
         ('Django', 'Django'),
@@ -33,7 +42,7 @@ class Post(models.Model):
         ('Approved', 'Approved'),
     )
 
-    title = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=50, unique=True, help_text="Podaj tytuł")
     synopsis = models.TextField(max_length=500)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     level = models.CharField(max_length=100, choices=LEVEL_CHOICES, default="Unknown")
@@ -44,6 +53,7 @@ class Post(models.Model):
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default="Not-Approved-Yet")
     numbers_of_entries = models.IntegerField(default=0)
     ratings = GenericRelation(Rating)
+    # queue = models.ForeignKey(Queue, on_delete=models.CASCADE, null = True)
 
     def __str__(self):
         return self.title

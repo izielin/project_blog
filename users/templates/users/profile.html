@@ -1,13 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <div class="content-section  container py-5 my-5">
 
-        <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </nav>
+<nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
 
+    <div class="content-section container py-5 my-5">
         <div class="media">
             <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
             <div class="media-body">
@@ -23,7 +23,6 @@
             </div>
         </div>
     </div>
-
     <div class="content-section mt-4 collapse  container py-5 my-5" id="collapseExample">
     <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
@@ -38,4 +37,15 @@
     </form>
 
     </div>
+    
+    <div class="container content-section">
+      <p class="text-muted"> dodaj listę<i class="fas fa-plus mx-4"> </i></p>
+    </div>
+    
+    <div class="content-section container">
+      {% for post in posts %}
+        {{post.title}}
+      {% endfor %}
+      
+    </div> 
 {% endblock content %}
