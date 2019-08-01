@@ -1,27 +1,28 @@
-{% extends 'blog/base.html' %}
-{% block content %}
+<form method="post" action="">
+  {% csrf_token %}
 
-    <section class="ecg-section ecg-heading">
-    <div class="container">
-     <div class="row">
-        <div class="col-md-8">
-          <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span>Dodaj Komentarz</span></p>
-          <h1 class="bread">Dodaj Komentarz</h1>
-        </div>
-     </div>
+ <div class="modal-header">
+    <h5 class="modal-title">Create new Comment</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-</section>
 
-    <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
+  <div class="modal-body">
+    {% for field in form %}
+      <div class="form-group{% if field.errors %} invalid{% endif %}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}
+          <p class="help-block">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
 
-    <div class="container my-5 py-5">
-        <form method="POST" class="post-form">{% csrf_token %}
-            {{ form }}
-            <button class="btn-hover-add" type="submit"><span>Opublikuj</span></button>
-        </form>
-    </div>
-{% endblock %}
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="submit-btn btn btn-primary">Create</button>
+  </div>
+
+</form>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mdeditor',
     'star_ratings',
     'django_cleanup.apps.CleanupConfig',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [

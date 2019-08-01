@@ -25,6 +25,12 @@
       </button>
     </nav>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
     <div class="container">
         <!-- main content -->
         <div class="row mt-5 pt-5">
@@ -33,7 +39,7 @@
           <div class="row ">
               <button class="btn-hover-update" onclick="location.href='{% url 'post-update' object.id %}'"><span>Edit</span></button>
               <button class="btn-hover-add" onclick="location.href='{% url 'post-upload' object.id %}'"><span>Upload</span></button>
-              <button class="btn-hover-delete" onclick="location.href='{% url 'post-delete' object.id %}'"><span>Delete</span></button>
+              <button class="delete-post btn-hover-delete" data-id="{% url 'post-delete' object.id %}"><span>Delete</span></button>
               <hr class="bd-dark mt-4 mb-4">
           </div>
 
@@ -45,7 +51,7 @@
 
               {% if user.is_authenticated%}
              <hr>
-              <button class="btn-hover-add" style="width: 40%;" onclick="location.href='{% url 'add_comment_to_post' pk=post.pk %}'"><span>Add comment</span></button>
+                <button class="create-comment btn-hover-add" style="width: 40%;" type="button" name="button"><span>Add comment</span></button>
             {% endif %}
           <hr>
 
@@ -58,7 +64,7 @@
                 <a class="mr-2">{{ comment.author.get_full_name }}</a>
                   <small class="text-muted">{{ comment.created_date|date:"d.m.Y"  }}</small>
                   {%if object.author == user or user.profile.moderator == True%}
-              <button class="btn justify-content-end" onclick="location.href='{% url 'comment-delete' comment.id %}'"><span><i class="fas fa-trash-alt text-danger d-flex " ></i></span></button>
+                      <button type="button" class="delete-comment btn justify-content-end" data-id="{% url 'comment-delete' comment.pk %}"><span><i class="fas fa-trash-alt text-danger d-flex " ></i></span></button>
               {% endif %}
               </div>
               <p class="article-content">{{ comment.text|linebreaks }}</p>
@@ -94,14 +100,12 @@
 <script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
 <script>
   $(function () {
-      // js 解析markdown
       editormd.markdownToHTML("content", {
-          //htmlDecode      : "style,script,iframe",  // you can filter tags decode
           emoji           : true,
           taskList        : true,
-          tex             : true,  // 默认不解析
-          flowChart       : true,  // 默认不解析
-          sequenceDiagram : true,  // 默认不解析
+          tex             : true,
+          flowChart       : true,
+          sequenceDiagram : true,
       });
 
       $(".reference-link").each(function (i,obj) {
@@ -110,6 +114,19 @@
   })
 
 </script>
+<script type="text/javascript">
+  $(function () {
+    $(".create-comment").modalForm({formURL: "{% url 'add_comment_to_post' pk=post.pk  %}"});
+    $(".delete-comment").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      });
+      $(".delete-post").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      });
+
+  });
+</script>
+
 {% endblock %}
 
 

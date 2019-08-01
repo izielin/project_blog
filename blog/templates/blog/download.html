@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load static %}
 {% block content %}
     <section class="ecg-section ecg-heading">
         <div class="container">
@@ -23,6 +24,12 @@
       </button>
     </nav>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
     <div class="row ecg-section container my-5 mx-auto">
         {% for item in download_list %}
             <div class="col-md-4 d-flex align-self-stretch">
@@ -33,8 +40,12 @@
                   </div>
                 </div>
                 <div class="media-body p-2 mt-2">
-                  <h3 class="heading mb-3"><a class="text-dark" href="{% url 'upload-delete' item.id %}">{{ item.name }}</a></h3>
-                  <a class=" btn icon-box" href="{{ item.document.url }}"><i class="fa fa-download"></i></a>
+                  <h3 class="heading mb-3">{{ item.name }}</h3>
+                  {%if object.author == user or user.profile.moderator == True%}
+                      <button type="button" class="file-delete btn justify-content-end" data-id="{% url 'upload-delete' item.id %}"><span><i class="fas fa-trash-alt text-danger d-flex"></i></span></button>
+              {% endif %}
+
+                    <a class=" btn icon-box" href="{{ item.document.url }}"><i class="fa fa-download"></i></a>
                 </div>
               </div>
             </div>
@@ -42,5 +53,15 @@
             <p>Nie ma żadnych plików do pobrania</p>
         {% endfor %}
     </div>
+
+<script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+    <script type="text/javascript">
+  $(function () {
+    $(".file-delete").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      })
+
+  });
+</script>
 
 {% endblock content %}

@@ -3,6 +3,7 @@ from django import forms
 from mdeditor.fields import MDTextFormField
 # from .models import Post, Comment, Document, Queue
 from .models import Post, Comment, Document
+from bootstrap_modal_forms.forms import BSModalForm
 
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
@@ -23,10 +24,11 @@ class MDEditorModleForm(forms.ModelForm):
         fields = '__all__'
 
 
-class CommentForm(forms.ModelForm):
+class CommentForm(BSModalForm):
     class Meta:
         model = Comment
-        fields = ('text',)
+        fields = ['text',]
+
 
 
 # class QueueForm(forms.ModelForm):

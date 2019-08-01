@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     UpdateView,
@@ -18,6 +19,10 @@ try:
     from django.urls import reverse
 except ImportError:
     from django.core.urlresolvers import reverse
+from bootstrap_modal_forms.generic import (BSModalCreateView,
+                                           BSModalUpdateView,
+                                           BSModalReadView,
+                                           BSModalDeleteView)
 
 
 def about(request):
@@ -42,8 +47,10 @@ def about(request):
     context = {
         'posts': posts,
         'most_popular': Post.objects.filter(authorized=True).order_by('-numbers_of_entries')[:3],
-        'most_rated': Post.objects.filter(authorized=True).filter(ratings__isnull=False).order_by('-ratings__average')[:3],
-        'category': Post.objects.filter(authorized=True).values('category').annotate(Count('category')).order_by('category'),
+        'most_rated': Post.objects.filter(authorized=True).filter(ratings__isnull=False).order_by('-ratings__average')[
+                      :3],
+        'category': Post.objects.filter(authorized=True).values('category').annotate(Count('category')).order_by(
+            'category'),
         'level': Post.objects.filter(authorized=True).values('level').annotate(Count('level')).order_by('level'),
     }
     return render(request, "blog/about.html", context)
@@ -106,15 +113,11 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class PostDeleteView(BSModalDeleteView, LoginRequiredMixin):
     model = Post
+    template_name = 'blog/postDelete.html'
+    success_message = 'Success'
     success_url = '/about'
-
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
 
 
 def model_form_upload(request, pk):
@@ -138,31 +141,38 @@ def download(request, pk):
     return render(request, 'blog/download.html', context)
 
 
-class DownloadDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class DownloadDeleteView(BSModalDeleteView, LoginRequiredMixin):
     model = Document
+    template_name = 'blog/fileDelete.html'
+    success_message = 'Success: File was deleted.'
 
     def get_success_url(self):
         id = self.object.postId
         return reverse('post-download', kwargs={'pk': id})
 
-    def test_func(self):
-        return True
+
+class CommentCreateView(BSModalCreateView, LoginRequiredMixin):
+    template_name = 'blog/addComment.html'
+    form_class = CommentForm
+
+    def form_valid(self, form, **kwargs):
+        form.instance.author = self.request.user
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs.get('pk'))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        id = self.object.post.id
+        return reverse('post-detail', kwargs={'pk': id})
 
 
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        form.instance.author = request.user
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('post-detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'blog/addComment.html', {'form': form})
+class CommentDeleteView(BSModalDeleteView, LoginRequiredMixin):
+    model = Comment
+    template_name = 'blog/deleteComment.html'
+    success_message = 'Success: Comment was deleted.'
 
+    def get_success_url(self):
+        id = self.object.post.id
+        return reverse('post-detail', kwargs={'pk': id})
 
 # def add_queue(request):
 #     if request.method == "POST":
@@ -177,20 +187,8 @@ def add_comment_to_post(request, pk):
 #     return render(request, 'blog/addQueue.html', {'form': form})
 
 
-class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Comment
-
-    def get_success_url(self):
-        id = self.object.post.id
-        return reverse('post-detail', kwargs={'pk': id})
-
-    def test_func(self):
-        return True
-
-
 def posts_no_authorized(request):
     context = {
         'posts': Post.objects.filter(authorized=False).order_by('-date_posted')
     }
     return render(request, 'blog/no_authorized.html', context)
-
