@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from django import forms
 from mdeditor.fields import MDTextFormField
+# from .models import Post, Comment, Document, Queue
 from .models import Post, Comment, Document
 
 
@@ -27,6 +28,11 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('text',)
 
+
+# class QueueForm(forms.ModelForm):
+#     title = forms.CharField()
+#     description = forms.CharField()
+#
 
 class DocumentForm(forms.ModelForm):
     class Meta:

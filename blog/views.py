@@ -5,6 +5,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post, Document, Comment
+# from .forms import CommentForm, DocumentForm, QueueForm
 from .forms import CommentForm, DocumentForm
 from django.views import generic
 from . import forms
@@ -25,7 +26,8 @@ def about(request):
     if query:
         posts_list = Post.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query) |
-            Q(author__first_name__icontains=query) | Q(category__icontains=query) | Q(level__icontains=query)
+            Q(author__first_name__icontains=query) | Q(category__icontains=query) |
+            Q(level__icontains=query)
         ).filter(authorized=True).distinct()
     paginator = Paginator(posts_list, 6)  # 6 posts per page
     page = request.GET.get('page')
@@ -160,6 +162,19 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'blog/addComment.html', {'form': form})
+
+
+# def add_queue(request):
+#     if request.method == "POST":
+#         form = QueueForm(request.POST)
+#         form.instance.author = request.user
+#         if form.is_valid():
+#             queue = form.save(commit=False)
+#             queue.save()
+#             return redirect('home')
+#     else:
+#         form = CommentForm()
+#     return render(request, 'blog/addQueue.html', {'form': form})
 
 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
