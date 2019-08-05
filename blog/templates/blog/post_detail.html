@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    #demo a{
+        color: white;
+
+    }
+
+    #demo a:hover{
+        color: #ccb78f;
+        text-decoration: none;
+    }
+    </style>
+
     <section class="ecg-section ecg-heading">
         <div class="container">
          <div class="row">
@@ -48,7 +64,6 @@
           <div id="content">
               <textarea>{{ object.content }}</textarea>
           </div>
-
               {% if user.is_authenticated%}
              <hr>
                 <button class="create-comment btn-hover-add" style="width: 40%;" type="button" name="button"><span>Add comment</span></button>
@@ -83,6 +98,10 @@
               <hr class="bg-white">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p></div>
         </div>
+
+        <div id="demo" class="sticky-top sidebar-box p-3">
+            <h3 class="sidebar-heading">Na skróty:</h3>
+        </div>
     </div>
 
 </div>
@@ -111,10 +130,8 @@
       $(".reference-link").each(function (i,obj) {
         console.log(obj)
       })
-  })
+  });
 
-</script>
-<script type="text/javascript">
   $(function () {
     $(".create-comment").modalForm({formURL: "{% url 'add_comment_to_post' pk=post.pk  %}"});
     $(".delete-comment").each(function () {
@@ -125,6 +142,32 @@
       });
 
   });
+
+window.onload = function() {
+    const x = document.getElementById("content").getElementsByTagName("A");
+    let i;
+    let heading = [];
+    for (i = 0; i < x.length; i++) {
+    heading.push(x[i].getAttribute("name"));
+  }
+
+        console.log(heading);
+
+
+   let hLen = heading.length;
+
+    for (i = 0; i < hLen; i++) {
+       a = document.createElement('a');
+       a.href = "#" + heading[i];
+       a.innerHTML = heading[i];// <a>INNER_TEXT</a>
+       document.getElementById("demo").appendChild(a);
+        hr = document.createElement('hr');
+        hr.classList.add("bg-white");
+       document.getElementById("demo").appendChild(hr);
+
+    }
+};
+
 </script>
 
 {% endblock %}

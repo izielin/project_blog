@@ -1,10 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import (
-    UpdateView,
-    DeleteView
-)
+from django.views.generic import UpdateView
 from .models import Post, Document, Comment
 # from .forms import CommentForm, DocumentForm, QueueForm
 from .forms import CommentForm, DocumentForm
@@ -14,15 +10,8 @@ from . import models
 from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-from bootstrap_modal_forms.generic import (BSModalCreateView,
-                                           BSModalUpdateView,
-                                           BSModalReadView,
-                                           BSModalDeleteView)
+from django.urls import reverse
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalDeleteView
 
 
 def about(request):
@@ -85,7 +74,7 @@ class ShowView(generic.DetailView):
     template_name = 'blog/post_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(ShowView, self).get_context_data(**kwargs)
         self.object.numbers_of_entries = self.object.numbers_of_entries + 1
         self.object.save()
         return context
