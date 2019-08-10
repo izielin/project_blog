@@ -6,16 +6,7 @@ from mdeditor.fields import MDTextField
 from star_ratings.models import Rating
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
-
-
-# class Queue(models.Model):
-#     title = models.CharField(max_length=200, unique=True, help_text="Podaj tytuł")
-#     description = models.TextField(max_length=500, help_text="Możesz tu umieścić którki opis",  null=True)
-#     date_created = models.DateTimeField(default=timezone.now)
-#     author = models.ForeignKey(User, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return self.title
+from PIL import Image
 
 
 class Post(models.Model):
@@ -54,13 +45,26 @@ class Post(models.Model):
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default="Not-Approved-Yet")
     numbers_of_entries = models.IntegerField(default=0)
     ratings = GenericRelation(Rating)
-    # queue = models.ForeignKey(Queue, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(default='b1.jpg', upload_to='post_pics')
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+    def get_summary(self):
+        return self.synopsis[0:80]
+
+    def save(self):
+        super().save()
+
+        img = Image.open(self.image.path)
+
+        if img.height > 200 or img.width > 200:
+            output_size = (200, 200)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 
 
 class Comment(models.Model):

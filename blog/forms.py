@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 from django import forms
 from mdeditor.fields import MDTextFormField
-# from .models import Post, Comment, Document, Queue
 from .models import Post, Comment, Document
 from bootstrap_modal_forms.forms import BSModalForm
 
@@ -15,6 +14,7 @@ class MDEditorForm(forms.Form):
     synopsis = forms.CharField()
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, label="category", initial='', widget=forms.Select())
     content = MDTextFormField()
+    image = forms.ImageField()
 
 
 class MDEditorModleForm(forms.ModelForm):
@@ -29,12 +29,6 @@ class CommentForm(BSModalForm):
         model = Comment
         fields = ['text',]
 
-
-
-# class QueueForm(forms.ModelForm):
-#     title = forms.CharField()
-#     description = forms.CharField()
-#
 
 class DocumentForm(forms.ModelForm):
     class Meta:

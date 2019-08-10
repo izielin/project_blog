@@ -1,6 +1,6 @@
-;(function($){
-    "use strict"
-	
+(function($){
+    "use strict";
+
     function text_slider(){
         if ( $('.blog_text_slider').length ){
             $('.blog_text_slider').owlCarousel({
@@ -20,16 +20,16 @@
 })(jQuery);
 
 
-$('.owl-carousel').owlCarousel({
-    stagePadding: 50,
-    loop:true,
-    margin:10,
-    nav:false,
-    autoplay: true,
-    items:2,
-    dots:true,
-    smartSpeed: 5000,
-});
-
-
-
+(function ($){
+    'use strict';
+        $('.post-category-slider').owlCarousel({
+            items: 1,
+            margin: 10,
+            loop: true,
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 3500, // Autoplay Timeout 1s = 1000ms
+            smartSpeed: 2000,
+            autoHeight:true,
+        });
+    })(jQuery);

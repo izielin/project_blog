@@ -12,28 +12,7 @@
     html {
         scroll-behavior: smooth;
     }
-
-    #demo a{
-        color: white;
-
-    }
-
-    #demo a:hover{
-        color: #ccb78f;
-        text-decoration: none;
-    }
     </style>
-
-    <section class="ecg-section ecg-heading">
-        <div class="container">
-         <div class="row">
-            <div class="col-md-8">
-              <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span> <span>{{ object.title }}</span></p>
-              <h1 class="bread">{{ object.title }} </h1>
-            </div>
-         </div>
-      </div>
-    </section>
 
     <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,28 +30,23 @@
         <!-- main content -->
         <div class="row mt-5 pt-5">
           <div class="col-xl-8 py-5">
-          {%if object.author == user or user.profile.moderator == True%}
-          <div class="row ">
-              <button class="btn-hover-update" onclick="location.href='{% url 'post-update' object.id %}'"><span>Edit</span></button>
-              <button class="btn-hover-add" onclick="location.href='{% url 'post-upload' object.id %}'"><span>Upload</span></button>
-              <button class="delete-post btn-hover-delete" data-id="{% url 'post-delete' object.id %}"><span>Delete</span></button>
-              <hr class="bd-dark mt-4 mb-4">
-          </div>
+            <div class="single-blog-content mb-100">
+                <div id="content" class="post-content">
+                    <textarea>{{ object.content }}</textarea>
+                </div>
+            </div>
 
-        {% endif %}
 
-          <div id="content">
-              <textarea>{{ object.content }}</textarea>
-          </div>
-              {% if user.is_authenticated%}
+            {% if user.is_authenticated%}
              <hr>
                 <button class="create-comment btn-hover-add" style="width: 40%;" type="button" name="button"><span>Add comment</span></button>
             {% endif %}
           <hr>
 
+
           <h3> Comments: {{ post.comments.count }}</h3>
         {% for comment in post.comments.all %}
-            <article class="media comment-section">
+            <article class="media comment-section comment-content">
             <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
             <div class="media-body">
               <div class="article-metadata">
@@ -87,24 +61,51 @@
           </article>
         {% endfor %}
     </div>
+                <div class="col-12 col-md-8 col-lg-4">
+                    <div class="post-sidebar-area wow fadeInUpBig" data-wow-delay="0.2s">
+                        <!-- Widget Area -->
+                        <div class="sidebar-widget-area">
+                            <h5 class="title">DOWNLOAD MATERIALS</h5>
+                            <div class="widget-content">
 
-    <div class="col-xl-4 p-xl-0">
-        <div class="sidebar-box p-3">
-          <div class="mt-3 mb-5"><h3 class="sidebar-heading">Download materials</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
-            <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a></div>
-          <div class="mt-5 mb-3"><h3 class="sidebar-heading">Paragraph</h3>
-            {% ratings object %}
-              <hr class="bg-white">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p></div>
-        </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+                            <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a>
 
-        <div id="demo" class="sticky-top sidebar-box p-3">
-            <h3 class="sidebar-heading">Na skróty:</h3>
-        </div>
+                        </div>
+                        </div>
+
+                {%if object.author == user or user.profile.moderator == True%}
+                    <div class="sidebar-widget-area">
+                        <h5 class="title">Stay Connected</h5>
+                        <div class="widget-content">
+                            <div class="social-area d-flex justify-content-between">
+                                <a href="{% url 'post-update' object.id %}"><i class="fas fa-edit" style="color: #1E824C;"></i></a>
+                                <a href="{% url 'post-upload' object.id %}"><i class="fas fa-upload" style="color: #3A539B;"></i></a>
+                                <a href="{% url 'post-delete' object.id %}"><i class="fas fa-trash-alt" style="color: #96281B;"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endif %}
+                        <div class="sidebar-widget-area">
+                        <h5 class="title">Stay Connected</h5>
+                        <div class="widget-content">
+                           {% ratings object %}
+                            <div class="post-meta">
+                             <hr>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget-area">
+                        <h5 class="title">Stay Connected</h5>
+                        <div class="widget-content" id="demo">
+                        </div>
+                    </div>
+         </div>
     </div>
 
-</div>
 <!-- .main content -->
 </div>
 
@@ -137,9 +138,7 @@
     $(".delete-comment").each(function () {
         $(this).modalForm({formURL: $(this).data('id')});
       });
-      $(".delete-post").each(function () {
-        $(this).modalForm({formURL: $(this).data('id')});
-      });
+      $(".delete-post").modalForm({formURL: "{% url 'add_comment_to_post' pk=post.pk  %}"});
 
   });
 

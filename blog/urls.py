@@ -22,6 +22,5 @@ urlpatterns = [
     path('download/<int:pk>', DownloadDeleteView.as_view(), name='upload-delete'),
     path('post/<int:pk>/download/', views.download, name='post-download'),
     path('post/<int:pk>/comment/', CommentCreateView.as_view(), name='add_comment_to_post'),
-    # path('queue/', views.add_queue, name='add_queue'),
     path('delete_comment/<int:pk>', CommentDeleteView.as_view(), name='comment-delete'),
 ]

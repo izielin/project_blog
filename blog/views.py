@@ -13,6 +13,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalDeleteView
 
+CATEGORY_CHOICES = Post.CATEGORY_CHOICES
+
 
 def about(request):
     posts_list = Post.objects.filter(authorized=True).order_by('-date_posted')
@@ -23,7 +25,7 @@ def about(request):
             Q(author__first_name__icontains=query) | Q(category__icontains=query) |
             Q(level__icontains=query)
         ).filter(authorized=True).distinct()
-    paginator = Paginator(posts_list, 6)  # 6 posts per page
+    paginator = Paginator(posts_list, 5)
     page = request.GET.get('page')
 
     try:
@@ -35,14 +37,18 @@ def about(request):
 
     context = {
         'posts': posts,
-        'most_popular': Post.objects.filter(authorized=True).order_by('-numbers_of_entries')[:3],
+        'most_popular': Post.objects.filter(authorized=True).order_by('-numbers_of_entries')[:4],
         'most_rated': Post.objects.filter(authorized=True).filter(ratings__isnull=False).order_by('-ratings__average')[
-                      :3],
+                      :4],
         'category': Post.objects.filter(authorized=True).values('category').annotate(Count('category')).order_by(
             'category'),
         'level': Post.objects.filter(authorized=True).values('level').annotate(Count('level')).order_by('level'),
+        'newest': Post.objects.filter(authorized=True).order_by('-date_posted')[:1],
+        'random': Post.objects.filter(authorized=True).order_by('?')[:3],
+        'latest': Post.objects.filter(authorized=True).order_by('-date_posted')[:4],
     }
-    return render(request, "blog/about.html", context)
+
+    return render(request, "blog/about_2.html", context)
 
 
 def home(request):

@@ -17,3 +17,4 @@ admin.site.register(demo_models.Post, ExampleModelAdmin)
 
 # admin.site.register(FileUploadUrl)
 admin.site.register(Comment)
+
