@@ -12,11 +12,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalDeleteView
+from django.utils import timezone
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
 
 
-def about(request):
+def post_list(request):
     posts_list = Post.objects.filter(authorized=True).order_by('-date_posted')
     query = request.GET.get('q')
     if query:
@@ -43,12 +44,13 @@ def about(request):
         'category': Post.objects.filter(authorized=True).values('category').annotate(Count('category')).order_by(
             'category'),
         'level': Post.objects.filter(authorized=True).values('level').annotate(Count('level')).order_by('level'),
-        'newest': Post.objects.filter(authorized=True).order_by('-date_posted')[:1],
+        'newest': Post.objects.filter(authorized=True).filter(date_posted__gte=timezone.now()
+                                                              .replace(hour=0, minute=0, second=0))
+                                                      .order_by('-date_posted')[:1],
         'random': Post.objects.filter(authorized=True).order_by('?')[:3],
         'latest': Post.objects.filter(authorized=True).order_by('-date_posted')[:4],
     }
-
-    return render(request, "blog/about_2.html", context)
+    return render(request, "blog/post_list.html", context)
 
 
 def home(request):
@@ -110,9 +112,11 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(BSModalDeleteView, LoginRequiredMixin):
     model = Post
-    template_name = 'blog/postDelete.html'
-    success_message = 'Success'
-    success_url = '/about'
+    template_name = 'blog/post_delete.html'
+    success_message = 'Success: Post was deleted.'
+
+    def get_success_url(self):
+        return reverse('blog-about')
 
 
 def model_form_upload(request, pk):
@@ -124,7 +128,7 @@ def model_form_upload(request, pk):
             return HttpResponseRedirect(reverse('post-detail', kwargs={'pk': pk}))
     else:
         form = DocumentForm()
-    return render(request, 'blog/upload.html', {'form': form})
+    return render(request, 'blog/file_form.html', {'form': form})
 
 
 def download(request, pk):
@@ -133,12 +137,12 @@ def download(request, pk):
         'post': Post.objects.filter(id=pk)
     }
 
-    return render(request, 'blog/download.html', context)
+    return render(request, 'blog/file_list.html', context)
 
 
 class DownloadDeleteView(BSModalDeleteView, LoginRequiredMixin):
     model = Document
-    template_name = 'blog/fileDelete.html'
+    template_name = 'blog/file_delete.html'
     success_message = 'Success: File was deleted.'
 
     def get_success_url(self):
@@ -147,7 +151,7 @@ class DownloadDeleteView(BSModalDeleteView, LoginRequiredMixin):
 
 
 class CommentCreateView(BSModalCreateView, LoginRequiredMixin):
-    template_name = 'blog/addComment.html'
+    template_name = 'blog/comment_form.html'
     form_class = CommentForm
 
     def form_valid(self, form, **kwargs):
@@ -162,7 +166,7 @@ class CommentCreateView(BSModalCreateView, LoginRequiredMixin):
 
 class CommentDeleteView(BSModalDeleteView, LoginRequiredMixin):
     model = Comment
-    template_name = 'blog/deleteComment.html'
+    template_name = 'blog/comment_delete.html'
     success_message = 'Success: Comment was deleted.'
 
     def get_success_url(self):

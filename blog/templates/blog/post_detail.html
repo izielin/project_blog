@@ -31,6 +31,7 @@
         <div class="row mt-5 pt-5">
           <div class="col-xl-8 py-5">
             <div class="single-blog-content mb-100">
+                <h1 class="bread">{{ object.title }} </h1>
                 <div id="content" class="post-content">
                     <textarea>{{ object.content }}</textarea>
                 </div>
@@ -81,7 +82,7 @@
                             <div class="social-area d-flex justify-content-between">
                                 <a href="{% url 'post-update' object.id %}"><i class="fas fa-edit" style="color: #1E824C;"></i></a>
                                 <a href="{% url 'post-upload' object.id %}"><i class="fas fa-upload" style="color: #3A539B;"></i></a>
-                                <a href="{% url 'post-delete' object.id %}"><i class="fas fa-trash-alt" style="color: #96281B;"></i></a>
+                                <button type="button" class="delete-post btn justify-content-end" data-id="{% url 'post-delete' object.pk %}"><span><i class="fas fa-trash-alt" style="color: #96281B;"></i></span></button>
                             </div>
 
                         </div>
@@ -138,7 +139,7 @@
     $(".delete-comment").each(function () {
         $(this).modalForm({formURL: $(this).data('id')});
       });
-      $(".delete-post").modalForm({formURL: "{% url 'add_comment_to_post' pk=post.pk  %}"});
+      $(".delete-post").modalForm({formURL: "{% url 'post-delete' pk=post.pk  %}"});
 
   });
 

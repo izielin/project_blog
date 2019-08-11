@@ -34,7 +34,7 @@ class Post(models.Model):
         ('Approved', 'Approved'),
     )
 
-    title = models.CharField(max_length=50, unique=True, help_text="Podaj tytuł")
+    title = models.CharField(max_length=50, unique=True)
     synopsis = models.TextField(max_length=500)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     level = models.CharField(max_length=100, choices=LEVEL_CHOICES, default="Unknown")
@@ -45,7 +45,7 @@ class Post(models.Model):
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default="Not-Approved-Yet")
     numbers_of_entries = models.IntegerField(default=0)
     ratings = GenericRelation(Rating)
-    image = models.ImageField(default='b1.jpg', upload_to='post_pics')
+    image = models.ImageField(default='default_post.jpg', upload_to='post_pics')
 
     def __str__(self):
         return self.title
@@ -56,8 +56,8 @@ class Post(models.Model):
     def get_summary(self):
         return self.synopsis[0:80]
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
         img = Image.open(self.image.path)
 

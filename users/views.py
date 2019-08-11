@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -31,7 +31,10 @@ def profile(request, username):
             u_form.save()
             p_form.save()
             messages.success(request, 'Your account has been updated!')
-            return redirect('profile')
+
+            def get_success_url(self, request):
+                reverse_user = request.user
+                return reverse('profile', kwargs={'username': reverse_user})
 
     else:
         u_form = UserUpdateForm(instance=request.user)

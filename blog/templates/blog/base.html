@@ -25,14 +25,14 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 <aside id="aside" role="complementary" class="text-center">
     <h1 class=" d-none d-xl-block" id="logo">
-      <a href="{% url 'blog-home' %}">
+      <a href="{% url 'home' %}">
         <span class="img d-lg-block" style="background-image: url({% static 'blog/images/logo_150px.png' %});"></span>
         ecg.vot.pl</a>
     </h1>
     <nav id="main-menu" role="navigation">
       <ul>
-          <li><a class="nav-item nav-link" href="{% url 'blog-home' %}">Strona Głowna</a></li>
-        <li><a class="nav-item nav-link" href="{% url 'blog-about' %}">Lista Kursów</a></li>
+          <li><a class="nav-item nav-link" href="{% url 'home' %}">Strona Głowna</a></li>
+        <li><a class="nav-item nav-link" href="{% url 'post-list' %}">Lista Kursów</a></li>
         {% if user.is_authenticated%}
             <li><a class="nav-item nav-link" href="{% url 'post-create' %}">Nowy Kurs</a></li><br>
             {% if user.profile.moderator == True %}

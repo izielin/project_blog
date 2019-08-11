@@ -1,22 +1,6 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-    <section class="ecg-section ecg-heading">
-        <div class="container">
-         <div class="row">
-            <div class="col-md-8">
-              <p class="breadcrumbs">
-                  <span class="mr-2"><a href="{% url 'blog-home' %}">Strona główna</a></span>
-                  <span class="mr-2"><a href="{% url 'blog-about' %}">Kursy</a></span>
-                  {% for item in post %}
-                  <span class="mr-2"><a href="{% url 'post-detail' item.id%}">{{ item.title }}</a></span>
-                  {% endfor %}
-                  <span>Download</span></p>
-              <h1 class="bread">Download</h1>
-            </div>
-         </div>
-      </div>
-    </section>
 
     <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
