@@ -128,7 +128,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = 'blog-home'
+LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 STAR_RATINGS_RERATE = False
@@ -143,11 +143,11 @@ MDEDITOR_CONFIGS = {
                     "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
                     "h1", "h2", "h3", "h5", "h6", "|",
                     "list-ul", "list-ol", "hr", "|",
-                    "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime",
+                    "link", "reference-link", "code", "preformatted-text", "code-block", "table", "datetime",
                     "html-entities", "pagebreak", "goto-line", "|",
                     "||", "preview", "watch"],  # custom edit box toolbar
-        'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],  # image upload format type
-        'image_folder': 'media/editor',  # image save the folder name
+        # 'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],  # image upload format type
+        # 'image_folder': '/media/editor',  # image save the folder name
         'theme': 'default',  # edit box theme, dark / default
         'preview_theme': 'default',  # Preview area theme, dark / default
         'editor_theme': 'default',  # edit area theme, pastel-on-dark / default
@@ -161,5 +161,11 @@ MDEDITOR_CONFIGS = {
     }
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ecg.vot@gmail.com'
+EMAIL_HOST_PASSWORD = 'ecg.VOT.019'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587

@@ -30,8 +30,51 @@
         <!-- main content -->
         <div class="row mt-5 pt-5">
           <div class="col-xl-8 py-5">
-            <div class="single-blog-content mb-100">
                 <h1 class="bread">{{ object.title }} </h1>
+
+              <div class="single-blog-content my-5">
+                <div  class="post-content">
+
+                     <div class="row" style="margin: 0; padding: 0;">
+                        <div class="col-6">
+                            <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="far fa-keyboard"></i><small class="text-muted">
+                                    {{ post.category }}</small>
+                                <br>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
+                                  {{ post.author.get_full_name }}</small></a>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="far fa-calendar-alt"></i><small class="text-muted">
+                                    {{ post.date_posted|date:"F d, Y" }}</small>
+                            </ul>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">
+                                  <i class="fas fa-chart-line"></i><small class="text-muted">
+                                  {{ post.level }}  </small>
+                              </li>
+                              <li class="list-group-item">
+                                <i class="far fa-eye"></i><small class="text-muted">
+                                    {{ post.numbers_of_entries }} </small>
+                                </li>
+                              <li class="list-group-item">
+                              <i class="far fa-comments"></i><small class="text-muted">
+                                    {{ post.comments.count }}  </small>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="text-justify">{{ post.synopsis }}</p>
+                        </div>
+                </div>
+               </div>
+            </div>
+
+              <div class="single-blog-content mt-5">
                 <div id="content" class="post-content">
                     <textarea>{{ object.content }}</textarea>
                 </div>

@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import UpdateView
-from .models import Post, Document, Comment
-# from .forms import CommentForm, DocumentForm, QueueForm
-from .forms import CommentForm, DocumentForm
+from .models import Post, Document, Comment, Cycle, Email
+# from .forms import CommentForm, DocumentForm, CycleForm
+from .forms import CommentForm, DocumentForm, CycleForm, EmailForm
 from django.views import generic
 from . import forms
 from . import models
@@ -11,8 +11,10 @@ from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from bootstrap_modal_forms.generic import BSModalCreateView, BSModalDeleteView
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalDeleteView, BSModalUpdateView
 from django.utils import timezone
+from django.core.mail import send_mail
+from django.conf import settings
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
 
@@ -59,6 +61,43 @@ def home(request):
     }
     return render(request, 'blog/home.html', context)
 
+def send_email(request):
+    context = {
+        'emails' : Email.objects.filter(posted=False).order_by('-date_created')
+    }
+    # send_mail(
+    # 'Subject here',
+    # 'Here is the message.',
+    # 'ecg.vot@gmail.com',
+    # ['misiopar@wp.pl'],
+    # fail_silently=False,
+    # )
+    return render(request, 'blog/send_email.html', context)
+
+# class EmailCreateView(generic.DetailView):
+#     model = Email
+#     template_name = 'blog/email_form.html'
+
+#     def form_valid(self, form, **kwargs):
+#         form.instance.author = self.request.user
+#         # form.instance.post = get_object_or_404(Post, pk=self.kwargs.get('pk'))
+#         return super().form_valid(form)
+
+#     # def get_success_url(self):
+#     #     id = self.object.emails.id
+#     #     return reverse('email-detail', kwargs={'pk': id})
+
+class EmailCreateView(BSModalCreateView, LoginRequiredMixin):
+    template_name = 'blog/email_form.html'
+    form_class = EmailForm
+
+    def form_valid(self, form, **kwargs):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        reverse_user = self.request.user
+        return reverse('profile', kwargs={'username': reverse_user})
 
 class MDEditorFormView(generic.FormView):
     form_class = forms.MDEditorForm
@@ -98,9 +137,9 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.profile.moderator == True:
-            self.fields = ['title', 'synopsis', 'category', 'level', 'authorized', 'content', 'status']
+            self.fields = ['title', 'synopsis', 'category', 'level', 'authorized', 'content', 'status', 'image']
         else:
-            self.fields = ['title', 'synopsis', 'category', 'content']
+            self.fields = ['title', 'synopsis', 'category', 'content', 'image']
         return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):
@@ -116,7 +155,7 @@ class PostDeleteView(BSModalDeleteView, LoginRequiredMixin):
     success_message = 'Success: Post was deleted.'
 
     def get_success_url(self):
-        return reverse('blog-about')
+        return reverse('post-list')
 
 
 def model_form_upload(request, pk):
@@ -173,17 +212,39 @@ class CommentDeleteView(BSModalDeleteView, LoginRequiredMixin):
         id = self.object.post.id
         return reverse('post-detail', kwargs={'pk': id})
 
-# def add_queue(request):
-#     if request.method == "POST":
-#         form = QueueForm(request.POST)
-#         form.instance.author = request.user
-#         if form.is_valid():
-#             queue = form.save(commit=False)
-#             queue.save()
-#             return redirect('home')
-#     else:
-#         form = CommentForm()
-#     return render(request, 'blog/addQueue.html', {'form': form})
+
+class CycleCreateView(BSModalCreateView, LoginRequiredMixin):
+    template_name = 'blog/cycle_form.html'
+    form_class = CycleForm
+
+    def form_valid(self, form, **kwargs):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        reverse_user = self.request.user
+        return reverse('profile', kwargs={'username': reverse_user})
+
+
+class CycleUpdateView(BSModalUpdateView):
+    model = Cycle
+    template_name = 'blog/cycle_update.html'
+    form_class = CycleForm
+    success_message = 'Success: Cycle was updated.'
+
+    def get_success_url(self):
+        reverse_user = self.request.user
+        return reverse('profile', kwargs={'username': reverse_user})
+
+
+class CycleDeleteView(BSModalDeleteView, LoginRequiredMixin):
+    model = Cycle
+    template_name = 'blog/cycle_delete.html'
+    success_message = 'Success: Cycle was deleted.'
+
+    def get_success_url(self):
+        reverse_user = self.request.user
+        return reverse('profile', kwargs={'username': reverse_user})
 
 
 def posts_no_authorized(request):

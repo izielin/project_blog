@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load static %}
 {% block content %}
 
 <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
@@ -6,6 +7,12 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 </nav>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
 
     <div class="content-section container py-5 my-5">
         <div class="media">
@@ -39,13 +46,41 @@
     </div>
     
     <div class="container content-section">
-{#    <button class="btn-hover-add" style="width: 40%;" onclick="location.href='{% url 'add_queue' %}'"><span>dodaj listę<i class="fas fa-plus mx-4"> </i></span></button>#}
+    <button type="button" class="create-cycle btn justify-content-end" data-id="{% url 'cycle-create' %}"><span><i class="fas fa-plus" style="color: #96281B;"></i></span></button>
     </div>
     
+    <div class="content-section container">
+      {% for cycle in cycles %}
+
+          <h4>{{cycle.title}}</h4>
+          <button type="button" class="update-cycle btn btn-sm " data-id="{% url 'cycle-update' cycle.pk %}">
+                    <span><i class="fas fa-edit" style="color: #1E824C;"></i></span></button>
+              <button type="button" class="delete-cycle btn btn-sm" data-id="{% url 'cycle-delete' cycle.pk %}">
+                  <span><i class="fas fa-trash-alt" style="color: #96281B;"></i></span></button>
+      {% endfor %}
+      
+    </div>
+
     <div class="content-section container">
       {% for post in posts %}
         {{post.title}}
       {% endfor %}
-      
-    </div> 
+
+    </div>
+<script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+    <script>
+    $(function () {
+        $(".create-cycle").modalForm({formURL: "{% url 'cycle-create' %}"});
+
+        $(".update-cycle").each(function () {
+          $(this).modalForm({formURL: $(this).data('id')});
+        });
+
+         $(".delete-cycle").each(function () {
+          $(this).modalForm({formURL: $(this).data('id')});
+        });
+
+});
+
+    </script>
 {% endblock content %}

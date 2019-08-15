@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="container content-section my-5 py-5">
+
+      <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+       </nav>
+
+
+      <form method="post" enctype="multipart/form-data">
+      {% for item in emails %}
+        {% csrf_token %}
+        {{ item.sender }}
+        {{ item.receivers }}
+        {{ item.subject }}
+        {{ item.message }}
+      {% endfor %}
+        <!-- {{ form.message }} -->
+        <button class="btn-hover-add" type="submit"><span>Send mail</span></button>
+      </form>
+
+  </div>
+{% endblock %}
