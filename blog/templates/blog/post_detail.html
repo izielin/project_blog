@@ -12,6 +12,20 @@
     html {
         scroll-behavior: smooth;
     }
+    .to-top{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #242423;
+        color:#fff;
+        padding: 9px 12px;
+        border-radius: 50%;
+        z-index: 999;
+    }
+    .to-top:hover{
+        background-color: #ccb78f;
+        color: #242423;
+    }
     </style>
 
     <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
@@ -26,11 +40,13 @@
       </div>
     </div>
 
+
     <div class="container">
+
         <!-- main content -->
         <div class="row mt-5 pt-5">
           <div class="col-xl-8 py-5">
-                <h1 class="bread">{{ object.title }} </h1>
+                <h1 class="bread" id="top">{{ object.title }} </h1>
 
               <div class="single-blog-content my-5">
                 <div  class="post-content">
@@ -111,7 +127,7 @@
                         <div class="sidebar-widget-area">
                             <h5 class="title">DOWNLOAD MATERIALS</h5>
                             <div class="widget-content">
-
+                            <img style="max-width: 200px;" class="mx-auto mb-4 d-block" src="{{ post.image.url }}" >
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
                             <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a>
 
@@ -148,10 +164,13 @@
                         </div>
                     </div>
          </div>
-    </div>
 
+    </div>
 <!-- .main content -->
+            <a href="#top" class="to-top"><i class="fas fa-chevron-up"></i></a>
+
 </div>
+
 
 <script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
 <script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
@@ -194,7 +213,6 @@ window.onload = function() {
     heading.push(x[i].getAttribute("name"));
   }
 
-        console.log(heading);
 
 
    let hLen = heading.length;
@@ -210,6 +228,19 @@ window.onload = function() {
 
     }
 };
+
+    $(document).ready(function(){
+        let offset = 250;
+        let duration = 500;
+
+        $(window).scroll(function(){
+            if($(this).scrollTop() > offset){
+                $('.to-top').fadeIn(duration);
+            } else {
+                $('.to-top').fadeOut(duration);
+            }
+        });
+  });
 
 </script>
 

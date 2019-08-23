@@ -8,7 +8,7 @@
     </button>
   </div>
 
-  <div class="modal-body">
+  <div class="modal-body comment-section comment-content" style="margin: 15px;">
     {% for field in form %}
       <div class="form-group{% if field.errors %} invalid{% endif %}">
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -21,8 +21,8 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="button" class="submit-btn btn btn-primary">Create</button>
+      <button class="btn create-comment btn-hover-delete" data-dismiss="modal"style="width: 40%;" type="button" name="button"><span>Close</span></button>
+      <button class="submit-btn create-comment btn-hover-add" style="width: 40%;" type="button" name="button"><span>Create</span></button>
   </div>
 
 </form>

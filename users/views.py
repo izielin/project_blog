@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from blog.models import Post, Cycle
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 def register(request):
     if request.method == 'POST':
@@ -40,8 +42,19 @@ def profile(request, username):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
+    posts_list = Post.objects.filter(author=user)
+    paginator = Paginator(posts_list, 8)
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     context = {
-        'posts': Post.objects.filter(author=user),
+        'posts': posts,
         'cycles': Cycle.objects.filter(author=user),
         'user': user,
         'u_form': u_form,
