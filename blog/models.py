@@ -46,23 +46,12 @@ class Post(models.Model):
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default="Not-Approved-Yet")
     numbers_of_entries = models.IntegerField(default=0)
     ratings = GenericRelation(Rating)
-    image = models.ImageField(default='default_post.jpg', upload_to='post_pics')
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        img = Image.open(self.image.path)
-
-        if img.height > 200 or img.width > 200:
-            output_size = (200, 200)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
 
 
 class Cycle(models.Model):

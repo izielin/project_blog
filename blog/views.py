@@ -137,9 +137,9 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.profile.moderator == True:
-            self.fields = ['title', 'synopsis', 'category', 'level', 'authorized', 'content', 'status', 'image']
+            self.fields = ['title', 'synopsis', 'category', 'level', 'authorized', 'content', 'status']
         else:
-            self.fields = ['title', 'synopsis', 'category', 'content', 'image']
+            self.fields = ['title', 'synopsis', 'category', 'content']
         return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):

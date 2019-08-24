@@ -1,6 +1,19 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <div class="content-section container my-5 py-5">
+
+    <style>
+
+    span::after {
+        content:"\a";
+        white-space: pre;
+    }
+
+    label{
+        margin-top:20px;
+    }
+    </style>
+
+    <div class="single-blog-post post-style-4 container my-5 py-5">
 
         <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -127,7 +127,7 @@
                         <div class="sidebar-widget-area">
                             <h5 class="title">DOWNLOAD MATERIALS</h5>
                             <div class="widget-content">
-                            <img style="max-width: 200px;" class="mx-auto mb-4 d-block" src="{{ post.image.url }}" >
+                            <img style="max-width: 200px;" class="mx-auto mb-4 d-block" src="{% static  post.category|add:".jpg" %}" >
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
                             <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a>
 
