@@ -44,23 +44,6 @@
     </form>
 
     </div>
-    
-    <div class="container content-section">
-    <button type="button" class="create-cycle btn justify-content-end" data-id="{% url 'cycle-create' %}"><span><i class="fas fa-plus" style="color: #96281B;"></i></span></button>
-    </div>
-    
-    <div class="content-section container">
-      {% for cycle in cycles %}
-
-          <h4>{{cycle.title}}</h4>
-          {{ cycle.post }}
-          <button type="button" class="update-cycle btn btn-sm " data-id="{% url 'cycle-update' cycle.pk %}">
-                    <span><i class="fas fa-edit" style="color: #1E824C;"></i></span></button>
-              <button type="button" class="delete-cycle btn btn-sm" data-id="{% url 'cycle-delete' cycle.pk %}">
-                  <span><i class="fas fa-trash-alt" style="color: #96281B;"></i></span></button>
-      {% endfor %}
-      
-    </div>
 
   <section class="section_gap blog_area">
     <div class="container">
@@ -68,49 +51,45 @@
         <div class="col-12">
         <div class="row">
         {% for post in posts %}
-
-
-
-            <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3 mx-auto col-lg-5 col-md-6 col-sm-6" data-wow-delay="0.2s">
-
-                                        <div class="post-content col-12">
-                                            <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                <div class="row" style="margin: 0; padding: 0;">
-                                                    <div class="col-6">
-                                                        <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item">
-                                                            <i class="far fa-keyboard"></i><small class="text-muted">
-                                                                {{ post.category }}</small>
-                                                            <br>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
-                                                              {{ post.author.get_full_name }}</small></a>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <i class="far fa-calendar-alt"></i><small class="text-muted">
-                                                                {{ post.date_posted|date:"F d, Y" }}</small>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <ul class="list-group list-group-flush">
-                                                          <li class="list-group-item">
-                                                              <i class="fas fa-chart-line"></i><small class="text-muted">
-                                                              {{ post.level }}  </small>
-                                                          </li>
-                                                          <li class="list-group-item">
-                                                            <i class="far fa-eye"></i><small class="text-muted">
-                                                                {{ post.numbers_of_entries }} </small>
-                                                            </li>
-                                                          <li class="list-group-item">
-                                                          <i class="far fa-comments"></i><small class="text-muted">
-                                                                {{ post.comments.count }}  </small>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                             </div>
+    <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3 mx-auto col-lg-5 col-md-6 col-sm-6" data-wow-delay="0.2s">
+    <div class="post-content col-12">
+        <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+            <div class="row" style="margin: 0; padding: 0;">
+                <div class="col-6">
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="far fa-keyboard"></i><small class="text-muted">
+                            {{ post.category }}</small>
+                        <br>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
+                          {{ post.author.get_full_name }}</small></a>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="far fa-calendar-alt"></i><small class="text-muted">
+                            {{ post.date_posted|date:"F d, Y" }}</small>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                          <i class="fas fa-chart-line"></i><small class="text-muted">
+                          {{ post.level }}  </small>
+                      </li>
+                      <li class="list-group-item">
+                        <i class="far fa-eye"></i><small class="text-muted">
+                            {{ post.numbers_of_entries }} </small>
+                        </li>
+                      <li class="list-group-item">
+                      <i class="far fa-comments"></i><small class="text-muted">
+                            {{ post.comments.count }}  </small>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+         </div>
 
       {% endfor %}
 
@@ -161,23 +140,4 @@
     </div>
   </section>
 
-
-
-
-<script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
-    <script>
-    $(function () {
-        $(".create-cycle").modalForm({formURL: "{% url 'cycle-create' %}"});
-
-        $(".update-cycle").each(function () {
-          $(this).modalForm({formURL: $(this).data('id')});
-        });
-
-         $(".delete-cycle").each(function () {
-          $(this).modalForm({formURL: $(this).data('id')});
-        });
-
-});
-
-    </script>
 {% endblock content %}

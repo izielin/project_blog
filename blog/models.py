@@ -54,17 +54,6 @@ class Post(models.Model):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
 
-class Cycle(models.Model):
-    title = models.CharField(max_length=200, unique=True)
-    description = models.TextField(max_length=500, default="Brak opisu")
-    date_created = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ManyToManyField(Post)
-
-    def __str__(self):
-        return self.title
-
-
 class Email(models.Model):
     # sender = models.EmailField(max_length=100, default="ecg.vot@gmail.com")
     sender = models.EmailField(max_length=100, default=settings.EMAIL_HOST_USER)

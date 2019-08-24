@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from blog.models import Post, Cycle
+from blog.models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -55,7 +55,6 @@ def profile(request, username):
 
     context = {
         'posts': posts,
-        'cycles': Cycle.objects.filter(author=user),
         'user': user,
         'u_form': u_form,
         'p_form': p_form,

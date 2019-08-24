@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import UpdateView
-from .models import Post, Document, Comment, Cycle, Email
+from .models import Post, Document, Comment, Email
 # from .forms import CommentForm, DocumentForm, CycleForm
-from .forms import CommentForm, DocumentForm, CycleForm, EmailForm
+from .forms import CommentForm, DocumentForm, EmailForm
 from django.views import generic
 from . import forms
 from . import models
@@ -211,40 +211,6 @@ class CommentDeleteView(BSModalDeleteView, LoginRequiredMixin):
     def get_success_url(self):
         id = self.object.post.id
         return reverse('post-detail', kwargs={'pk': id})
-
-
-class CycleCreateView(BSModalCreateView, LoginRequiredMixin):
-    template_name = 'blog/cycle_form.html'
-    form_class = CycleForm
-
-    def form_valid(self, form, **kwargs):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        reverse_user = self.request.user
-        return reverse('profile', kwargs={'username': reverse_user})
-
-
-class CycleUpdateView(BSModalUpdateView):
-    model = Cycle
-    template_name = 'blog/cycle_update.html'
-    form_class = CycleForm
-    success_message = 'Success: Cycle was updated.'
-
-    def get_success_url(self):
-        reverse_user = self.request.user
-        return reverse('profile', kwargs={'username': reverse_user})
-
-
-class CycleDeleteView(BSModalDeleteView, LoginRequiredMixin):
-    model = Cycle
-    template_name = 'blog/cycle_delete.html'
-    success_message = 'Success: Cycle was deleted.'
-
-    def get_success_url(self):
-        reverse_user = self.request.user
-        return reverse('profile', kwargs={'username': reverse_user})
 
 
 def posts_no_authorized(request):
