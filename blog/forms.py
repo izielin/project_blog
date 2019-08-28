@@ -13,7 +13,6 @@ class MDEditorForm(forms.Form):
     synopsis = forms.CharField()
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, label="category", initial='', widget=forms.RadioSelect())
     content = MDTextFormField()
-    image = forms.ImageField()
 
 
 class MDEditorModleForm(forms.ModelForm):

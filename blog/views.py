@@ -61,31 +61,20 @@ def home(request):
     }
     return render(request, 'blog/home.html', context)
 
+
 def send_email(request):
-    context = {
-        'emails' : Email.objects.filter(posted=False).order_by('-date_created')
-    }
-    # send_mail(
-    # 'Subject here',
-    # 'Here is the message.',
-    # 'ecg.vot@gmail.com',
-    # ['misiopar@wp.pl'],
-    # fail_silently=False,
-    # )
-    return render(request, 'blog/send_email.html', context)
+    # context = {
+    #     'emails' : Email.objects.filter(posted=False).order_by('-date_created')
+    # }
+    send_mail(
+        'Subject here',
+        'Here is the message.',
+        'ecg.vot@gmail.com',
+        ['misiopar@wp.pl'],
+        fail_silently=False,
+    )
+    return render(request, 'blog/send_email.html')
 
-# class EmailCreateView(generic.DetailView):
-#     model = Email
-#     template_name = 'blog/email_form.html'
-
-#     def form_valid(self, form, **kwargs):
-#         form.instance.author = self.request.user
-#         # form.instance.post = get_object_or_404(Post, pk=self.kwargs.get('pk'))
-#         return super().form_valid(form)
-
-#     # def get_success_url(self):
-#     #     id = self.object.emails.id
-#     #     return reverse('email-detail', kwargs={'pk': id})
 
 class EmailCreateView(BSModalCreateView, LoginRequiredMixin):
     template_name = 'blog/email_form.html'
@@ -98,6 +87,7 @@ class EmailCreateView(BSModalCreateView, LoginRequiredMixin):
     def get_success_url(self):
         reverse_user = self.request.user
         return reverse('profile', kwargs={'username': reverse_user})
+
 
 class MDEditorFormView(generic.FormView):
     form_class = forms.MDEditorForm
