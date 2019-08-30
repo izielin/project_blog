@@ -223,7 +223,7 @@
                                             <img src="{% static  post.category|add:".jpg" %}">
                                         </div>
                                         <div class="post-content col-8">
-                                            <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                                            <h4 class="text-center"><a class="article-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
                                                 <div class="row" style="margin: 0; padding: 0;">
                                                     <div class="col-6">
                                                         <ul class="list-group list-group-flush">
@@ -233,8 +233,13 @@
                                                             <br>
                                                         </li>
                                                         <li class="list-group-item">
+                                                            {% if not post.author.first_name  %}
+                                                                <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
+                                                              {{ post.author }}</small></a>
+                                                            {%  else %}
                                                             <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
                                                               {{ post.author.get_full_name }}</small></a>
+                                                            {% endif %}
                                                         </li>
                                                         <li class="list-group-item">
                                                             <i class="far fa-calendar-alt"></i><small class="text-muted">

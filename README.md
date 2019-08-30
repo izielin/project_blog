@@ -10,3 +10,6 @@ pip3 install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
+
+#heroku super user
+heroku run python manage.py createsuperuser
