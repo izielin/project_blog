@@ -15,10 +15,10 @@ class Post(models.Model):
         ('Python', 'Python'),
         ('C++', 'C++'),
         ('Graphics', 'Graphics'),
-        ('Text Editor', 'TextEditor'),
+        ('TextEditor', 'Text Editor'),
         ('Spreadsheet', 'Spreadsheet'),
-        ('DataBase', 'DataBase'),
-        ('Web Design', 'WebDesign'),
+        ('DataBase', 'Data Base'),
+        ('WebDesign', 'Web Design'),
     )
 
     LEVEL_CHOICES = (
