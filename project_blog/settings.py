@@ -23,7 +23,7 @@ SECRET_KEY = 'pt6+_*#um&ihr=3_1^7ng=(_7wy@x3_t0-l-0#qml$r+a%e&l8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,11 +134,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'blog/static')
+
+# os.makedirs(STATIC_TMP, exist_ok=True)
+# os.makedirs(STATIC_ROOT, exist_ok=True)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'blog/templates'), os.path.join(BASE_DIR, 'users/templates')]
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

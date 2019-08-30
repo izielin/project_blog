@@ -81,4 +81,6 @@ venv/
 pve
 env
 .pve
+
+db.sqlite3
 .env
