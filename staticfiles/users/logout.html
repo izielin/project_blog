@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="content-section container my-5 py-5">
+
+        <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+
+        <h2>You have been logged out</h2>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <a class="text-dark" href="{% url 'login' %}">Log In Again</a>
+            </small>
+        </div>
+
+    </div>
+
+{% endblock content %}

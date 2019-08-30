@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>ecg.vot.pl</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/owl.carousel.min.css' %}">
+<link rel="shortcut icon" href="">
+
+    {% if title %}
+        <title>Django Blog - {{ title }}</title>
+    {% else %}
+        <title>Django Blog</title>
+    {% endif %}
+
+</head>
+<body>
+<div class="row m-0">
+  <div class="col-xl-2 p-0" style="background-color: #242423;">
+    <nav class="navbar navbar-expand-xl">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<aside id="aside" role="complementary" class="text-center">
+    <h1 class=" d-none d-xl-block" id="logo">
+      <a href="{% url 'home' %}">
+        <span class="img d-lg-block" style="background-image: url({% static 'blog/images/logo_150px.png' %});"></span>
+        ecg.vot.pl</a>
+    </h1>
+    <nav id="main-menu" role="navigation">
+      <ul>
+          <li><a class="nav-item nav-link" href="{% url 'home' %}">Strona Głowna</a></li>
+        <li><a class="nav-item nav-link" href="{% url 'post-list' %}">Lista Kursów</a></li>
+        {% if user.is_authenticated%}
+            <li><a class="nav-item nav-link" href="{% url 'post-create' %}">Nowy Kurs</a></li><br>
+            {% if user.profile.moderator == True %}
+                <hr class="w-75 bg-light">
+                <li><a class="nav-item nav-link" href="{% url 'post-no-authorized' %}">Akceptacja</a></li>
+                <hr class="w-75 bg-light"><br><br><br>
+            {% endif %}
+            <li><a class="nav-item nav-link" href="{% url 'profile' user %}">Twój Profil</a></li>
+            <li><a class="nav-item nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
+          {% else %}
+            <li><a class="nav-item nav-link" href="{% url 'login' %}">Zaloguj</a></li>
+            <li><a class="nav-item nav-link" href="{% url 'register' %}">Rejestracja</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </aside>
+  </div>
+  </nav>
+  </div>
+  <div class="col-xl-10 col-12 p-0">
+
+        <!-- container -->
+      {% block content %}{% endblock %}
+
+<!-- .container -->
+
+
+  <!-- footer -->
+<footer class="footer-template">
+          <div class=" px-md-5">
+            <div class="row mb-5">
+              <div class="col-md">
+                <div class="footer-template-widget mb-4 ml-md-4">
+                  <ul>
+            <img src="{% static 'blog/images/logo_200px.png' %}" class="img">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius</p>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md">
+                 <div class="footer-template-widget mb-4">
+                  <h2>Przydatne linki</h2>
+                  <ul>
+                    <a href="http://lo1.sandomierz.pl/"><p>Strona Szkoły <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="index.html"><p>Poczytaj <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="materialy.html"><p>Materiały <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="linki.html"><p>Linki & Narzędzia <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md">
+                 <div class="footer-template-widget mb-4">
+                  <h2>Przydatne linki</h2>
+                  <ul>
+                    <a href="http://lo1.sandomierz.pl/"><p>Strona Szkoły <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="index.html"><p>Poczytaj <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="materialy.html"><p>Materiały <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                    <hr>
+                    <a href="linki.html"><p>Linki & Narzędzia <i class="fa fa-angle-right g-absolute-centered--y g-right-0"></i></p></a>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="footer-template-widget mb-4">
+                  <h2>Kontakt</h2>
+                  <div class=" mb-3">
+                    <ul>
+                  <li><p>ul.Jana Długosza 7</p></li>
+                    <li><p>Sandomierz, Polska</p></li>
+                    <p>Email: <span class="email"><b>ecg.vot@gmail.com</b></span></p>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <small style="color: white"> Coding by Michał Parzych • Graphics by Hubert Żuber</small>
+            </div>
+          </div>
+        </footer>
+<!-- .footer -->
+
+
+</div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+           <script src="{% static 'blog/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+      <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'blog/js/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'blog/js/popper.js' %}"></script>
+      <script src="{% static 'blog/js/stellar.js' %}"></script>
+      <script src="{% static 'blog/js/theme.js' %}"></script>
+</body>
+</html>

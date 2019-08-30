@@ -1,0 +1,249 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load ratings %}
+{% block content %}
+
+    <link href="{% static 'mdeditor/css/editormd.min.css' %}" rel="stylesheet">
+    <link href="{% static 'mdeditor/css/editormd.preview.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    .to-top{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #242423;
+        color:#fff;
+        padding: 9px 12px;
+        border-radius: 50%;
+        z-index: 999;
+    }
+    .to-top:hover{
+        background-color: #ccb78f;
+        color: #242423;
+    }
+    </style>
+
+    <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+
+    <div class="container">
+
+        <!-- main content -->
+        <div class="row mt-5 pt-5">
+          <div class="col-xl-8 py-5">
+                <h1 class="bread" id="top">{{ object.title }} </h1>
+
+              <div class="single-blog-content my-5">
+                <div  class="post-content">
+
+                     <div class="row" style="margin: 0; padding: 0;">
+                        <div class="col-6">
+                            <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="far fa-keyboard"></i><small class="text-muted">
+                                    {{ post.category }}</small>
+                                <br>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
+                                  {{ post.author.get_full_name }}</small></a>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="far fa-calendar-alt"></i><small class="text-muted">
+                                    {{ post.date_posted|date:"F d, Y" }}</small>
+                            </ul>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">
+                                  <i class="fas fa-chart-line"></i><small class="text-muted">
+                                  {{ post.level }}  </small>
+                              </li>
+                              <li class="list-group-item">
+                                <i class="far fa-eye"></i><small class="text-muted">
+                                    {{ post.numbers_of_entries }} </small>
+                                </li>
+                              <li class="list-group-item">
+                              <i class="far fa-comments"></i><small class="text-muted">
+                                    {{ post.comments.count }}  </small>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6">
+                            <p class="text-justify">{{ post.synopsis }}</p>
+                        </div>
+                </div>
+               </div>
+            </div>
+
+              <div class="single-blog-content mt-5">
+                <div id="content" class="post-content">
+                    <textarea>{{ object.content }}</textarea>
+                </div>
+            </div>
+
+
+            {% if user.is_authenticated%}
+             <hr>
+                <button class="create-comment btn-hover-add" style="width: 40%;" type="button" name="button"><span>Add comment</span></button>
+            {% endif %}
+          <hr>
+
+
+          <h3> Comments: {{ post.comments.count }}</h3>
+        {% for comment in post.comments.all %}
+            <article class="media comment-section comment-content">
+            <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2">{{ comment.author.get_full_name }}</a>
+                  <small class="text-muted">{{ comment.created_date|date:"d.m.Y"  }}</small>
+                  {%if object.author == user or user.profile.moderator == True%}
+                      <button type="button" class="delete-comment btn justify-content-end" data-id="{% url 'comment-delete' comment.pk %}"><span><i class="fas fa-trash-alt text-danger d-flex " ></i></span></button>
+              {% endif %}
+              </div>
+              <p class="article-content">{{ comment.text|linebreaks }}</p>
+            </div>
+          </article>
+        {% endfor %}
+    </div>
+                <div class="col-12 col-md-8 col-lg-4">
+                    <div class="post-sidebar-area wow fadeInUpBig" data-wow-delay="0.2s">
+                        <!-- Widget Area -->
+                        <div class="sidebar-widget-area">
+                            <h5 class="title">DOWNLOAD MATERIALS</h5>
+                            <div class="widget-content">
+                            <img style="max-width: 200px;" class="mx-auto mb-4 d-block" src="{% static  post.category|add:".jpg" %}" >
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+                            <a href="{% url 'post-download' object.id %}" style="color: #ccb78f;"> Download </a>
+
+                        </div>
+                        </div>
+
+                {%if object.author == user or user.profile.moderator == True%}
+                    <div class="sidebar-widget-area">
+                        <h5 class="title">Stay Connected</h5>
+                        <div class="widget-content">
+                            <div class="social-area d-flex justify-content-between">
+                                <a href="{% url 'post-update' object.id %}"><i class="fas fa-edit" style="color: #1E824C;"></i></a>
+                                <a href="{% url 'post-upload' object.id %}"><i class="fas fa-upload" style="color: #3A539B;"></i></a>
+                                <button type="button" class="delete-post btn justify-content-end" data-id="{% url 'post-delete' object.pk %}"><span><i class="fas fa-trash-alt" style="color: #96281B;"></i></span></button>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endif %}
+                        <div class="sidebar-widget-area">
+                        <h5 class="title">Stay Connected</h5>
+                        <div class="widget-content">
+                           {% ratings object %}
+                            <div class="post-meta">
+                             <hr>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget-area">
+                        <h5 class="title">Stay Connected</h5>
+                        <div class="widget-content" id="demo">
+                        </div>
+                    </div>
+         </div>
+
+    </div>
+<!-- .main content -->
+            <a href="#top" class="to-top"><i class="fas fa-chevron-up"></i></a>
+
+</div>
+
+
+<script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/raphael.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/underscore.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/sequence-diagram.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
+<script>
+  $(function () {
+      editormd.markdownToHTML("content", {
+          emoji           : true,
+          taskList        : true,
+          tex             : true,
+          flowChart       : true,
+          sequenceDiagram : true,
+      });
+
+      $(".reference-link").each(function (i,obj) {
+        console.log(obj)
+      })
+  });
+
+  $(function () {
+    $(".create-comment").modalForm({formURL: "{% url 'add_comment_to_post' pk=post.pk  %}"});
+    $(".delete-comment").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      });
+      $(".delete-post").modalForm({formURL: "{% url 'post-delete' pk=post.pk  %}"});
+
+  });
+
+window.onload = function() {
+    const x = document.getElementById("content").getElementsByTagName("A");
+    let i;
+    let heading = [];
+    for (i = 0; i < x.length; i++) {
+    heading.push(x[i].getAttribute("name"));
+  }
+
+
+
+   let hLen = heading.length;
+
+    for (i = 0; i < hLen; i++) {
+       a = document.createElement('a');
+       a.href = "#" + heading[i];
+       a.innerHTML = heading[i];// <a>INNER_TEXT</a>
+       document.getElementById("demo").appendChild(a);
+        hr = document.createElement('hr');
+        hr.classList.add("bg-white");
+       document.getElementById("demo").appendChild(hr);
+
+    }
+};
+
+    $(document).ready(function(){
+        let offset = 250;
+        let duration = 500;
+
+        $(window).scroll(function(){
+            if($(this).scrollTop() > offset){
+                $('.to-top').fadeIn(duration);
+            } else {
+                $('.to-top').fadeOut(duration);
+            }
+        });
+  });
+
+</script>
+
+{% endblock %}
+
+
