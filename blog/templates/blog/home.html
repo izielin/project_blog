@@ -8,16 +8,30 @@
                 <div class="col-lg-7">
                     <div class="blog_text_slider owl-carousel">
                     {% for post in posts %}
-                        <div class="item">
-                            <div class="blog_text">
-                                <div class="cat">
-                                    <span class="cat_btn mr-4"> {{ post.author.get_full_name }}</span>
-                                    <span><i class="fas fa-calendar-alt"></i> {{ post.date_posted|date:"d.m.Y" }}</span>
+                                 <div class="single-blog-post blog_text ">
+                              <div class="post-thumbnail">
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                <div class="post-cta">
+                                  <p>{{ post.category }}</p>
                                 </div>
-                                    <h3 class="my-4"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+                              </div>
+                              <div class="post-content">
+                                <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
                                 <p>{{ post.synopsis }}</p>
+                                <div class="post-meta">
+                                  {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                                  <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                                </div>
+                              </div>
                             </div>
-                        </div>
                     {% endfor %}
                     </div>
                 </div>

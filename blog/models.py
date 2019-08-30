@@ -6,7 +6,6 @@ from mdeditor.fields import MDTextField
 from star_ratings.models import Rating
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from PIL import Image
 from django.conf import settings
 
 

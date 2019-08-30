@@ -2,49 +2,48 @@
 {% load static %}
 {% block content %}
 
-    <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content"></div>
-      </div>
+  <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
     </div>
+  </div>
 
+  <div class="row" style="max-width: 100%;">
     <div class="row ecg-section container my-5 mx-auto">
-        {% for item in download_list %}
-            <div class="col-md-4 d-flex align-self-stretch">
-              <div class="media block-6 materials py-4 d-block">
-                <div class="d-flex justify-content-start">
-                  <div class="icon d-flex align-items-center justify-content-center">
-                    <span><i class="fas fa-file-archive fa-4x"></i></span>
-                  </div>
-                </div>
-                <div class="media-body p-2 mt-2">
-                  <h3 class="heading mb-3">{{ item.name }}</h3>
-                  {%if object.author == user or user.profile.moderator == True%}
-                      <button type="button" class="file-delete btn justify-content-end" data-id="{% url 'upload-delete' item.id %}"><span><i class="fas fa-trash-alt text-danger d-flex"></i></span></button>
-              {% endif %}
-
-                    <a class=" btn icon-box" href="{{ item.document.url }}"><i class="fa fa-download"></i></a>
+      {% for item in download_list %}
+        <div class="col-3 mx-4 single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3" data-wow-delay="0.2s">
+          <div class=" mx-auto d-flex align-self-stretch">
+            <div class="media block-6 materials py-4 d-block">
+              <div class="d-flex justify-content-start">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span><i class="fas fa-file-archive fa-4x"></i></span>
                 </div>
               </div>
+              <div class="media-body p-2 mt-2">
+                <h3 class="heading mb-3">{{ item.name }}</h3>
+                {%if object.author == user or user.profile.moderator == True%}
+                  <button type="button" class="file-delete btn justify-content-end" data-id="{% url 'upload-delete' item.id %}"><span><i class="fas fa-trash-alt text-danger d-flex"></i></span></button>
+                {% endif %}
+                <a class=" btn icon-box" href="{{ item.document.url }}"><i class="fa fa-download" style="color: #3A539B;"></i></a>
+              </div>
             </div>
-        {% empty %}
-            <p>Nie ma żadnych plików do pobrania</p>
-        {% endfor %}
+          </div>
+        </div>
+
+      {% empty %}
+        <p>Nie ma żadnych plików do pobrania</p>
+      {% endfor %}
     </div>
+  </div>
+
+
 
 <script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
   $(function () {
     $(".file-delete").each(function () {
         $(this).modalForm({formURL: $(this).data('id')});
-      })
-
+    })
   });
 </script>
 

@@ -2,35 +2,30 @@
 {% block content %}
 
 <div class="container my-5 py-5">
-    <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
-    <h3 class="mb-5"> Niezatwierdzoych postów: {{ posts.count }}</h3>
+  <h3 class="mb-5"> Niezatwierdzoych postów: {{ posts.count }}</h3>
     <div class="table-responsive ">
-        <table class="table table-striped" >
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">category</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Upload Date</th>
-                </tr>
-            </thead>
-            <tbody >
-                {% for post in posts %}
-                <tr>
-                    <td><a class="article-title" href="{% url 'post-update' post.id %}">{{ post.title }}</a></td>
-                    <td>{{post.author.get_full_name }}</td>
-                    <td>{{post.category}}</td>
-                    <td>{{post.status}}</td>
-                    <td>{{post.date_posted|date:" d.m.Y"}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <table class="table table-striped" >
+        <thead style="background-color: #242423; color: white;">
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">category</th>
+            <th scope="col">Status</th>
+            <th scope="col">Upload Date</th>
+          </tr>
+        </thead>
+      <tbody>
+        {% for post in posts %}
+          <tr>
+            <td><a class="article-title" href="{% url 'post-update' post.id %}">{{ post.title }}</a></td>
+            <td>{{post.author.get_full_name }}</td>
+            <td>{{post.category}}</td>
+            <td>{{post.status}}</td>
+            <td>{{post.date_posted|date:" d.m.Y"}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      </table>
     </div>
-</div>
+  </div>
 {% endblock %}

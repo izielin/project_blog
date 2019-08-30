@@ -2,408 +2,473 @@
 {% load static %}
 {% block content %}
 
-        <style>
-            .btn-sub{
-                background: white;
-                border: none;
-                width: 100%;
-            }
-            .btn-sub:hover {
-                background: white;
-            }
+    <style>
+        .btn-sub{
+            background: white;
+            border: none;
+            width: 100%;
+        }
+        .btn-sub:hover {
+            background: white;
+        }
 
-            .btn-sub:focus {
-                outline:0;
-            }
+        .btn-sub:focus {
+            outline:0;
+        }
 
+
+    .post-content i {
+        font-size: 20px;
+        padding: 10px;
+        background-color: #242423;
+        color: #ccb78f;
+            box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.4), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+        margin-right: 10px;
+    }
     </style>
 
-    <nav class="navbar navbar-light bg-white container justify-content-end d-xl-none my-3">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-       </nav>
 
-<div class="main-content-wrapper" style="padding-top: 100px;">
-    <div class="container">
+    <div class="main-content-wrapper" style="padding-top: 100px;">
+      <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-                <div class="post-content-area mb-50">
-                    <div class="post-category-area" style="padding-top: 100px;">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="tab1" data-toggle="tab" href="#post-tab-1" role="tab" aria-controls="post-tab-1" aria-selected="true">latest</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="tab2" data-toggle="tab" href="#post-tab-2" role="tab" aria-controls="post-tab-2" aria-selected="false">most_popular</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="tab3" data-toggle="tab" href="#post-tab-3" role="tab" aria-controls="post-tab-3" aria-selected="false">most_rated</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="tab4" data-toggle="tab" href="#post-tab-4" role="tab" aria-controls="post-tab-4" aria-selected="false">random</a>
-                            </li>
-                        </ul>
+          <div class="col-12 col-lg-8">
+            <div class="post-content-area mb-50">
+              <div class="post-category-area" style="padding-top: 100px;">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="tab1" data-toggle="tab" href="#post-tab-1" role="tab" aria-controls="post-tab-1" aria-selected="true">latest</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="tab2" data-toggle="tab" href="#post-tab-2" role="tab" aria-controls="post-tab-2" aria-selected="false">most_popular</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="tab3" data-toggle="tab" href="#post-tab-3" role="tab" aria-controls="post-tab-3" aria-selected="false">most_rated</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="tab4" data-toggle="tab" href="#post-tab-4" role="tab" aria-controls="post-tab-4" aria-selected="false">random</a>
+                  </li>
+                </ul>
 
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="post-tab-1" role="tabpanel" aria-labelledby="tab1">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
-                                            {% for post in latest %}
-                                            <div class="single-blog-post">
-                                                <div class="post-thumbnail">
-                                                    <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
-                                                    <div class="post-cta"><p>{{ post.category }}</p></div>
-                                                </div>
-                                                <div class="post-content">
-                                                    <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                    <p>{{ post.synopsis }}</p>
-                                                    <div class="post-meta">
-                                                        <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                    {% for post in latest %}
-                                        <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
-                                            <div class="post-thumbnail">
-                                               <img src="{% static  post.category|add:".jpg" %}" >
-                                            </div>
-                                            <div class="post-content">
-                                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                <!-- Post Meta -->
-                                                <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    </div>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="post-tab-1" role="tabpanel" aria-labelledby="tab1">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
+                          {% for post in latest %}
+                            <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                <div class="post-cta">
+                                  <p>{{ post.category }}</p>
                                 </div>
+                              </div>
+                              <div class="post-content">
+                                <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                                <p>{{ post.synopsis }}</p>
+                                  <div class="post-meta">
+                                    {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                                  </div>
+                              </div>
                             </div>
-
-                            <div class="tab-pane fade" id="post-tab-2" role="tabpanel" aria-labelledby="tab2">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
-                                            {% for post in most_popular %}
-                                            <div class="single-blog-post">
-                                                <div class="post-thumbnail">
-                                                    <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
-                                                    <div class="post-cta"><p>{{ post.category }}</p></div>
-                                                </div>
-                                                <div class="post-content">
-                                                    <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                    <p>{{ post.synopsis }}</p>
-                                                    <div class="post-meta">
-                                                        <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                    {% for post in most_popular %}
-                                        <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
-                                            <div class="post-thumbnail">
-                                               <img src="{% static  post.category|add:".jpg" %}" >
-                                            </div>
-                                            <div class="post-content">
-                                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                <!-- Post Meta -->
-                                                <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="post-tab-3" role="tabpanel" aria-labelledby="tab3">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
-                                            {% for post in most_rated %}
-                                            <div class="single-blog-post">
-                                                <div class="post-thumbnail">
-                                                    <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
-                                                    <div class="post-cta"><p>{{ post.category }}</p></div>
-                                                </div>
-                                                <div class="post-content">
-                                                    <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                    <p>{{ post.synopsis }}</p>
-                                                    <div class="post-meta">
-                                                        <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                    {% for post in most_rated %}
-                                        <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
-                                            <div class="post-thumbnail">
-                                               <img src="{% static  post.category|add:".jpg" %}" >
-                                            </div>
-                                            <div class="post-content">
-                                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                <!-- Post Meta -->
-                                                <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="post-tab-4" role="tabpanel" aria-labelledby="tab4">
-                                            <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
-                                            {% for post in random %}
-                                            <div class="single-blog-post">
-                                                <div class="post-thumbnail">
-                                                    <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
-                                                    <div class="post-cta"><p>{{ post.category }}</p></div>
-                                                </div>
-                                                <div class="post-content">
-                                                    <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                    <p>{{ post.synopsis }}</p>
-                                                    <div class="post-meta">
-                                                        <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                    {% for post in random %}
-                                        <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
-                                            <div class="post-thumbnail">
-                                               <img src="{% static  post.category|add:".jpg" %}" >
-                                            </div>
-                                            <div class="post-content">
-                                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                <!-- Post Meta -->
-                                                <a href="{% url 'profile' post.author.username %}"><small class="text-muted">{{ post.author.get_full_name }}</small></a>
-                                                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
+                          {% endfor %}
                         </div>
+                      </div>
+
+                      <div class="col-12 col-md-6">
+                        {% for post in latest %}
+                          <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
+                            <div class="post-thumbnail">
+                              <img src="{% static  post.category|add:".jpg" %}" >
+                            </div>
+                            <div class="post-content">
+                              <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                              {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
                     </div>
-                    <div class="post-latest-articles">
-                        <div class="row">
-                            <div class="col-12 ">
-                                <div class="title">
-                                    <h5>Latest Articles</h5>
+                  </div>
+
+                  <div class="tab-pane fade" id="post-tab-2" role="tabpanel" aria-labelledby="tab2">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
+                          {% for post in most_popular %}
+                            <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                <div class="post-cta">
+                                  <p>{{ post.category }}</p>
                                 </div>
-                                {% for post in posts %}
-                                    <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3" data-wow-delay="0.2s">
-                                        <div class="post-thumbnail">
-                                            <img src="{% static  post.category|add:".jpg" %}">
-                                        </div>
-                                        <div class="post-content col-8">
-                                            <h4 class="text-center"><a class="article-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                                <div class="row" style="margin: 0; padding: 0;">
-                                                    <div class="col-6">
-                                                        <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item">
-                                                            <i class="far fa-keyboard"></i><small class="text-muted">
-                                                                {{ post.category }}</small>
-                                                            <br>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            {% if not post.author.first_name  %}
-                                                                <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
-                                                              {{ post.author }}</small></a>
-                                                            {%  else %}
-                                                            <i class="far fa-user"></i><a href="{% url 'profile' post.author.username %}"><small class="text-muted">
-                                                              {{ post.author.get_full_name }}</small></a>
-                                                            {% endif %}
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <i class="far fa-calendar-alt"></i><small class="text-muted">
-                                                                {{ post.date_posted|date:"F d, Y" }}</small>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <ul class="list-group list-group-flush">
-                                                          <li class="list-group-item">
-                                                              <i class="fas fa-chart-line"></i><small class="text-muted">
-                                                              {{ post.level }}  </small>
-                                                          </li>
-                                                          <li class="list-group-item">
-                                                            <i class="far fa-eye"></i><small class="text-muted">
-                                                                {{ post.numbers_of_entries }} </small>
-                                                            </li>
-                                                          <li class="list-group-item">
-                                                          <i class="far fa-comments"></i><small class="text-muted">
-                                                                {{ post.comments.count }}  </small>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                             </div>
-                                        {% endfor %}
-                                        </div>
-                                    </div>
+                              </div>
+                              <div class="post-content">
+                                <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                                <p>{{ post.synopsis }}</p>
+                                <div class="post-meta">
+                                  {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                                  <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
                                 </div>
+                              </div>
+                            </div>
+                          {% endfor %}
                         </div>
+                      </div>
+
+                      <div class="col-12 col-md-6">
+                        {% for post in most_popular %}
+                          <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
+                            <div class="post-thumbnail">
+                              <img src="{% static  post.category|add:".jpg" %}" >
+                            </div>
+                            <div class="post-content">
+                              <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                              {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
                     </div>
+                  </div>
 
+                  <div class="tab-pane fade" id="post-tab-3" role="tabpanel" aria-labelledby="tab3">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
+                          {% for post in most_rated %}
+                            <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                  <div class="post-cta">
+                                    <p>{{ post.category }}</p>
+                                  </div>
+                              </div>
+                              <div class="post-content">
+                                <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                                <p>{{ post.synopsis }}</p>
+                                  <div class="post-meta">
+                                    {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                                  </div>
+                              </div>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
 
-                <div class="col-12 col-md-8 col-lg-4">
-                    <div class="post-sidebar-area wow fadeInUpBig" data-wow-delay="0.2s">
-                        <!-- Widget Area -->
-                        <div class="sidebar-widget-area">
-                            <h5 class="title">About World</h5>
-                            <div class="widget-content">
-
-                                <form method="GET" class="pb-5">
-                                    <input class="form-control form-control-md" type="text" name="q" value="{{ request.GET.q }}" placeholder="Wyszukaj">
-                                </form>
-
-                                <p>The mango is perfect in that it is always yellow and if it’s not, I don’t want to hear about it. The mango’s only flaw, and it’s a minor one, is the effort it sometimes takes to undress the mango, carve it up in a way that makes sense, and find its way to the mouth.</p>
+                    <div class="col-12 col-md-6">
+                    {% for post in most_rated %}
+                        <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
+                            <div class="post-thumbnail">
+                               <img src="{% static  post.category|add:".jpg" %}" >
+                            </div>
+                            <div class="post-content">
+                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                                <!-- Post Meta -->
+                                {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
                             </div>
                         </div>
-
-                        <div class="sidebar-widget-area">
-                            <h5 class="title">Today’s Pick</h5>
-                            {% for post in newest %}
-                            <div class="widget-content">
-                                <div class="single-blog-post todays-pick">
-                                    <div class="">
-                                        <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}">
-                                    </div>
-                                   <div class="post-content">
-                                    <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                                </div>
-                                </div>
-                            </div>
-                                {% empty %}
-                            <div class="widget-content">
-                                <div class="single-blog-post todays-pick">
-                                   <div class="post-content">
-                                    <h4 class="text-center"><a class="article-title">Nie dodano dziś żadnego kursu</a></h4>
-                                </div>
-                                </div>
-                            </div>
-                            {%  endfor %}
-                        </div>
-
-                    <div class="sidebar-widget-area">
-                        <h5 class="title">Stay Connected</h5>
-                        <div class="widget-content">
-                            <div class="social-area d-flex justify-content-between">
-                                <a href="#"><i class="fab fa-github-square"></i></a>
-                                <a href="#"><i class="fas fa-mail-bulk"></i></a>
-                                <a href="#"><i class="fab fa-facebook"></i></a>
-                                <a href="#"><i class="fab fa-google-plus"></i></a>
-                            </div>
-                        </div>
+                    {% endfor %}
                     </div>
+                </div>
+            </div>
 
-                    <div class="sidebar-widget-area">
-                        <h5 class="title">Top Stories</h5>
-                        <div class="widget-content">
-
-                           {%  for cat in category%}
-                           <div class="single-blog-post post-style-2 d-flex align-items-center widget-post my-3">
-                                <div class="post-content col-12">
-                                <form method="get">
-                                    <button type="submit" name="q" value="{{  cat.category }}" class="btn-sub d-flex justify-content-start" style="text-transform: uppercase;"><span class="d-flex justify-content-start" style="width: 50%;">{{ cat.category }}</span><span class="d-flex justify-content-end" style="width: 50%;">({{ cat.category__count }})</span></button>
-                                </form>
+                  <div class="tab-pane fade" id="post-tab-4" role="tabpanel" aria-labelledby="tab4">
+                    <div class="row">
+                       <div class="col-12 col-md-6">
+                         <div class="post-category-slider owl-carousel wow fadeInUpBig" data-wow-delay="0.1s">
+                           {% for post in random %}
+                             <div class="single-blog-post">
+                               <div class="post-thumbnail">
+                                 <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                 <div class="post-cta">
+                                   <p>{{ post.category }}</p>
+                                 </div>
                                </div>
-                            </div>
-                            {% endfor %}
-
-                        </div>
-                    </div>
-
-                    <div class="sidebar-widget-area">
-                        <h5 class="title">Top Stories</h5>
-                        <div class="widget-content">
-
-                           {%  for lvl in level%}
-                           <div class="single-blog-post post-style-2 d-flex align-items-center widget-post my-3">
-                                <div class="post-content col-12">
-                                <form method="get">
-                                    <button type="submit" name="q" value="{{  lvl.level }}" class="btn-sub d-flex justify-content-start"><span class="d-flex justify-content-start" style="width: 50%;">{{ lvl.level }}</span><span class="d-flex justify-content-end" style="width: 50%;">({{ lvl.level__count }})</span></button>
-                                </form>
+                               <div class="post-content">
+                                 <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                                 <p>{{ post.synopsis }}</p>
+                                 <div class="post-meta">
+                                   {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                                   <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                                 </div>
                                </div>
-                            </div>
-                            {% endfor %}
+                             </div>
+                           {% endfor %}
+                         </div>
+                       </div>
 
-                        </div>
+                       <div class="col-12 col-md-6">
+                         {% for post in random %}
+                           <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
+                             <div class="post-thumbnail">
+                               <img src="{% static  post.category|add:".jpg" %}" >
+                             </div>
+                             <div class="post-content">
+                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                               {% if not post.author.first_name  %}
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                               <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                             </div>
+                           </div>
+                         {% endfor %}
+                       </div>
+                      </div>
                     </div>
-         </div>
-    </div>
-</div>
+                </div>
+              </div>
+              <div class="post-latest-articles">
+                <div class="row">
+                  <div class="col-12 ">
+                    <div class="title">
+                        <h5>All Articles</h5>
+                    </div>
+                    {% for post in posts %}
+                      <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3" data-wow-delay="0.2s">
+                        <div class="post-thumbnail">
+                          <img src="{% static  post.category|add:".jpg" %}">
+                        </div>
+                      <div class="post-content col-8">
+                        <h4 class="text-center"><a class="article-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                        <div class="row" style="margin: 0; padding: 0;">
+                          <div class="col-6">
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">
+                                <i class="far fa-keyboard"></i>
+                                <small class="text-muted">{{ post.category }}</small>
+                                <br>
+                              </li>
+                              <li class="list-group-item">
+                                {% if not post.author.first_name  %}
+                                    <i class="far fa-user"></i>
+                                  <a href="{% url 'profile' post.author.username %}">
+                                    <small class="text-muted">{{ post.author }}</small>
+                                  </a>
+                                {%  else %}
+                                    <i class="far fa-user"></i>
+                                    <a href="{% url 'profile' post.author.username %}">
+                                      <small class="text-muted">{{ post.author.get_full_name }}</small>
+                                    </a>
+                                {% endif %}
+                              </li>
+                              <li class="list-group-item">
+                                <i class="far fa-calendar-alt"></i>
+                                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="col-6">
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">
+                                <i class="fas fa-chart-line"></i>
+                                <small class="text-muted">{{ post.level }}  </small>
+                              </li>
+                              <li class="list-group-item">
+                                <i class="far fa-eye"></i>
+                                <small class="text-muted">{{ post.numbers_of_entries }} </small>
+                              </li>
+                              <li class="list-group-item">
+                                <i class="far fa-comments"></i>
+                                  <small class="text-muted">{{ post.comments.count }}</small>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div class="col-12 col-md-8 col-lg-4">
+            <div class="post-sidebar-area wow fadeInUpBig" data-wow-delay="0.2s">
+              <div class="sidebar-widget-area">
+                <h5 class="title">About World</h5>
+                  <div class="widget-content">
+                    <form method="GET" class="pb-5">
+                      <input class="form-control form-control-md" type="text" name="q" value="{{ request.GET.q }}" placeholder="Wyszukaj">
+                    </form>
+                    <p>The mango is perfect in that it is always yellow and if it’s not, I don’t want to hear about it. The mango’s only flaw, and it’s a minor one, is the effort it sometimes takes to undress the mango, carve it up in a way that makes sense, and find its way to the mouth.</p>
+                  </div>
+                </div>
 
-    {% if posts.has_other_pages %}
-        <div class="center mt-5">
+              <div class="sidebar-widget-area">
+                <h5 class="title">Today’s Pick</h5>
+                {% for post in newest %}
+                  <div class="widget-content">
+                    <div class="single-blog-post todays-pick">
+                      <div>
+                        <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}">
+                      </div>
+                      <div class="post-content">
+                        <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                      </div>
+                    </div>
+                  </div>
+                {% empty %}
+                  <div class="widget-content">
+                    <div class="single-blog-post todays-pick">
+                      <div class="post-content">
+                        <h4 class="text-center"><a class="article-title">Nie dodano dziś żadnego kursu</a></h4>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+
+              <div class="sidebar-widget-area">
+                <h5 class="title">Stay Connected</h5>
+                <div class="widget-content">
+                  <div class="social-area d-flex justify-content-between">
+                    <a href="#"><i class="fab fa-github-square"></i></a>
+                    <a href="#"><i class="fas fa-mail-bulk"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-google-plus"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sidebar-widget-area">
+                <h5 class="title">Top Stories</h5>
+                <div class="widget-content">
+                  {%  for cat in category%}
+                    <div class="single-blog-post post-style-2 d-flex align-items-center widget-post my-3">
+                      <div class="post-content col-12">
+                        <form method="get">
+                            <button type="submit" name="q" value="{{  cat.category }}" class="btn-sub d-flex justify-content-start" style="text-transform: uppercase;"><span class="d-flex justify-content-start" style="width: 50%;">{{ cat.category }}</span><span class="d-flex justify-content-end" style="width: 50%;">({{ cat.category__count }})</span></button>
+                        </form>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="sidebar-widget-area">
+                <h5 class="title">Top Stories</h5>
+                <div class="widget-content">
+                  {%  for lvl in level%}
+                    <div class="single-blog-post post-style-2 d-flex align-items-center widget-post my-3">
+                      <div class="post-content col-12">
+                        <form method="get">
+                          <button type="submit" name="q" value="{{  lvl.level }}" class="btn-sub d-flex justify-content-start"><span class="d-flex justify-content-start" style="width: 50%;">{{ lvl.level }}</span><span class="d-flex justify-content-end" style="width: 50%;">({{ lvl.level__count }})</span></button>
+                        </form>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% if posts.has_other_pages %}
+          <div class="center mt-5">
             <div class="pagination">
-                <ul>
-                    {% if posts.has_previous %}
-                        <li>
-                            <a class="prev" href="?page=1"><i class="fas fa-angle-double-left"></i></a>
-                        </li>
-                        <li>
-                            <a class="prev" href="?page={{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-left"></i></a>
-                        </li>
+              <ul>
+                {% if posts.has_previous %}
+                  <li>
+                    <a class="prev" href="?page=1"><i class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li>
+                    <a class="prev" href="?page={{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-left"></i></a>
+                  </li>
                 {% endif %}
 
                 {% for num in posts.paginator.page_range %}
-                    {% if posts.number == num %}
-                        <li class="page-number active">
-                        <a href="?page={{ num }}">{{ num }}</a>
-                        </li>
-                    {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
-                        <li class="page-number">
-                        <a
-                           href="?page={{ num }}">{{ num }}</a>
-                        </li>
-                    {% endif %}
+                  {% if posts.number == num %}
+                    <li class="page-number active">
+                      <a href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                    <li class="page-number">
+                      <a href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                  {% endif %}
                 {% endfor %}
 
-
                 {% if posts.has_next %}
-                    <li>
-                    <a class="next" href="?page=
-                        {{ posts.next_page_number }}"><i class="fas fa-angle-right"></i></a>
-                    </li>
-                    <li>
-                    <a class="next" href="?page=
-                        {{ posts.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a>
-                    </li>
+                  <li>
+                    <a class="next" href="?page= {{ posts.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+                  </li>
+                  <li>
+                    <a class="next" href="?page={{ posts.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a>
+                  </li>
                 {% endif %}
-                </ul>
+              </ul>
             </div>
-        </div>
-{% endif %}
-            </div>
-            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
 
 {% endblock %}

@@ -2,27 +2,21 @@
 {% load staticfiles %}
 {% block content %}
 
-    <style>
+  <style>
     .footer-template h2{
         background-color: #242423 !important;
         color: #fff !important;
     }
 
-    </style>
+  </style>
 
-  <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-   </nav>
-
-    <div class="container my-5 py-5">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.media }}
-            {{ form.as_p }}
-            <button class="btn-hover-update" type="submit"><span>Dodaj</span></button>
-        </form>
-    </div>
+  <div class="container my-5 py-5">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.media }}
+      {{ form.as_p }}
+      <button class="btn-hover-update" type="submit"><span>Dodaj</span></button>
+    </form>
+  </div>
 
 {% endblock %}
