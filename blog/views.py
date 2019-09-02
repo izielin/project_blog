@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import UpdateView
 from .models import Post, Document, Comment
-# from .forms import CommentForm, DocumentForm, CycleForm
 from .forms import CommentForm, DocumentForm
 from django.views import generic
 from . import forms
@@ -11,10 +10,12 @@ from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from bootstrap_modal_forms.generic import BSModalCreateView, BSModalDeleteView, BSModalUpdateView
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalDeleteView
 from django.utils import timezone
+from users.models import Profile
 from django.core.mail import send_mail
 from django.conf import settings
+from datetime import datetime
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
 
@@ -75,6 +76,25 @@ class MDEditorFormView(generic.FormView):
             'category_abbr': form.cleaned_data['category'][:3],
             'author': self.request.user
         }
+
+        recipients = []
+        for prof in Profile.objects.filter(moderator=True):
+            recipients.append(prof.user.email)
+
+        subject = "Stworzono nowy kurs"
+        message = "Otrzymujesz tę wiadomość, gdyż używkownik %s " \
+                  "stworzył nowy kurs pod tytułem: '%s'\n" \
+                  "Kurs oczekuje na autoryzajcę, proszę udaj się na stronę akceptacji. \n\n\n"\
+                  "Szczegóły:\n"             \
+                  "Tytuł: %s,\n"             \
+                  "Autor: %s,\n"             \
+                  "Kategoria: %s,\n"             \
+                  "Data stowrzenia :%s\n"             \
+            % (self.request.user, form.cleaned_data['title'], form.cleaned_data['title'], self.request.user,
+               form.cleaned_data['category'], datetime.now().date())
+
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipients)
+
         instance = models.Post.objects.create(**kwargs)
         self.success_url = reverse('post-detail', kwargs={'pk': instance.id})
         return super(MDEditorFormView, self).form_valid(form)
