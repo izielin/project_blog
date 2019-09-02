@@ -6,6 +6,7 @@ $(function($){
                 items: 1,
                 nav: false,
                 autoplay: true,
+                autoplayTimeout: 15000,
                 smartSpeed: 3000,
                 dots:false,
 				navContainer: '.blog_text_slider',
@@ -22,7 +23,7 @@ $(function ($){
             loop: true,
             dots: false,
             autoplay: true,
-            autoplayTimeout: 10000, // Autoplay Timeout 1s = 1000ms
+            autoplayTimeout: 15000,
             smartSpeed: 2000,
             nav: true,
             navText: ['<i class="fas fa-arrow-circle-left"></i>', '<i class="fas fa-arrow-circle-right"></i>']

@@ -10,7 +10,7 @@
                     {% for post in posts %}
                                  <div class="single-blog-post blog_text ">
                               <div class="post-thumbnail">
-                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category_abbr|add:".jpg" %}" >
                                 <div class="post-cta">
                                   <p>{{ post.category }}</p>
                                 </div>

@@ -7,14 +7,12 @@ from .views import (
     MDEditorFormView,
     ShowView,
     CommentCreateView,
-    EmailCreateView
 )
 from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('post_list/', views.post_list, name='post-list'),
-    path('send_email/', views.send_email, name='send-email'),
     path('post/<int:pk>/', ShowView.as_view(), name='post-detail'),
     path('post/new/', MDEditorFormView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
@@ -25,5 +23,4 @@ urlpatterns = [
     path('download/<int:pk>', DownloadDeleteView.as_view(), name='upload-delete'),
     path('post/<int:pk>/comment/', CommentCreateView.as_view(), name='add_comment_to_post'),
     path('delete_comment/<int:pk>', CommentDeleteView.as_view(), name='comment-delete'),
-    path('email/new/', EmailCreateView.as_view(), name='email-create'),
 ]

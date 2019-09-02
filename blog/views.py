@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import UpdateView
-from .models import Post, Document, Comment, Email
+from .models import Post, Document, Comment
 # from .forms import CommentForm, DocumentForm, CycleForm
-from .forms import CommentForm, DocumentForm, EmailForm
+from .forms import CommentForm, DocumentForm
 from django.views import generic
 from . import forms
 from . import models
@@ -62,33 +62,6 @@ def home(request):
     return render(request, 'blog/home.html', context)
 
 
-def send_email(request):
-    # context = {
-    #     'emails' : Email.objects.filter(posted=False).order_by('-date_created')
-    # }
-    send_mail(
-        'Subject here',
-        'Here is the message.',
-        'ecg.vot@gmail.com',
-        ['misiopar@wp.pl'],
-        fail_silently=False,
-    )
-    return render(request, 'blog/send_email.html')
-
-
-class EmailCreateView(BSModalCreateView, LoginRequiredMixin):
-    template_name = 'blog/email_form.html'
-    form_class = EmailForm
-
-    def form_valid(self, form, **kwargs):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        reverse_user = self.request.user
-        return reverse('profile', kwargs={'username': reverse_user})
-
-
 class MDEditorFormView(generic.FormView):
     form_class = forms.MDEditorForm
     template_name = 'blog/post_form.html'
@@ -99,6 +72,7 @@ class MDEditorFormView(generic.FormView):
             'synopsis': form.cleaned_data['synopsis'],
             'content': form.cleaned_data['content'],
             'category': form.cleaned_data['category'],
+            'category_abbr': form.cleaned_data['category'][:3],
             'author': self.request.user
         }
         instance = models.Post.objects.create(**kwargs)

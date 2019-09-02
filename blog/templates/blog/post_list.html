@@ -57,7 +57,7 @@
                           {% for post in latest %}
                             <div class="single-blog-post">
                               <div class="post-thumbnail">
-                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category_abbr|add:".jpg" %}" >
                                 <div class="post-cta">
                                   <p>{{ post.category }}</p>
                                 </div>
@@ -87,7 +87,7 @@
                         {% for post in latest %}
                           <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
                             <div class="post-thumbnail">
-                              <img src="{% static  post.category|add:".jpg" %}" >
+                              <img src="{% static  post.category_abbr|add:".jpg" %}" >
                             </div>
                             <div class="post-content">
                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
@@ -115,7 +115,7 @@
                           {% for post in most_popular %}
                             <div class="single-blog-post">
                               <div class="post-thumbnail">
-                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category_abbr|add:".jpg" %}" >
                                 <div class="post-cta">
                                   <p>{{ post.category }}</p>
                                 </div>
@@ -145,7 +145,7 @@
                         {% for post in most_popular %}
                           <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
                             <div class="post-thumbnail">
-                              <img src="{% static  post.category|add:".jpg" %}" >
+                              <img src="{% static  post.category_abbr|add:".jpg" %}" >
                             </div>
                             <div class="post-content">
                               <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
@@ -173,7 +173,7 @@
                           {% for post in most_rated %}
                             <div class="single-blog-post">
                               <div class="post-thumbnail">
-                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category_abbr|add:".jpg" %}" >
                                   <div class="post-cta">
                                     <p>{{ post.category }}</p>
                                   </div>
@@ -203,7 +203,7 @@
                     {% for post in most_rated %}
                         <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
                             <div class="post-thumbnail">
-                               <img src="{% static  post.category|add:".jpg" %}" >
+                               <img src="{% static  post.category_abbr|add:".jpg" %}" >
                             </div>
                             <div class="post-content">
                                <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
@@ -232,7 +232,7 @@
                            {% for post in random %}
                              <div class="single-blog-post">
                                <div class="post-thumbnail">
-                                 <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}" >
+                                 <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category_abbr|add:".jpg" %}" >
                                  <div class="post-cta">
                                    <p>{{ post.category }}</p>
                                  </div>
@@ -262,7 +262,7 @@
                          {% for post in random %}
                            <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
                              <div class="post-thumbnail">
-                               <img src="{% static  post.category|add:".jpg" %}" >
+                               <img src="{% static  post.category_abbr|add:".jpg" %}" >
                              </div>
                              <div class="post-content">
                                <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
@@ -293,7 +293,7 @@
                     {% for post in posts %}
                       <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3" data-wow-delay="0.2s">
                         <div class="post-thumbnail">
-                          <img src="{% static  post.category|add:".jpg" %}">
+                          <img src="{% static  post.category_abbr|add:".jpg" %}">
                         </div>
                       <div class="post-content col-8">
                         <h4 class="text-center"><a class="article-title"  href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
@@ -368,7 +368,7 @@
                   <div class="widget-content">
                     <div class="single-blog-post todays-pick">
                       <div>
-                        <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category|add:".jpg" %}">
+                        <img style="max-width: 200px;" class="mx-auto d-block" src="{% static  post.category_abbr|add:".jpg" %}">
                       </div>
                       <div class="post-content">
                         <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>

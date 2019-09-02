@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from django import forms
 from mdeditor.fields import MDTextFormField
-from .models import Post, Comment, Document, Email
+from .models import Post, Comment, Document
 from bootstrap_modal_forms.forms import BSModalForm
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
@@ -33,9 +33,3 @@ class DocumentForm(forms.ModelForm):
         model = Document
         fields = ['name', 'document']
 
-# class EmailForm(forms.ModelForm):
-class EmailForm(BSModalForm):
-    class Meta:
-        model = Email
-        fields = ['receivers', 'subject', 'message']
-        # fields = '__all__'

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from blog.models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.forms import PasswordResetForm
 
 
 def register(request):
@@ -61,4 +62,5 @@ def profile(request, username):
     }
 
     return render(request, 'users/profile.html', context)
+
 
