@@ -44,7 +44,16 @@
   <div class="container">
     <div class="row mt-5 pt-5">
       <div class="col-xl-9 py-5">
-        <h1 class="bread" id="top">{{ object.title }} </h1>
+
+
+        <div class="container">
+           <div class="row">
+              <div class="col-md-8">
+                <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'post-list' %}">Lista kursów</a></span> <span>{{ object.title }}</span></p>
+                <h1 class="bread">{{ object.title }}</h1>
+              </div>
+           </div>
+        </div>
 
           <div class="single-blog-content mt-5">
             <div id="content" class="post-content">
