@@ -8,29 +8,95 @@
         color: #fff !important;
     }
 
+    #id_category {
+              list-style-type: none;
+    }
+
+  #id_category li label {
+
+      margin-bottom: 15px;
+  }
+
   </style>
 
 
 
   <div class="container my-5 py-5">
-    {% if request.get_full_path == "/post/new/" %}
-
- <div class="container">
-           <div class="row">
-              <div class="col-md-8">
-                <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'post-list' %}">Lista kursów</a></span> <span>Nowy Kurs</span></p>
-                <h1 class="bread">Nowy Kurs</h1>
-              </div>
-           </div>
-        </div>
-
-{% endif %}
-    <form method="post">
+    <form class="" method="post">
       {% csrf_token %}
       {{ form.media }}
-      {{ form.as_p }}
-      <button class="btn-hover-update" type="submit"><span>Dodaj</span></button>
+
+        <div class="row">
+            <div class="col-xl-9 py-5">
+            {% if request.get_full_path == "/post/new/" %}
+            <div class=" mb-5">
+               <div class="row">
+                  <div class="col-md-8">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'post-list' %}">Lista kursów</a></span> <span>Nowy Kurs</span></p>
+                    <h1 class="bread">Nowy Kurs</h1>
+                  </div>
+               </div>
+            </div>
+            {% else %}
+            <div class=" mb-5">
+               <div class="row">
+                  <div class="col-md-8">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Strona główna</a></span> <span class="mr-2"><a href="{% url 'post-list' %}">Lista kursów</a></span> <span>Edycja Kursu</span></p>
+                    <h1 class="bread">Edycja Kursu</h1>
+                  </div>
+               </div>
+            </div>
+            {% endif %}
+
+          <div class="single-blog-content mt-5">
+              {{ form.media }}
+            {{ form.synopsis.label_tag }}
+            {{ form.synopsis }}
+              <hr>
+            {{ form.content.label_tag }}
+            {{ form.content }}
+
+          <button class="btn-hover-update my-5" type="submit" style="width: 40%;"><span>Dodaj</span></button>
+
+          </div>
+
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-3">
+          <div class="post-sidebar-area wow fadeInUpBig" data-wow-delay="0.2s">
+            <div class="sidebar-widget-area pl-2">
+                {% if request.get_full_path == "/post/new/" or user.profile.moderator != True %}
+                      {{ form.title.label_tag }}<br>
+                    {{ form.title }}<br>
+                    <hr>
+                        {{ form.category.label_tag }}<br>
+                    {{ form.category }}<br>
+                {% else %}
+                    {{ form.title.label_tag }}<br>
+                    {{ form.title }}<br>
+                        <hr>
+                        {{ form.authorized.label_tag }}
+                    {{ form.authorized }} <br><br>
+                        <hr>
+                        {{ form.category.label_tag }}<br>
+                    {{ form.category }}<br>
+                        <hr>
+                        {{ form.level.label_tag }}<br>
+                    {{ form.level }}<br>
+                        <hr>
+                        {{ form.status.label_tag }}<br>
+                    {{ form.status }}<br>
+                {% endif %}
+
+            </div>
+          </div>
+        </div>
+        </div>
+
+
     </form>
+
   </div>
+
 
 {% endblock %}

@@ -6,6 +6,7 @@ from bootstrap_modal_forms.forms import BSModalForm
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
 LEVEL_CHOICES = Post.LEVEL_CHOICES
+STATUS_CHOICES = Post.STATUS_CHOICES
 
 
 class MDEditorForm(forms.Form):
@@ -14,12 +15,6 @@ class MDEditorForm(forms.Form):
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, label="category", initial='', widget=forms.RadioSelect())
     content = MDTextFormField()
 
-
-class MDEditorModleForm(forms.ModelForm):
-
-    class Meta:
-        model = Post
-        fields = '__all__'
 
 
 class CommentForm(BSModalForm):

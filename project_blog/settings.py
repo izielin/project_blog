@@ -157,11 +157,10 @@ MDEDITOR_CONFIGS = {
         'width': '100% ',  # Custom edit box width
         'height': 800,  # Custom edit box height
         'toolbar': ["undo", "redo", "|",
-                    "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
+                    "bold", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
                     "h1", "h2", "h3", "h5", "h6", "|",
                     "list-ul", "list-ol", "hr", "|",
-                    "link", "reference-link", "code", "preformatted-text", "code-block", "table", "datetime",
-                    "html-entities", "pagebreak", "goto-line", "|",
+                    "link", "code", "preformatted-text", "code-block", "table",
                     "||", "preview", "watch"],  # custom edit box toolbar
         # 'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],  # image upload format type
         # 'image_folder': '/media/editor',  # image save the folder name

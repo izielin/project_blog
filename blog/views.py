@@ -49,7 +49,7 @@ def post_list(request):
         'level': Post.objects.filter(authorized=True).values('level').annotate(Count('level')).order_by('level'),
         'newest': Post.objects.filter(authorized=True).filter(date_posted__gte=timezone.now()
                                                               .replace(hour=0, minute=0, second=0))
-                                                      .order_by('-date_posted')[:1],
+                      .order_by('-date_posted')[:1],
         'random': Post.objects.filter(authorized=True).order_by('?')[:3],
         'latest': Post.objects.filter(authorized=True).order_by('-date_posted')[:4],
     }
@@ -84,14 +84,14 @@ class MDEditorFormView(generic.FormView):
         subject = "Stworzono nowy kurs"
         message = "Otrzymujesz tę wiadomość, gdyż używkownik %s " \
                   "stworzył nowy kurs pod tytułem: '%s'\n" \
-                  "Kurs oczekuje na autoryzajcę, proszę udaj się na stronę akceptacji. \n\n\n"\
-                  "Szczegóły:\n"             \
-                  "Tytuł: %s,\n"             \
-                  "Autor: %s,\n"             \
-                  "Kategoria: %s,\n"             \
-                  "Data stowrzenia :%s\n"             \
-            % (self.request.user, form.cleaned_data['title'], form.cleaned_data['title'], self.request.user,
-               form.cleaned_data['category'], datetime.now().date())
+                  "Kurs oczekuje na autoryzajcę, proszę udaj się na stronę akceptacji. \n\n\n" \
+                  "Szczegóły:\n" \
+                  "Tytuł: %s,\n" \
+                  "Autor: %s,\n" \
+                  "Kategoria: %s,\n" \
+                  "Data stowrzenia :%s\n" \
+                  % (self.request.user, form.cleaned_data['title'], form.cleaned_data['title'], self.request.user,
+                     form.cleaned_data['category'], datetime.now().date())
 
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipients)
 
