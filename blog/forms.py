@@ -29,9 +29,15 @@ class DocumentForm(forms.ModelForm):
 
 
 class CycleForm(BSModalForm):
-    post = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                     choices=((x.id, x.title) for x in Post.objects.all()))
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if user is not None:
+            self.fields['posts'].queryset = Post.objects.filter(author=user)
 
     class Meta:
         model = Cycle
-        fields = ['title', 'description', 'post']
+        fields = ['title', 'description', 'posts']
+        widgets = {
+            'posts': forms.CheckboxSelectMultiple(),
+        }

@@ -203,9 +203,15 @@ def posts_no_authorized(request):
     }
     return render(request, 'blog/no_authorized.html', context)
 
-class CycleCreateView(BSModalCreateView, LoginRequiredMixin):
+
+class CycleCreateView(LoginRequiredMixin, BSModalCreateView):
     template_name = 'blog/cycle_form.html'
     form_class = CycleForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(user=self.request.user)
+        return kwargs
 
     def form_valid(self, form, **kwargs):
         form.instance.author = self.request.user
@@ -221,6 +227,11 @@ class CycleUpdateView(BSModalUpdateView):
     template_name = 'blog/cycle_update.html'
     form_class = CycleForm
     success_message = 'Success: Cycle was updated.'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(user=self.request.user)
+        return kwargs
 
     def get_success_url(self):
         reverse_user = self.request.user

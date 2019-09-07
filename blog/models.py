@@ -81,7 +81,7 @@ class Cycle(models.Model):
     description = models.TextField(max_length=500, default="Brak opisu")
     date_created = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ManyToManyField(Post)
+    posts = models.ManyToManyField(Post)
 
     def __str__(self):
         return self.title
