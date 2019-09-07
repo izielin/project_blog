@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from django import forms
 from mdeditor.fields import MDTextFormField
-from .models import Post, Comment, Document
+from .models import Post, Comment, Document, Cycle
 from bootstrap_modal_forms.forms import BSModalForm
 
 CATEGORY_CHOICES = Post.CATEGORY_CHOICES
@@ -16,7 +16,6 @@ class MDEditorForm(forms.Form):
     content = MDTextFormField()
 
 
-
 class CommentForm(BSModalForm):
     class Meta:
         model = Comment
@@ -28,3 +27,11 @@ class DocumentForm(forms.ModelForm):
         model = Document
         fields = ['name', 'document']
 
+
+class CycleForm(BSModalForm):
+    post = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                     choices=((x.id, x.title) for x in Post.objects.all()))
+
+    class Meta:
+        model = Cycle
+        fields = ['title', 'description', 'post']

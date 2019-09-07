@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="content-section container py-5 my-5">
+    <div class="single-blog-post post-style-4 container py-5 my-5">
         <div class="media">
             <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
             <div class="media-body">
@@ -30,8 +30,8 @@
             </div>
         </div>
     </div>
-    <div class="content-section mt-4 collapse container py-5 my-5" id="collapseExample">
-    <form method="POST" enctype="multipart/form-data">
+    <div class="single-blog-post post-style-4 mt-4 collapse container py-5 my-5" id="collapseExample" >
+    <form method="POST" enctype="multipart/form-data" style="width: 75%; margin-left: auto; margin-right: auto;">
           {% csrf_token %}
           <fieldset class="form-group">
               <legend class="border-bottom mb-4">Profile Info</legend>
@@ -39,12 +39,29 @@
               {{ p_form }}
           </fieldset>
           <div class="form-group">
-              <button class="btn btn-dark" type="submit">Update</button>
+              <button class="create-comment btn-hover-add" style="width: 40%;" type="submit" name="button"><span>Update</span></button>
           </div>
     </form>
 
     </div>
+    {% if user.profile.developer == True %}
+    <div class="container content-section">
+    <button type="button" class="create-cycle btn justify-content-end" data-id="{% url 'cycle-create' %}"><span><i class="fas fa-plus" style="color: #96281B;"></i></span></button>
+    </div>
 
+    <div class="content-section container">
+      {% for cycle in cycles %}
+
+          <h4>{{cycle.title}}</h4>
+          {{ cycle.post }}
+          <button type="button" class="update-cycle btn btn-sm " data-id="{% url 'cycle-update' cycle.pk %}">
+                    <span><i class="fas fa-edit" style="color: #1E824C;"></i></span></button>
+              <button type="button" class="delete-cycle btn btn-sm" data-id="{% url 'cycle-delete' cycle.pk %}">
+                  <span><i class="fas fa-trash-alt" style="color: #96281B;"></i></span></button>
+      {% endfor %}
+
+    </div>
+    {% endif %}
   <section class="section_gap blog_area">
     <div class="container">
       <div class="row justify-content-center">
@@ -139,5 +156,19 @@
 {% endif %}
     </div>
   </section>
+
+
+    <script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+    <script>
+    $(function () {
+        $(".create-cycle").modalForm({formURL: "{% url 'cycle-create' %}"});
+        $(".update-cycle").each(function () {
+          $(this).modalForm({formURL: $(this).data('id')});
+        });
+         $(".delete-cycle").each(function () {
+          $(this).modalForm({formURL: $(this).data('id')});
+        });
+});
+    </script>
 
 {% endblock content %}

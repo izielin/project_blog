@@ -3,9 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from blog.models import Post
+from blog.models import Post, Cycle
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.forms import PasswordResetForm
 
 
 def register(request):
@@ -59,6 +58,7 @@ def profile(request, username):
         'user': user,
         'u_form': u_form,
         'p_form': p_form,
+        'cycles': Cycle.objects.filter(author=user),
     }
 
     return render(request, 'users/profile.html', context)
