@@ -57,7 +57,56 @@
                     <span><i class="fas fa-edit" style="color: #1E824C;"></i></span></button>
               <button type="button" class="delete-cycle btn btn-sm" data-id="{% url 'cycle-delete' cycle.pk %}">
                   <span><i class="fas fa-trash-alt" style="color: #96281B;"></i></span></button>
+
+
+
+      {% for c in c_post %}
+
+<div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3 mx-auto col-lg-5 col-md-6 col-sm-6" data-wow-delay="0.2s">
+    <div class="post-content col-12">
+        <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' c.id %}">{{ c.title }}</a></h4>
+            <div class="row" style="margin: 0; padding: 0;">
+                <div class="col-6">
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="far fa-keyboard"></i><small class="text-muted">
+                            {{ c.category }}</small>
+                        <br>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="far fa-user"></i><a href="{% url 'profile' c.author.username %}"><small class="text-muted">
+                          {{ c.author.get_full_name }}</small></a>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="far fa-calendar-alt"></i><small class="text-muted">
+                            {{ c.date_posted|date:"F d, Y" }}</small>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                          <i class="fas fa-chart-line"></i><small class="text-muted">
+                          {{ c.level }}  </small>
+                      </li>
+                      <li class="list-group-item">
+                        <i class="far fa-eye"></i><small class="text-muted">
+                            {{ c.numbers_of_entries }} </small>
+                        </li>
+                      <li class="list-group-item">
+                      <i class="far fa-comments"></i><small class="text-muted">
+                            {{ c.comments.count }}  </small>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+         </div>
+
       {% endfor %}
+
+
+      {% endfor %}
+
 
     </div>
     {% endif %}
