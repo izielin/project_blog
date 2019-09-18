@@ -53,14 +53,7 @@ def profile(request, username):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    # for title, id in Cycle.objects.filter(author=request.user).values_list('title', 'posts'):
-    #     print(title, id)
-
     cycles = Cycle.objects.filter(author=user)
-
-    for cycle in cycles:
-        c_post = Post.objects.filter(cycle__title__startswith=cycle.title)
-        # print(c_post)
 
     context = {
         'posts': posts,
@@ -68,9 +61,7 @@ def profile(request, username):
         'u_form': u_form,
         'p_form': p_form,
         'cycles': cycles,
-        'c_post': c_post,
     }
-    print(c_post)
 
     return render(request, 'users/profile.html', context)
 
