@@ -29,3 +29,21 @@ $(function ($){
             navText: ['<i class="fas fa-arrow-circle-left"></i>', '<i class="fas fa-arrow-circle-right"></i>']
         });
     });
+
+$(function ($) {
+    'use strict';
+    $('.cycle_slider').owlCarousel({
+    center: true,
+    items:2,
+    loop:false,
+    margin:10,
+    responsive:{
+        600:{
+            items:1
+        },
+        1000:{
+            items:2
+        }
+    }
+})
+});
