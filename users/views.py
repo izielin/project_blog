@@ -22,6 +22,7 @@ def register(request):
 
 @login_required
 def profile(request, username):
+    current_user = request.user
     user = User.objects.get(username=username)
 
     if request.method == 'POST':
@@ -55,9 +56,12 @@ def profile(request, username):
 
     cycles = Cycle.objects.filter(author=user)
 
+    # print(current_user, "obecny, ", user, "profil" )
+
     context = {
         'posts': posts,
         'user': user,
+        'current_user': current_user,
         'u_form': u_form,
         'p_form': p_form,
         'cycles': cycles,

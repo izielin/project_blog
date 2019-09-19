@@ -650,7 +650,6 @@ a.article-title:hover {
   background: url(../images/banner/home-banner.jpg) no-repeat scroll center left;
   margin-top: 15px;
   background-size: contain;
-  display: none;
 }
 
 @media (min-width: 1920px) {

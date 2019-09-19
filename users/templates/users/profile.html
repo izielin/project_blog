@@ -2,6 +2,23 @@
 {% load static %}
 {% block content %}
 
+    <style>
+
+    .fa-arrow-circle-left, .fa-arrow-circle-right{
+        font-size: 30px;
+        color: lightgray;
+        display: block;
+    }
+
+
+    .fa-arrow-circle-left:hover, .fa-arrow-circle-right:hover{
+        font-size: 30px;
+        cursor: pointer;
+        color: #ccb78f;
+    }
+
+    </style>
+
 <nav class="navbar navbar-light bg-white justify-content-end d-xl-none">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -21,8 +38,10 @@
                 <div class="row">
                     <div class="col-11"><h2 class="account-heading">
                         {{ user.get_full_name }}</h2></div>
+                    {%  if current_user == user %}
                     <div class="col-1"><a class="text-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas
                     fa-user-edit"></i></a></div>
+                    {% endif %}
                 </div>
                     <h6 class="text-muted">{{ user.username }}</h6>
                     <hr> <br>
@@ -52,17 +71,23 @@
     <div class="content-section container">
       {% for cycle in cycles %}
 
-          <h4>{{cycle.title}}</h4>
+          <h4 class="article-title" style="font-size: 20px; text-align: center; margin: 15px 0;">{{cycle.title}}</h4>
+
+
+          {% if cycle.author == current_user or current_user.profile.moderator == True%}
           <button type="button" class="update-cycle btn btn-sm " data-id="{% url 'cycle-update' cycle.pk %}">
                     <span><i class="fas fa-edit" style="color: #1E824C;"></i></span></button>
               <button type="button" class="delete-cycle btn btn-sm" data-id="{% url 'cycle-delete' cycle.pk %}">
                   <span><i class="fas fa-trash-alt" style="color: #96281B;"></i></span></button>
+          {% endif %}
 
+          <hr style="width: 75%;; color: lightgray;">
 
+<div class="cycle_slider owl-carousel ">
 
       {% for c in cycle.posts.all %}
 
-<div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig my-3 mx-auto col-lg-5 col-md-6 col-sm-6" data-wow-delay="0.2s">
+<div class="single-blog-post post-style-4 d-flex align-items-center" data-wow-delay="0.2s">
     <div class="post-content col-12">
         <h4 class="text-center"><a class="article-title" href="{% url 'post-detail' c.id %}">{{ c.title }}</a></h4>
             <div class="row" style="margin: 0; padding: 0;">
@@ -104,7 +129,7 @@
 
       {% endfor %}
 
-
+</div>
       {% endfor %}
 
 
